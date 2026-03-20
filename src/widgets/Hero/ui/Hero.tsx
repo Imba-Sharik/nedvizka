@@ -62,11 +62,14 @@ export function Hero() {
       </div>
 
       {/* Hero content */}
-      <div className="hero-content px-4 lg:px-0">
-        <div className="hero-text">
+      <div className="relative z-20 mt-47.5 px-4 lg:px-0 lg:absolute lg:mt-0 lg:top-[max(18.96vw,364px)] lg:right-[7.8125vw]">
+        <div className="font-(family-name:--font-pt-mono) text-[27px] leading-9 font-medium uppercase whitespace-pre-wrap lg:whitespace-pre text-black dark:text-white">
           Формируем места,{"\n"}где эстетика, инфраструктура{"\n"}и предпринимательство{"\n"}соединяются в единую городскую{"\n"}среду.
         </div>
-        <a href="#" className="hero-cta">
+        <a
+          href="#"
+          className="block mt-9.5 opacity-40 dark:opacity-[0.37] font-sans text-[14px] leading-3.75 font-normal no-underline whitespace-pre text-black dark:text-white"
+        >
           Забронировать{"\n"}площадь →
         </a>
       </div>
