@@ -1,6 +1,7 @@
 import { Header } from "@/widgets/header";
 import { Hero } from "@/widgets/Hero";
 import { Cards } from "@/widgets/Cards";
+import { About } from "@/widgets/About";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Header />
       <Hero />
       <Cards />
+      <About />
     </main>
   );
 }

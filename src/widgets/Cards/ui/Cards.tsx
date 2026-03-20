@@ -30,7 +30,7 @@ const cards = [
 
 export function Cards() {
   return (
-    <Container className="relative z-20 pb-20 lg:pb-32">
+    <Container className="relative z-20 pb-20 lg:pb-49">
       <div className="flex flex-col gap-5 lg:flex-row">
         {cards.map((card) => (
           <div key={card.src} style={{ flex: 1 }}>

@@ -162,6 +162,13 @@ html::-webkit-scrollbar {
 
 
 
+/* About section: fluid margin on right column, only on xl+ */
+@media (min-width: 1280px) {
+  .about-right-col {
+    margin-left: clamp(0px, calc((100vw - 1280px) * 1.072), 686px);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
