@@ -23,6 +23,7 @@ export const sfProDisplay = localFont({
   ],
   variable: "--font-sf-pro-display",
   display: "swap",
+  adjustFontFallback: false,
 });
 
 export const ptMono = localFont({
@@ -31,4 +32,5 @@ export const ptMono = localFont({
   ],
   variable: "--font-pt-mono",
   display: "swap",
+  adjustFontFallback: false,
 });

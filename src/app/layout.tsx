@@ -14,12 +14,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="ru"
-      className={`${sfProDisplay.variable} ${ptMono.variable} antialiased`}
-      suppressHydrationWarning
-    >
-      <body className="min-w-480 overflow-x-hidden">
+    <html lang="ru" suppressHydrationWarning>
+      <body className={`${sfProDisplay.variable} ${ptMono.variable} overflow-x-hidden antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

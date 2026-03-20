@@ -55,10 +55,10 @@
 :root {
   --page-bg: #DDDDDD;
   --page-text: #000000;
-  --page-divider: rgba(151, 151, 151, 0.34);
+  --page-divider: #BBBBBB;
 
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --background: #DDDDDD;
+  --foreground: #000000;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -96,8 +96,8 @@
   --page-text: #FFFFFF;
   --page-divider: #2B2B2B;
 
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
+  --background: #0A0A0A;
+  --foreground: #FFFFFF;
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
@@ -129,14 +129,42 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+html {
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes gradient-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.gradient-blur {
+  --size: 500px;
+  --speed: 50s;
+  --easing: cubic-bezier(0.8, 0.2, 0.2, 0.8);
+
+  width: var(--size);
+  height: var(--size);
+  opacity: 0.22;
+  filter: blur(100px);
+  background-image: conic-gradient(hsl(222, 84%, 60%), hsl(164, 79%, 71%), hsl(200, 80%, 65%), hsl(222, 84%, 60%));
+  animation: gradient-rotate var(--speed) var(--easing) alternate infinite;
+  border-radius: 50%;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
+    @apply bg-background text-foreground font-sans;
   }
 }
