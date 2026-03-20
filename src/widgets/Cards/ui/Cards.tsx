@@ -43,6 +43,7 @@ export function Cards() {
                 src={card.src}
                 alt={card.alt}
                 fill
+                priority
                 unoptimized
                 style={{ objectFit: "cover" }}
               />

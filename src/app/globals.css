@@ -129,6 +129,11 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* Fix view-transitions overflow warning for Next.js fill images */
+.overflow-hidden img {
+  overflow: clip;
+}
+
 html {
   scrollbar-width: none;
 }
