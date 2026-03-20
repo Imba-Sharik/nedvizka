@@ -19,9 +19,13 @@ export function Header() {
 
       {/* Desktop nav */}
       <nav className="hidden lg:flex items-center">
+        <p className="text-[14px] font-medium leading-4.25 opacity-[0.82] text-page-text mr-53.5">
+          Все площадки
+        </p>
+
         <button
           onClick={toggleTheme}
-          className="w-7.5 h-7.5 flex items-center justify-center rounded-[7px] opacity-[0.82] text-page-text hover:bg-black/5 dark:hover:bg-white/10 transition-colors mr-4"
+          className="w-7.5 h-7.5 flex items-center justify-center rounded-[7px] opacity-[0.82] text-page-text hover:bg-black/5 dark:hover:bg-white/10 transition-colors mr-2"
           aria-label="Переключить тему"
         >
           <svg
@@ -51,10 +55,6 @@ export function Header() {
             />
           </svg>
         </button>
-
-        <p className="text-[14px] font-medium leading-4.25 opacity-[0.82] text-page-text mr-63">
-          Все площадки
-        </p>
 
         <p className="text-[14px] font-medium leading-4.25 opacity-[0.82] text-page-text mr-7.5">
           +7 495 120-19-05
