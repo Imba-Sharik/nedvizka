@@ -13,6 +13,7 @@ export default function Home() {
           height: "930.8px",
           left: "calc((100% - 100vw) / 2 - 80.5px)",
           width: "calc(100vw + 119px)",
+          opacity: 0.57,
         }}
       >
         {/* Block 1 — bottom-left to top-right, right-aligned */}
