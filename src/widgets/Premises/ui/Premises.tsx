@@ -127,7 +127,7 @@ export function Premises() {
     <section className="mt-52">
       <Container className="py-20 lg:py-32">
         {/* Title + Filter */}
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-col gap-8 min-[1240px]:flex-row min-[1240px]:items-center min-[1240px]:justify-between">
           <h2
             className="font-(family-name:--font-pt-mono) font-normal uppercase text-black dark:text-white shrink-0"
             style={{ fontSize: "53px", lineHeight: "56px" }}
@@ -136,7 +136,7 @@ export function Premises() {
           </h2>
 
           {/* Filter */}
-          <div className="flex items-center gap-6 flex-wrap">
+          <div className="flex items-center gap-6 flex-wrap min-[1240px]:flex-nowrap">
             <div className="flex items-center gap-2.25">
               <span className="font-sans text-[14px] font-medium leading-4.25 text-black dark:text-white">
                 Цена
@@ -164,7 +164,7 @@ export function Premises() {
         <div className="mt-11">
           {/* Column headers */}
           <div
-            className="hidden lg:grid pb-3"
+            className="hidden min-[1470px]:grid pb-3"
             style={{ gridTemplateColumns: gridCols }}
           >
             {["Площадка", "Лот", "Площадь", "Тип", "Цена", "Статус", ""].map(
@@ -185,7 +185,7 @@ export function Premises() {
             <div key={i}>
               <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
               <div
-                className="hidden lg:grid items-center py-5.5"
+                className="hidden min-[1470px]:grid items-center py-5.5"
                 style={{ gridTemplateColumns: gridCols }}
               >
                 <span className={cellBase}>{row.place}</span>
@@ -208,7 +208,7 @@ export function Premises() {
               </div>
 
               {/* Mobile row */}
-              <div className="lg:hidden flex flex-col gap-1 py-4">
+              <div className="min-[1470px]:hidden flex flex-col gap-1 py-4">
                 <span className={`${cellBase} font-medium`}>{row.place}</span>
                 <div className="flex gap-6 flex-wrap">
                   <span className="font-sans text-[13px] text-black/50 dark:text-white/50">
