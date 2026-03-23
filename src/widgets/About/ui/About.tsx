@@ -9,10 +9,10 @@ export function About() {
           className="w-full"
           style={{ height: "1px", backgroundColor: "#979797" }}
         />
-        <div className="flex flex-col xl:flex-row">
+        <div className="flex flex-col lg:flex-row">
           {/* Block 1 — heading */}
           <div
-            className="pt-10.5 xl:w-142.5 xl:shrink-0"
+            className="pt-10.5 lg:w-143 lg:shrink-0"
           >
             <p
               className="font-(family-name:--font-pt-mono) font-normal uppercase text-black dark:text-white whitespace-pre-line"
@@ -23,7 +23,7 @@ export function About() {
           </div>
 
           {/* Right column — block 2 + block 3 */}
-          <div className="about-right-col flex flex-col justify-between mt-10 xl:mt-0 xl:pt-12.25">
+          <div className="about-right-col flex flex-col justify-between mt-10 lg:mt-0 lg:pt-12.25">
             {/* Block 2 — description */}
             <p
               className="font-(family-name:--font-pt-mono) font-normal text-black dark:text-white whitespace-pre-line"

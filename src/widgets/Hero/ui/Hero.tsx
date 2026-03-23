@@ -62,7 +62,7 @@ export function Hero() {
       </div>
 
       {/* Hero content */}
-      <div className="relative z-20 mt-47.5 px-4 lg:px-0 lg:absolute lg:mt-0 lg:top-[max(18.96vw,364px)] lg:right-[7.8125vw]">
+      <div className="relative z-20 mt-47.5 px-4 lg:px-0 lg:absolute lg:mt-0 lg:top-91 lg:right-37.5">
         <div className="font-(family-name:--font-pt-mono) text-[27px] leading-9 font-medium uppercase whitespace-pre-wrap lg:whitespace-pre text-black dark:text-white">
           Формируем места,{"\n"}где эстетика, инфраструктура{"\n"}и предпринимательство{"\n"}соединяются в единую городскую{"\n"}среду.
         </div>
