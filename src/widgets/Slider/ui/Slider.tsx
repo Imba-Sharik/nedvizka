@@ -32,7 +32,7 @@ export function Slider() {
   }, [api]);
 
   return (
-    <section>
+    <section className="mt-15">
       <Container>
         <Carousel opts={{ loop: true }} setApi={setApi}>
           <div className="relative overflow-hidden rounded-[10px]">
