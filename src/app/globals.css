@@ -167,11 +167,10 @@ html::-webkit-scrollbar {
 
 
 
-/* About section: fluid margin on right column, only on xl+ */
-@media (min-width: 1280px) {
-  .about-right-col {
-    margin-left: clamp(0px, calc((100vw - 1280px) * 1.072), 686px);
-  }
+/* Base 3-column grid — shared by Cards, Gallery, and 2-col sections (col-span-2 + col-span-1) */
+@utility section-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 @layer base {

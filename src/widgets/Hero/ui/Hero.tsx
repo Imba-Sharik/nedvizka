@@ -1,6 +1,6 @@
 export function Hero() {
   return (
-    <section className="pb-16 lg:pb-0 lg:h-157.5">
+    <section className="pb-16 lg:pb-0 relative lg:h-[clamp(480px,44vw,630px)]">
 
       {/* Lines group — above gradient */}
       <div
@@ -62,16 +62,19 @@ export function Hero() {
       </div>
 
       {/* Hero content */}
-      <div className="relative z-20 mt-47.5 px-4 lg:px-0 lg:absolute lg:mt-0 lg:top-91 lg:right-37.5">
-        <div className="font-(family-name:--font-pt-mono) text-[27px] leading-9 font-medium uppercase whitespace-pre-wrap lg:whitespace-pre text-black dark:text-white">
-          Формируем места,{"\n"}где эстетика, инфраструктура{"\n"}и предпринимательство{"\n"}соединяются в единую городскую{"\n"}среду.
+      <div className="relative z-20 mt-47.5 px-4 lg:mt-0 lg:px-6.5 lg:absolute lg:top-[45.6%] lg:left-0 lg:right-0 lg:section-cols lg:gap-5">
+        <div className="hidden lg:block lg:col-span-2" /> {/* left spacer */}
+        <div className="lg:col-span-1">
+          <div className="font-(family-name:--font-pt-mono) text-[27px] leading-9 font-medium uppercase whitespace-pre-line lg:whitespace-pre lg:text-[clamp(14px,1.7vw,27px)] lg:leading-[1.35] text-black dark:text-white">
+            Формируем места,{"\n"}где эстетика, инфраструктура{"\n"}и предпринимательство{"\n"}соединяются в единую городскую{"\n"}среду.
+          </div>
+          <a
+            href="#"
+            className="block mt-9.5 opacity-40 dark:opacity-[0.37] font-sans text-[14px] leading-3.75 font-normal no-underline whitespace-pre text-black dark:text-white"
+          >
+            Забронировать{"\n"}площадь →
+          </a>
         </div>
-        <a
-          href="#"
-          className="block mt-9.5 opacity-40 dark:opacity-[0.37] font-sans text-[14px] leading-3.75 font-normal no-underline whitespace-pre text-black dark:text-white"
-        >
-          Забронировать{"\n"}площадь →
-        </a>
       </div>
     </section>
   );

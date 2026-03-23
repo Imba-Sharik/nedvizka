@@ -1,128 +1,91 @@
+"use client";
+
+import { useState } from "react";
 import { Container } from "@/shared/ui";
 
-const premises = [
-  {
-    place: "МЕТМАШ",
-    lot: "0117-54",
-    area: "300 м²",
-    type: "Нежилое помещение",
-    price: "100200₽",
-    status: "Забронировано",
-  },
-  {
-    place: "Парк-музей Коломенское",
-    lot: "0117-54",
-    area: "300 м²",
-    type: "Нежилое помещение",
-    price: "100200₽",
-    status: "Свободно",
-  },
-  {
-    place: "МЕТМАШ",
-    lot: "0117-54",
-    area: "300 м²",
-    type: "Нежилое помещение",
-    price: "100200₽",
-    status: "Забронировано",
-  },
-  {
-    place: "МЕТМАШ",
-    lot: "0117-54",
-    area: "300 м²",
-    type: "Нежилое помещение",
-    price: "100200₽",
-    status: "Забронировано",
-  },
-  {
-    place: "Парк-музей Коломенское",
-    lot: "0117-54",
-    area: "300 м²",
-    type: "Нежилое помещение",
-    price: "100200₽",
-    status: "Забронировано",
-  },
-  {
-    place: "МЕТМАШ",
-    lot: "0117-54",
-    area: "300 м²",
-    type: "Нежилое помещение",
-    price: "100200₽",
-    status: "Забронировано",
-  },
-  {
-    place: "ДК Серп и Молот",
-    lot: "0117-54",
-    area: "300 м²",
-    type: "Нежилое помещение",
-    price: "100200₽",
-    status: "Забронировано",
-  },
-  {
-    place: "ДK Серп и Молот",
-    lot: "0117-54",
-    area: "300 м²",
-    type: "Нежилое помещение",
-    price: "100200₽",
-    status: "Свободно",
-  },
-  {
-    place: "ДK Серп и Молот",
-    lot: "0117-54",
-    area: "300 м²",
-    type: "Нежилое помещение",
-    price: "100200₽",
-    status: "Забронировано",
-  },
-  {
-    place: "Парк-музей Коломенское",
-    lot: "0117-54",
-    area: "300 м²",
-    type: "Нежилое помещение",
-    price: "100200₽",
-    status: "Забронировано",
-  },
-  {
-    place: "ДK Серп и Молот",
-    lot: "0117-54",
-    area: "300 м²",
-    type: "Нежилое помещение",
-    price: "100200₽",
-    status: "Забронировано",
-  },
-  {
-    place: "Парк-музей Коломенское",
-    lot: "0117-54",
-    area: "300 м²",
-    type: "Нежилое помещение",
-    price: "100200₽",
-    status: "Забронировано",
-  },
+interface Premise {
+  place: string;
+  lot: string;
+  area: number;
+  type: string;
+  price: number;
+  status: "Забронировано" | "Свободно";
+}
+
+const premises: Premise[] = [
+  { place: "МЕТМАШ", lot: "0117-54", area: 300, type: "Нежилое помещение", price: 100200, status: "Забронировано" },
+  { place: "Парк-музей Коломенское", lot: "0117-54", area: 300, type: "Нежилое помещение", price: 100200, status: "Свободно" },
+  { place: "МЕТМАШ", lot: "0117-54", area: 300, type: "Нежилое помещение", price: 100200, status: "Забронировано" },
+  { place: "МЕТМАШ", lot: "0117-54", area: 300, type: "Нежилое помещение", price: 100200, status: "Забронировано" },
+  { place: "Парк-музей Коломенское", lot: "0117-54", area: 300, type: "Нежилое помещение", price: 100200, status: "Забронировано" },
+  { place: "МЕТМАШ", lot: "0117-54", area: 300, type: "Нежилое помещение", price: 100200, status: "Забронировано" },
+  { place: "ДК Серп и Молот", lot: "0117-54", area: 300, type: "Нежилое помещение", price: 100200, status: "Забронировано" },
+  { place: "ДK Серп и Молот", lot: "0117-54", area: 300, type: "Нежилое помещение", price: 100200, status: "Свободно" },
+  { place: "ДK Серп и Молот", lot: "0117-54", area: 300, type: "Нежилое помещение", price: 100200, status: "Забронировано" },
+  { place: "Парк-музей Коломенское", lot: "0117-54", area: 300, type: "Нежилое помещение", price: 100200, status: "Забронировано" },
+  { place: "ДK Серп и Молот", lot: "0117-54", area: 300, type: "Нежилое помещение", price: 100200, status: "Забронировано" },
+  { place: "Парк-музей Коломенское", lot: "0117-54", area: 300, type: "Нежилое помещение", price: 100200, status: "Забронировано" },
 ];
 
 const gridCols = "3.4fr 1fr 1.2fr 2.7fr 1fr 1.5fr 1.5fr";
 
-const pill = (value: string) => (
-  <div
-    key={value}
-    className="relative flex items-center justify-center font-sans text-[14px] font-medium leading-4.25 text-white rounded-[68px] overflow-hidden"
-    style={{ width: 69, height: 39 }}
-  >
-    <div
-      className="absolute inset-0"
-      style={{
-        background: "rgba(0,0,0,0.41)",
-        backdropFilter: "blur(22px)",
-        opacity: 0.3,
-      }}
-    />
-    <span className="relative">{value}</span>
-  </div>
-);
-
 const cellBase =
   "font-(family-name:--font-pt-mono) font-normal text-[20px] leading-4.75 text-[#0c0c0c] dark:text-white";
 
+function FilterPill({
+  value,
+  placeholder,
+  onChange,
+}: {
+  value: string;
+  placeholder: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div
+      className="relative flex items-center justify-center rounded-[68px] overflow-hidden"
+      style={{ width: 69, height: 39 }}
+    >
+      <div
+        className="absolute inset-0 bg-[rgba(0,0,0,0.41)] dark:bg-[rgba(255,255,255,0.41)]"
+        style={{
+          backdropFilter: "blur(22px)",
+          opacity: 0.3,
+        }}
+      />
+      <input
+        type="number"
+        value={value}
+        placeholder={placeholder}
+        onChange={(e) => onChange(e.target.value)}
+        className="relative w-full h-full bg-transparent text-center font-sans text-[14px] font-medium leading-4.25 text-black dark:text-black placeholder:text-white/80 border-0 outline-none appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+      />
+    </div>
+  );
+}
+
+const fmt = (n: number) => n + "₽";
+
 export function Premises() {
+  const [priceFrom, setPriceFrom] = useState("");
+  const [priceTo, setPriceTo] = useState("");
+  const [areaFrom, setAreaFrom] = useState("");
+  const [areaTo, setAreaTo] = useState("");
+  const [filtered, setFiltered] = useState<Premise[]>(premises);
+
+  const handleFilter = () => {
+    const pf = priceFrom ? Number(priceFrom) : 0;
+    const pt = priceTo ? Number(priceTo) : Infinity;
+    const af = areaFrom ? Number(areaFrom) : 0;
+    const at = areaTo ? Number(areaTo) : Infinity;
+
+    setFiltered(
+      premises.filter(
+        (r) => r.price >= pf && r.price <= pt && r.area >= af && r.area <= at,
+      ),
+    );
+  };
+
   return (
     <section className="mt-52">
       <Container className="py-20 lg:py-32">
@@ -141,18 +104,19 @@ export function Premises() {
               <span className="font-sans text-[14px] font-medium leading-4.25 text-black dark:text-white">
                 Цена
               </span>
-              {pill("0")}
-              {pill("1000")}
+              <FilterPill value={priceFrom} placeholder="0" onChange={setPriceFrom} />
+              <FilterPill value={priceTo} placeholder="1000" onChange={setPriceTo} />
             </div>
             <div className="flex items-center gap-2.25">
               <span className="font-sans text-[14px] font-medium leading-4.25 text-black dark:text-white">
                 Площадь
               </span>
-              {pill("100")}
-              {pill("150")}
+              <FilterPill value={areaFrom} placeholder="100" onChange={setAreaFrom} />
+              <FilterPill value={areaTo} placeholder="150" onChange={setAreaTo} />
             </div>
             <button
-              className="font-sans text-[14px] font-medium leading-4.25 text-black bg-white dark:bg-white dark:text-black rounded-[68px] px-6"
+              onClick={handleFilter}
+              className="font-sans text-[14px] font-medium leading-4.25 text-black bg-white dark:bg-white dark:text-black rounded-[68px] px-6 cursor-pointer"
               style={{ height: 39 }}
             >
               Показать
@@ -181,7 +145,7 @@ export function Premises() {
           </div>
 
           {/* Rows */}
-          {premises.map((row, i) => (
+          {filtered.map((row, i) => (
             <div key={i}>
               <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
               <div
@@ -190,9 +154,9 @@ export function Premises() {
               >
                 <span className={cellBase}>{row.place}</span>
                 <span className={cellBase}>{row.lot}</span>
-                <span className={cellBase}>{row.area}</span>
+                <span className={cellBase}>{row.area} м²</span>
                 <span className={cellBase}>{row.type}</span>
-                <span className={cellBase}>{row.price}</span>
+                <span className={cellBase}>{fmt(row.price)}</span>
                 <span
                   className={`font-(family-name:--font-pt-mono) font-normal text-[20px] leading-4.75 ${
                     row.status === "Забронировано"
@@ -209,16 +173,21 @@ export function Premises() {
 
               {/* Mobile row */}
               <div className="min-[1470px]:hidden flex flex-col gap-1 py-4">
-                <span className={`${cellBase} font-medium`}>{row.place}</span>
+                <div className="flex items-center justify-between">
+                  <span className={`${cellBase} font-medium`}>{row.place}</span>
+                  <button className="font-sans text-[13px] font-medium text-black/50 dark:text-white/50 whitespace-nowrap">
+                    Оставь заявку
+                  </button>
+                </div>
                 <div className="flex gap-6 flex-wrap">
                   <span className="font-sans text-[13px] text-black/50 dark:text-white/50">
                     {row.lot}
                   </span>
                   <span className="font-sans text-[13px] text-black/50 dark:text-white/50">
-                    {row.area}
+                    {row.area} м²
                   </span>
                   <span className="font-sans text-[13px] text-black/50 dark:text-white/50">
-                    {row.price}
+                    {fmt(row.price)}
                   </span>
                   <span className="font-sans text-[13px] text-black/50 dark:text-white/50">
                     {row.status}
@@ -227,6 +196,12 @@ export function Premises() {
               </div>
             </div>
           ))}
+
+          {filtered.length === 0 && (
+            <div className="py-12 text-center font-sans text-[16px] text-black/50 dark:text-white/50">
+              Помещения не найдены
+            </div>
+          )}
 
           {/* Bottom divider */}
           <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />

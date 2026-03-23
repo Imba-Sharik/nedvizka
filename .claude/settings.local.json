@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__memory-bank__memory_bank_write",
+      "mcp__memory-bank__memory_bank_read",
+      "Bash(npm install:*)",
+      "mcp__memory-bank__memory_bank_update"
+    ]
+  }
+}

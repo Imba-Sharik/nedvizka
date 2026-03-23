@@ -3,9 +3,39 @@ import { Container } from "@/shared/ui";
 export function Quote() {
   return (
     <section>
-      <Container className="py-20 lg:py-32">
-        {/* TODO: Текстовая секция / цитата */}
-        <div className="w-full min-h-[300px] bg-neutral-100 dark:bg-neutral-900" />
+      <Container className="pb-20 lg:pb-32">
+        {/* Divider */}
+        <div
+          className="w-full"
+          style={{ height: "1px", borderTop: "1px solid rgba(151,151,151,1)", opacity: 0.41 }}
+        />
+        <div className="flex flex-col lg:section-cols lg:gap-5 pt-7">
+          {/* Col 1 — label */}
+          <p className="font-sans text-[14px] font-medium text-black dark:text-white lg:col-span-1">
+            VSF
+          </p>
+
+          {/* Spacer — col 2 */}
+          <div className="hidden lg:block lg:col-span-1" />
+
+          {/* Col 3 — quote text */}
+          <div className="mt-6 lg:mt-0 lg:col-span-1">
+            <p
+              className="font-sans font-normal text-black dark:text-white"
+              style={{ fontSize: "clamp(13px,1.25vw,18px)", lineHeight: "1.33" }}
+            >
+              Not quite glass. Not quite resin. Liquid glass is a rare, optical-grade material with the
+              clarity of crystal and the flow of molten light.
+            </p>
+            <p
+              className="font-sans font-normal text-black dark:text-white mt-6"
+              style={{ fontSize: "clamp(13px,1.25vw,18px)", lineHeight: "1.33" }}
+            >
+              It&apos;s cool to the touch, yet seems to glow from within — bending light, color, and
+              shadow in ever-changing ways.
+            </p>
+          </div>
+        </div>
       </Container>
     </section>
   );

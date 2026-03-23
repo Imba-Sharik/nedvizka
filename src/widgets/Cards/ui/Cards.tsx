@@ -31,9 +31,9 @@ const cards = [
 export function Cards() {
   return (
     <Container className="relative z-20 pb-20 lg:pb-49">
-      <div className="flex flex-col gap-5 lg:flex-row">
+      <div className="grid grid-cols-1 lg:section-cols gap-5">
         {cards.map((card) => (
-          <div key={card.src} style={{ flex: 1 }}>
+          <div key={card.src}>
             {/* Image */}
             <div
               className="relative overflow-hidden rounded-[9px] bg-[rgba(216,216,216,1)]"
