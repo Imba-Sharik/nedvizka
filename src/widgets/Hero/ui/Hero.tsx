@@ -1,4 +1,58 @@
+'use client'
+
+import { useRef, useEffect } from 'react'
+
 export function Hero() {
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const mouse = useRef({ x: 0, y: 0 })
+  const pos = useRef({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const section = wrapperRef.current?.closest('section') as HTMLElement | null
+    if (!section) return
+
+    const onMouseMove = (e: MouseEvent) => {
+      const rect = section.getBoundingClientRect()
+      mouse.current = {
+        x: (e.clientX - rect.left - rect.width / 2) * 0.5,
+        y: (e.clientY - rect.top - rect.height / 2) * 0.5,
+      }
+    }
+
+    section.addEventListener('mousemove', onMouseMove)
+
+    const isTouchDevice = window.matchMedia('(hover: none)').matches
+    if (isTouchDevice) {
+      if (wrapperRef.current) {
+        wrapperRef.current.style.opacity = '1'
+        wrapperRef.current.classList.add('gradient-mobile-drift')
+      }
+      return () => section.removeEventListener('mousemove', onMouseMove)
+    }
+
+    let rafId: number
+    const tick = () => {
+      pos.current.x += (mouse.current.x - pos.current.x) * 0.07
+      pos.current.y += (mouse.current.y - pos.current.y) * 0.07
+
+      if (wrapperRef.current) {
+        const clamp = (v: number, max: number) => Math.max(-max, Math.min(max, v))
+        const dx = clamp(pos.current.x, 160)
+        const dy = clamp(pos.current.y, 120)
+        wrapperRef.current.style.transform = `translateX(calc(-50% + ${dx}px)) translateY(${dy}px)`
+        wrapperRef.current.style.opacity = '1'
+      }
+
+      rafId = requestAnimationFrame(tick)
+    }
+    rafId = requestAnimationFrame(tick)
+
+    return () => {
+      section.removeEventListener('mousemove', onMouseMove)
+      cancelAnimationFrame(rafId)
+    }
+  }, [])
+
   return (
     <section className="pb-16 md:pb-0 relative md:h-[clamp(480px,44vw,630px)]">
 
@@ -56,8 +110,12 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Gradient blur */}
-      <div className="absolute top-30 left-1/2 -translate-x-1/2 pointer-events-none z-0">
+      {/* Gradient blur — mouse following wrapper + CSS rotation inside */}
+      <div
+        ref={wrapperRef}
+        className="absolute top-4 lg:top-20 left-1/2 lg:left-1/2 pointer-events-none z-0"
+        style={{ willChange: 'transform', opacity: 0, transition: 'opacity 0.4s ease' }}
+      >
         <div className="gradient-blur" />
       </div>
 
@@ -72,7 +130,7 @@ export function Hero() {
             href="#"
             className="block mt-9.5 opacity-40 dark:opacity-[0.37] font-sans text-[14px] leading-3.75 font-normal no-underline whitespace-pre text-black dark:text-white"
           >
-            Забронировать{"\n"}площадь →
+            Подобрать{"\n"}площадь →
           </a>
         </div>
       </div>

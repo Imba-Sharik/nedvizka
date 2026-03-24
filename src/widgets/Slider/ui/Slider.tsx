@@ -32,7 +32,7 @@ export function Slider() {
   }, [api]);
 
   return (
-    <section className="mt-15">
+    <section style={{ marginTop: 'clamp(40px, 4.2vw, 60px)' }}>
       <Container>
         <Carousel opts={{ loop: true }} setApi={setApi}>
           <div className="relative overflow-hidden rounded-[10px]">

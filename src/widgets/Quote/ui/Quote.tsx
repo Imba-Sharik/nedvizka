@@ -3,7 +3,7 @@ import { Container } from "@/shared/ui";
 export function Quote() {
   return (
     <section>
-      <Container className="pb-20 sm:pb-32">
+      <Container style={{ paddingBottom: 'clamp(80px, 8.9vw, 128px)' }}>
         {/* Divider */}
         <div
           className="w-full"

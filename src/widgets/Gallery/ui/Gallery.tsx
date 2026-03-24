@@ -11,8 +11,8 @@ const images: { src: string; alt: string; col: string; row: number }[] = [
 
 export function Gallery() {
   return (
-    <section className="mt-9">
-      <Container className="py-20 lg:py-32">
+    <section style={{ marginTop: 'clamp(20px, 2.5vw, 36px)' }}>
+      <Container style={{ paddingTop: 'clamp(80px, 8.9vw, 128px)', paddingBottom: 'clamp(80px, 8.9vw, 128px)' }}>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {images.map(({ src, alt, col, row }) => (
             <div

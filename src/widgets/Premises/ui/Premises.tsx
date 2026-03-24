@@ -30,7 +30,7 @@ const premises: Premise[] = [
 const gridCols = "3.4fr 1fr 1.2fr 2.7fr 1fr 1.5fr 1.5fr";
 
 const cellBase =
-  "font-(family-name:--font-pt-mono) font-normal text-[20px] leading-4.75 text-[#0c0c0c] dark:text-white";
+  "font-(family-name:--font-pt-mono) font-normal leading-4.75 text-[#0c0c0c] dark:text-white";
 
 function FilterPill({
   value,
@@ -58,7 +58,7 @@ function FilterPill({
         value={value}
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
-        className="relative w-full h-full bg-transparent text-center font-sans text-[14px] font-medium leading-4.25 text-black dark:text-black placeholder:text-white/80 border-0 outline-none appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+        className="relative w-full h-full bg-transparent text-center font-sans text-[14px] font-medium leading-4.25 text-black dark:text-white placeholder:text-black/50 dark:placeholder:text-white/50 border-0 outline-none appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
       />
     </div>
   );
@@ -87,8 +87,8 @@ export function Premises() {
   };
 
   return (
-    <section className="mt-52">
-      <Container className="py-20 sm:py-32">
+    <section style={{ marginTop: 'clamp(80px, 14.4vw, 208px)' }}>
+      <Container style={{ paddingTop: 'clamp(80px, 8.9vw, 128px)', paddingBottom: 'clamp(80px, 8.9vw, 128px)' }}>
         {/* Title + Filter */}
         <div className="flex flex-col gap-8 min-[1240px]:flex-row min-[1240px]:items-center min-[1240px]:justify-between">
           <h2
@@ -125,87 +125,69 @@ export function Premises() {
         </div>
 
         {/* Table */}
-        <div className="mt-11">
-          {/* Column headers */}
-          <div
-            className="hidden min-[1470px]:grid pb-3"
-            style={{ gridTemplateColumns: gridCols }}
-          >
-            {["Площадка", "Лот", "Площадь", "Тип", "Цена", "Статус", ""].map(
-              (col) => (
-                <span
-                  key={col}
-                  className="font-sans text-[14px] font-medium text-black dark:text-white"
-                  style={{ opacity: 0.44 }}
-                >
-                  {col}
-                </span>
-              ),
-            )}
-          </div>
+        <div className="mt-11 overflow-x-auto">
+          <div style={{ minWidth: 1350 }}>
+            {/* Column headers */}
+            <div className="grid pb-3" style={{ gridTemplateColumns: gridCols }}>
+              {["Площадка", "Лот", "Площадь", "Тип", "Цена", "Статус", ""].map(
+                (col) => (
+                  <span
+                    key={col}
+                    className="font-sans font-medium text-black dark:text-white"
+                    style={{ opacity: 0.44, fontSize: 14 }}
+                  >
+                    {col}
+                  </span>
+                ),
+              )}
+            </div>
 
-          {/* Rows */}
-          {filtered.map((row, i) => (
-            <div key={i}>
-              <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
-              <div
-                className="hidden min-[1470px]:grid items-center py-5.5"
-                style={{ gridTemplateColumns: gridCols }}
-              >
-                <span className={cellBase}>{row.place}</span>
-                <span className={cellBase}>{row.lot}</span>
-                <span className={cellBase}>{row.area} м²</span>
-                <span className={cellBase}>{row.type}</span>
-                <span className={cellBase}>{fmt(row.price)}</span>
-                <span
-                  className={`font-(family-name:--font-pt-mono) font-normal text-[20px] leading-4.75 ${
-                    row.status === "Забронировано"
-                      ? "text-[#0c0c0c] dark:text-[#FF824A]"
-                      : "text-[#0c0c0c] dark:text-[#E5FF82]"
-                  }`}
+            {/* Rows */}
+            {filtered.map((row, i) => (
+              <div key={i}>
+                <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
+                <div
+                  className="grid items-center py-5.5"
+                  style={{ gridTemplateColumns: gridCols, fontSize: 20 }}
                 >
-                  {row.status}
-                </span>
-                <button className={`${cellBase} text-right whitespace-nowrap`}>
-                  Оставь заявку
-                </button>
-              </div>
-
-              {/* Mobile row */}
-              <div className="min-[1470px]:hidden flex flex-col gap-1 py-4">
-                <div className="flex items-center justify-between">
-                  <span className={`${cellBase} font-medium`}>{row.place}</span>
-                  <button className="font-sans text-[13px] font-medium text-black/50 dark:text-white/50 whitespace-nowrap">
+                  <span className={cellBase}>{row.place}</span>
+                  <span className={cellBase}>{row.lot}</span>
+                  <span className={cellBase}>{row.area} м²</span>
+                  <span className={cellBase}>{row.type}</span>
+                  <span className={cellBase}>{fmt(row.price)}</span>
+                  <span
+                    className={`font-(family-name:--font-pt-mono) font-normal leading-4.75 ${
+                      row.status === "Забронировано"
+                        ? "text-[#0c0c0c] dark:text-[#FF824A]"
+                        : "text-[#0c0c0c] dark:text-[#E5FF82]"
+                    }`}
+                  >
+                    {row.status}
+                  </span>
+                  <button className={`${cellBase} text-right whitespace-nowrap`}>
                     Оставь заявку
                   </button>
                 </div>
-                <div className="flex gap-6 flex-wrap">
-                  <span className="font-sans text-[13px] text-black/50 dark:text-white/50">
-                    {row.lot}
-                  </span>
-                  <span className="font-sans text-[13px] text-black/50 dark:text-white/50">
-                    {row.area} м²
-                  </span>
-                  <span className="font-sans text-[13px] text-black/50 dark:text-white/50">
-                    {fmt(row.price)}
-                  </span>
-                  <span className="font-sans text-[13px] text-black/50 dark:text-white/50">
-                    {row.status}
-                  </span>
-                </div>
               </div>
-            </div>
-          ))}
+            ))}
 
-          {filtered.length === 0 && (
-            <div className="py-12 text-center font-sans text-[16px] text-black/50 dark:text-white/50">
-              Помещения не найдены
-            </div>
-          )}
+            {filtered.length === 0 && (
+              <div className="py-12 text-center font-sans text-[16px] text-black/50 dark:text-white/50">
+                Помещения не найдены
+              </div>
+            )}
 
-          {/* Bottom divider */}
-          <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
+            {/* Bottom divider */}
+            <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
+          </div>
         </div>
+
+        <a
+          href="#"
+          className="block mt-9.5 opacity-40 dark:opacity-[0.37] font-sans text-[20px] leading-3.75 font-normal no-underline text-black dark:text-white"
+        >
+          Показать все
+        </a>
       </Container>
     </section>
   );

@@ -151,18 +151,44 @@ html::-webkit-scrollbar {
   }
 }
 
+@keyframes gradient-mobile-side {
+  from { transform: translateX(calc(-50% - 12vw)); }
+  to   { transform: translateX(calc(-50% + 12vw)); }
+}
+
+.gradient-mobile-drift {
+  animation: gradient-mobile-side 1.5s ease-in-out alternate infinite;
+}
+
+@keyframes gradient-breathe {
+  from { scale: 0.9; opacity: 0.32; }
+  to   { scale: 1.1; opacity: 0.42; }
+}
+
 .gradient-blur {
-  --size: 500px;
-  --speed: 50s;
+  --size: 280px;
+  --speed: 10s;
   --easing: cubic-bezier(0.8, 0.2, 0.2, 0.8);
 
   width: var(--size);
   height: var(--size);
-  opacity: 0.22;
-  filter: blur(100px);
+  filter: blur(45px);
   background-image: conic-gradient(hsl(222, 84%, 60%), hsl(164, 79%, 71%), hsl(200, 80%, 65%), hsl(222, 84%, 60%));
-  animation: gradient-rotate var(--speed) var(--easing) alternate infinite;
   border-radius: 50%;
+  animation:
+    gradient-rotate var(--speed) var(--easing) alternate infinite,
+    gradient-breathe 9s ease-in-out alternate infinite;
+}
+
+@media (min-width: 1024px) {
+  .gradient-blur {
+    --size: 560px;
+    filter: blur(80px);
+  }
+
+  .dark .gradient-blur {
+    filter: blur(75px);
+  }
 }
 
 
