@@ -12,14 +12,14 @@ export function Header() {
   };
 
   return (
-    <header className="relative flex items-center justify-between py-4 px-4 lg:py-5.75 lg:pl-6.5 lg:pr-6.5 lg:section-cols lg:gap-5 lg:items-center lg:justify-normal">
-      <span className="text-[22px] lg:text-[26px] font-medium leading-7.75 text-page-text lg:col-span-2 lg:self-center">
+    <header className="relative flex items-center justify-between py-4 px-4 md:py-5.75 md:pl-6.5 md:pr-6.5 md:section-cols md:gap-5 md:items-center md:justify-normal">
+      <span className="text-[22px] md:text-[26px] font-medium leading-7.75 text-page-text md:col-span-2 md:self-center">
         Недвижка
       </span>
 
       {/* Desktop nav */}
-      <nav className="hidden lg:flex items-center justify-between lg:col-span-1">
-        <p className="text-[clamp(10px,0.97vw,14px)] font-medium leading-4.25 opacity-[0.82] text-page-text">
+      <nav className="hidden md:flex items-center justify-between md:col-span-1">
+        <p className="text-[clamp(8px,0.97vw,14px)] font-medium leading-4.25 opacity-[0.82] text-page-text">
           Все площадки
         </p>
 
@@ -57,11 +57,11 @@ export function Header() {
             </svg>
           </button>
 
-          <p className="text-[clamp(10px,0.97vw,14px)] font-medium leading-4.25 opacity-[0.82] text-page-text">
+          <p className="text-[clamp(8px,0.97vw,14px)] font-medium leading-4.25 opacity-[0.82] text-page-text">
             +7 495 120-19-05
           </p>
 
-          <button className="px-[clamp(8px,0.83vw,12px)] h-[clamp(22px,2.1vw,30px)] rounded-[7px] bg-white dark:bg-white/10 opacity-[0.82] text-[clamp(10px,0.97vw,14px)] font-medium text-page-text">
+          <button className="px-[clamp(8px,0.83vw,12px)] h-[clamp(26px,2.1vw,30px)] rounded-[7px] bg-white dark:bg-white/10 opacity-[0.82] text-[clamp(8px,0.97vw,14px)] font-medium text-page-text">
             Оставить заявку
           </button>
         </div>
@@ -69,7 +69,7 @@ export function Header() {
 
       {/* Mobile menu button */}
       <button
-        className="lg:hidden text-[14px] font-medium uppercase tracking-wide text-page-text opacity-[0.82]"
+        className="md:hidden text-[14px] font-medium uppercase tracking-wide text-page-text opacity-[0.82]"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
       >
         {isMenuOpen ? "Закрыть" : "Menu"}
@@ -77,7 +77,7 @@ export function Header() {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-background shadow-md p-4 flex flex-col gap-4 lg:hidden z-50">
+        <div className="absolute top-full left-0 right-0 bg-background shadow-md p-4 flex flex-col gap-4 md:hidden z-50">
           <p className="text-[14px] font-medium leading-4.25 opacity-[0.82] text-page-text">
             Все площадки
           </p>

@@ -3,23 +3,23 @@ import { Container } from "@/shared/ui";
 export function Quote() {
   return (
     <section>
-      <Container className="pb-20 lg:pb-32">
+      <Container className="pb-20 sm:pb-32">
         {/* Divider */}
         <div
           className="w-full"
           style={{ height: "1px", borderTop: "1px solid rgba(151,151,151,1)", opacity: 0.41 }}
         />
-        <div className="flex flex-col lg:section-cols lg:gap-5 pt-7">
+        <div className="flex flex-col sm:section-cols sm:gap-5 pt-7">
           {/* Col 1 — label */}
-          <p className="font-sans text-[14px] font-medium text-black dark:text-white lg:col-span-1">
+          <p className="font-sans text-[14px] font-medium text-black dark:text-white sm:col-span-1">
             VSF
           </p>
 
           {/* Spacer — col 2 */}
-          <div className="hidden lg:block lg:col-span-1" />
+          <div className="hidden sm:block sm:col-span-1" />
 
           {/* Col 3 — quote text */}
-          <div className="mt-6 lg:mt-0 lg:col-span-1">
+          <div className="mt-6 sm:mt-0 sm:col-span-1">
             <p
               className="font-sans font-normal text-black dark:text-white"
               style={{ fontSize: "clamp(13px,1.25vw,18px)", lineHeight: "1.33" }}

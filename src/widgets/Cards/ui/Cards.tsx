@@ -30,8 +30,8 @@ const cards = [
 
 export function Cards() {
   return (
-    <Container className="relative z-20 pb-20 lg:pb-49">
-      <div className="grid grid-cols-1 lg:section-cols gap-5">
+    <Container className="relative z-20 pb-20 sm:pb-49">
+      <div className="grid grid-cols-1 sm:section-cols gap-5">
         {cards.map((card) => (
           <div key={card.src}>
             {/* Image */}
@@ -53,12 +53,12 @@ export function Cards() {
             <div className="flex items-start justify-between mt-4.25">
               {/* Title + description */}
               <div>
-                <span className="font-(family-name:--font-pt-mono) text-[24px] leading-7.25 font-normal uppercase text-black dark:text-white">
+                <span className="font-(family-name:--font-pt-mono) font-normal uppercase text-black dark:text-white" style={{ fontSize: "clamp(18px,1.2vw,24px)", lineHeight: "1.3" }}>
                   {card.name}
                 </span>
                 <p
-                  className="mt-3 font-sans text-[15px] font-medium leading-4.75 text-black dark:text-white opacity-[0.37]"
-                  style={{ maxWidth: card.descriptionWidth }}
+                  className="mt-3 font-sans font-medium text-black dark:text-white opacity-[0.37]"
+                  style={{ fontSize: "clamp(13px,0.75vw,15px)", lineHeight: "1.33", maxWidth: `clamp(${Math.round(card.descriptionWidth * 0.6)}px,${(card.descriptionWidth / 2000 * 100).toFixed(2)}vw,${card.descriptionWidth}px)` }}
                 >
                   {card.description}
                 </p>

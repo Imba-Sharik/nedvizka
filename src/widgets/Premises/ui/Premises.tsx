@@ -88,12 +88,12 @@ export function Premises() {
 
   return (
     <section className="mt-52">
-      <Container className="py-20 lg:py-32">
+      <Container className="py-20 sm:py-32">
         {/* Title + Filter */}
         <div className="flex flex-col gap-8 min-[1240px]:flex-row min-[1240px]:items-center min-[1240px]:justify-between">
           <h2
             className="font-(family-name:--font-pt-mono) font-normal uppercase text-black dark:text-white shrink-0"
-            style={{ fontSize: "53px", lineHeight: "56px" }}
+            style={{ fontSize: "clamp(28px,2.65vw,53px)", lineHeight: "1.06" }}
           >
             Доступные помещения
           </h2>

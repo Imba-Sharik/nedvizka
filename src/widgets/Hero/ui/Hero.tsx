@@ -1,6 +1,6 @@
 export function Hero() {
   return (
-    <section className="pb-16 lg:pb-0 relative lg:h-[clamp(480px,44vw,630px)]">
+    <section className="pb-16 md:pb-0 relative md:h-[clamp(480px,44vw,630px)]">
 
       {/* Lines group — above gradient */}
       <div
@@ -62,10 +62,10 @@ export function Hero() {
       </div>
 
       {/* Hero content */}
-      <div className="relative z-20 mt-47.5 px-4 lg:mt-0 lg:px-6.5 lg:absolute lg:top-[45.6%] lg:left-0 lg:right-0 lg:section-cols lg:gap-5">
-        <div className="hidden lg:block lg:col-span-2" /> {/* left spacer */}
-        <div className="lg:col-span-1">
-          <div className="font-(family-name:--font-pt-mono) text-[27px] leading-9 font-medium uppercase whitespace-pre-line lg:whitespace-pre lg:text-[clamp(14px,1.7vw,27px)] lg:leading-[1.35] text-black dark:text-white">
+      <div className="relative z-20 mt-20 px-4 md:mt-0 md:px-6.5 md:absolute md:top-[45.6%] md:left-0 md:right-0 md:section-cols md:gap-5">
+        <div className="hidden md:block md:col-span-2" /> {/* left spacer */}
+        <div className="md:col-span-1">
+          <div className="font-(family-name:--font-pt-mono) font-medium uppercase whitespace-pre-line md:whitespace-pre text-black dark:text-white text-[20px] md:text-[clamp(12px,1.7vw,27px)] leading-[1.35]">
             Формируем места,{"\n"}где эстетика, инфраструктура{"\n"}и предпринимательство{"\n"}соединяются в единую городскую{"\n"}среду.
           </div>
           <a
