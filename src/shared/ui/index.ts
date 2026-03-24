@@ -9,6 +9,7 @@ export {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "./dropdown-menu";
+export { CustomCursor } from "./custom-cursor";
 export {
   Sheet,
   SheetTrigger,

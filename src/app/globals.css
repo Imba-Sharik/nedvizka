@@ -1,4 +1,11 @@
 @import "tailwindcss";
+
+* { cursor: none !important; }
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
