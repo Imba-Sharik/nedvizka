@@ -35,7 +35,7 @@ export function Header() {
         {/* Desktop: Оставить заявку */}
         <button
           className="pointer-events-auto hidden lg:block absolute top-[clamp(16px,1.6vw,23px)] right-6.5 px-[clamp(8px,0.83vw,12px)] h-[clamp(26px,2.1vw,30px)] rounded-[7px] bg-white opacity-[0.82] text-[clamp(8px,0.97vw,14px)] font-medium text-black"
-          style={{ animation: "slideDown 0.5s ease both", animationDelay: "320ms" }}
+          style={{ animation: "slideDown 0.5s ease both" }}
         >
           Оставить заявку
         </button>
@@ -50,11 +50,10 @@ export function Header() {
         )}
       </div>
 
-      <header className="sticky top-0 z-50 mix-blend-exclusion invert flex items-center justify-between py-4 px-4 lg:py-5.75 lg:pl-6.5 lg:pr-6.5 lg:section-cols lg:gap-5 lg:items-center lg:justify-normal">
+      <header className="sticky top-0 z-50 mix-blend-exclusion invert flex items-center justify-between py-4 px-4 lg:py-5.75 lg:pl-6.5 lg:pr-6.5 lg:section-cols lg:gap-5 lg:items-center lg:justify-normal" style={{ animation: "slideDown 0.5s ease both" }}>
         <Link
           href="/"
           className="text-[22px] lg:text-[26px] font-medium leading-7.75 text-black lg:col-span-2 lg:self-center"
-          style={{ animation: "slideDown 0.5s ease both", animationDelay: "0ms" }}
         >
           Недвижка
         </Link>
@@ -64,7 +63,6 @@ export function Header() {
           <DropdownMenu>
             <DropdownMenuTrigger
               className="text-[clamp(8px,0.97vw,14px)] font-medium leading-4.25 opacity-[0.82] text-black outline-none cursor-pointer"
-              style={{ animation: "slideDown 0.5s ease both", animationDelay: "80ms" }}
             >
               Все площадки
             </DropdownMenuTrigger>
@@ -80,7 +78,6 @@ export function Header() {
           <div className="flex items-center" style={{ gap: 'clamp(0px, 1.7vw, 24px)' }}>
             <button
               onClick={toggleTheme}
-              style={{ animation: "slideDown 0.5s ease both", animationDelay: "160ms" }}
               className="w-7.5 h-7.5 flex items-center justify-center rounded-[7px] opacity-[0.82] text-black transition-colors"
               aria-label="Переключить тему"
             >
@@ -90,7 +87,6 @@ export function Header() {
             </button>
             <p
               className="text-[clamp(8px,0.97vw,14px)] font-medium leading-4.25 opacity-[0.82] text-black"
-              style={{ animation: "slideDown 0.5s ease both", animationDelay: "240ms" }}
             >
               +7 495 120-19-05
             </p>
