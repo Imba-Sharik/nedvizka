@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" suppressHydrationWarning>
-      <body className={`${sfProDisplay.variable} ${ptMono.variable} overflow-x-clip antialiased cursor-none`}>
+      <body className={`${sfProDisplay.variable} ${ptMono.variable} overflow-x-clip antialiased lg:cursor-none`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

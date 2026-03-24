@@ -50,7 +50,7 @@ export function CustomCursor() {
   return (
     <div
       ref={dotRef}
-      className="pointer-events-none fixed left-0 top-0 z-9999 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white mix-blend-difference"
+      className="pointer-events-none fixed left-0 top-0 z-9999 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white mix-blend-difference hidden lg:block"
       style={{ width: 12, height: 12, transition: "width 0.2s ease, height 0.2s ease" }}
     />
   );

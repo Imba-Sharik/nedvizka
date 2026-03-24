@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
-* { cursor: none !important; }
+@media (min-width: 1024px) {
+  * { cursor: none !important; }
+}
 
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-12px); }
