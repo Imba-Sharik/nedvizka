@@ -10,6 +10,8 @@ export {
   DropdownMenuItem,
 } from "./dropdown-menu";
 export { CustomCursor } from "./custom-cursor";
+export { Reveal } from "./reveal";
+export { PageTransition } from "./page-transition";
 export {
   Sheet,
   SheetTrigger,

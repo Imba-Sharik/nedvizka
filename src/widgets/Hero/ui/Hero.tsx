@@ -1,20 +1,30 @@
 'use client'
 
 import { useRef, useEffect } from 'react'
+import { Reveal } from '@/shared/ui'
 
 export function Hero() {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const mouse = useRef({ x: 0, y: 0 })
   const pos = useRef({ x: 0, y: 0 })
+  const sectionRect = useRef<DOMRect | null>(null)
 
   useEffect(() => {
     const section = wrapperRef.current?.closest('section') as HTMLElement | null
     if (!section) return
 
+    const ease = (v: number, half: number) => {
+      const t = Math.min(Math.abs(v) / half, 1)
+      const curved = t * t * (3 - 2 * t)
+      return Math.sign(v) * curved * half
+    }
+
     const onMouseMove = (e: MouseEvent) => {
       const rect = section.getBoundingClientRect()
+      sectionRect.current = rect
+      const rawX = e.clientX - rect.left - rect.width / 2
       mouse.current = {
-        x: (e.clientX - rect.left - rect.width / 2) * 0.5,
+        x: ease(rawX, rect.width / 2),
         y: (e.clientY - rect.top - rect.height / 2) * 0.5,
       }
     }
@@ -30,14 +40,16 @@ export function Hero() {
       return () => section.removeEventListener('mousemove', onMouseMove)
     }
 
+    const clamp = (v: number, max: number) => Math.max(-max, Math.min(max, v))
+
     let rafId: number
     const tick = () => {
       pos.current.x += (mouse.current.x - pos.current.x) * 0.07
       pos.current.y += (mouse.current.y - pos.current.y) * 0.07
 
       if (wrapperRef.current) {
-        const clamp = (v: number, max: number) => Math.max(-max, Math.min(max, v))
-        const dx = clamp(pos.current.x, 160)
+        const maxX = sectionRect.current ? sectionRect.current.width / 2 - 280 : 440
+        const dx = clamp(pos.current.x, maxX)
         const dy = clamp(pos.current.y, 120)
         wrapperRef.current.style.transform = `translateX(calc(-50% + ${dx}px)) translateY(${dy}px)`
         wrapperRef.current.style.opacity = '1'
@@ -122,7 +134,7 @@ export function Hero() {
       {/* Hero content */}
       <div className="relative z-20 mt-20 px-4 md:mt-0 md:px-6.5 md:absolute md:top-[45.6%] md:left-0 md:right-0 md:section-cols md:gap-5">
         <div className="hidden md:block md:col-span-2" /> {/* left spacer */}
-        <div className="md:col-span-1">
+        <Reveal className="md:col-span-1" start="top 95%">
           <div className="font-(family-name:--font-pt-mono) font-medium uppercase whitespace-pre-line md:whitespace-pre text-black dark:text-white text-[20px] md:text-[clamp(12px,1.7vw,27px)] leading-[1.35]">
             Формируем места,{"\n"}где эстетика, инфраструктура{"\n"}и предпринимательство{"\n"}соединяются в единую городскую{"\n"}среду.
           </div>
@@ -132,7 +144,7 @@ export function Hero() {
           >
             Подобрать{"\n"}площадь →
           </a>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

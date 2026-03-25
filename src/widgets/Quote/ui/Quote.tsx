@@ -1,4 +1,4 @@
-import { Container } from "@/shared/ui";
+import { Container, Reveal } from "@/shared/ui";
 
 export function Quote() {
   return (
@@ -11,15 +11,17 @@ export function Quote() {
         />
         <div className="flex flex-col sm:section-cols sm:gap-5 pt-7">
           {/* Col 1 — label */}
-          <p className="font-sans text-[14px] font-medium text-black dark:text-white sm:col-span-1">
-            VSF
-          </p>
+          <Reveal className="sm:col-span-1">
+            <p className="font-sans text-[14px] font-medium text-black dark:text-white">
+              VSF
+            </p>
+          </Reveal>
 
           {/* Spacer — col 2 */}
           <div className="hidden sm:block sm:col-span-1" />
 
           {/* Col 3 — quote text */}
-          <div className="mt-6 sm:mt-0 sm:col-span-1">
+          <Reveal delay={0.2} className="mt-6 sm:mt-0 sm:col-span-1">
             <p
               className="font-sans font-normal text-black dark:text-white"
               style={{ fontSize: "clamp(13px,1.25vw,18px)", lineHeight: "1.33" }}
@@ -34,7 +36,7 @@ export function Quote() {
               It&apos;s cool to the touch, yet seems to glow from within — bending light, color, and
               shadow in ever-changing ways.
             </p>
-          </div>
+          </Reveal>
         </div>
       </Container>
     </section>

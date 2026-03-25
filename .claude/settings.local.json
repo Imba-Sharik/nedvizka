@@ -4,7 +4,8 @@
       "mcp__memory-bank__memory_bank_write",
       "mcp__memory-bank__memory_bank_read",
       "Bash(npm install:*)",
-      "mcp__memory-bank__memory_bank_update"
+      "mcp__memory-bank__memory_bank_update",
+      "WebFetch(domain:mariecodina.com)"
     ]
   }
 }

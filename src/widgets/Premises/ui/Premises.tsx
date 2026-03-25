@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Container } from "@/shared/ui";
+import { Container, Reveal } from "@/shared/ui";
 
 interface Premise {
   place: string;
@@ -90,7 +90,7 @@ export function Premises() {
     <section style={{ marginTop: 'clamp(80px, 14.4vw, 208px)' }}>
       <Container style={{ paddingTop: 'clamp(80px, 8.9vw, 128px)', paddingBottom: 'clamp(80px, 8.9vw, 128px)' }}>
         {/* Title + Filter */}
-        <div className="flex flex-col gap-8 min-[1240px]:flex-row min-[1240px]:items-center min-[1240px]:justify-between">
+        <Reveal className="flex flex-col gap-8 min-[1240px]:flex-row min-[1240px]:items-center min-[1240px]:justify-between">
           <h2
             className="font-(family-name:--font-pt-mono) font-normal uppercase text-black dark:text-white shrink-0"
             style={{ fontSize: "clamp(28px,2.65vw,53px)", lineHeight: "1.06" }}
@@ -122,10 +122,10 @@ export function Premises() {
               Показать
             </button>
           </div>
-        </div>
+        </Reveal>
 
         {/* Table */}
-        <div className="mt-11 overflow-x-auto">
+        <Reveal delay={0.15} className="mt-11 overflow-x-auto">
           <div style={{ minWidth: 1350 }}>
             {/* Column headers */}
             <div className="grid pb-3" style={{ gridTemplateColumns: gridCols }}>
@@ -148,7 +148,7 @@ export function Premises() {
                 <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
                 <div
                   className="grid items-center py-5.5"
-                  style={{ gridTemplateColumns: gridCols, fontSize: 20 }}
+                  style={{ gridTemplateColumns: gridCols, fontSize: 16 }}
                 >
                   <span className={cellBase}>{row.place}</span>
                   <span className={cellBase}>{row.lot}</span>
@@ -180,11 +180,11 @@ export function Premises() {
             {/* Bottom divider */}
             <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
           </div>
-        </div>
+        </Reveal>
 
         <a
           href="#"
-          className="block mt-9.5 opacity-40 dark:opacity-[0.37] font-sans text-[20px] leading-3.75 font-normal no-underline text-black dark:text-white"
+          className="block mt-9.5 opacity-40 dark:opacity-[0.37] font-sans text-[16px] leading-3.75 font-normal no-underline text-black dark:text-white"
         >
           Показать все
         </a>

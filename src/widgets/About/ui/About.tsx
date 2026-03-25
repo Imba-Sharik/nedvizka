@@ -1,4 +1,4 @@
-import { Container } from "@/shared/ui";
+import { Container, Reveal } from "@/shared/ui";
 
 export function About() {
   return (
@@ -11,7 +11,7 @@ export function About() {
         />
         <div className="flex flex-col sm:section-cols sm:gap-5">
           {/* Block 1 — heading */}
-          <div className="pt-10.5 sm:col-span-1">
+          <Reveal className="pt-10.5 sm:col-span-1">
             <p
               className="font-(family-name:--font-pt-mono) font-normal uppercase text-black dark:text-white whitespace-pre-line"
               style={{
@@ -21,13 +21,13 @@ export function About() {
             >
               PLACEBO/25{"\n"}СОЗДАЕМ МЕСТА ДЛЯ БИЗНЕСА
             </p>
-          </div>
+          </Reveal>
 
           {/* Spacer — col 2 */}
           <div className="hidden sm:block sm:col-span-1" />
 
           {/* Col 3 — block 2 + block 3 */}
-          <div className="flex flex-col mt-10 sm:mt-0 sm:pt-12.25 sm:col-span-1 sm:self-start min-w-0">
+          <Reveal className="flex flex-col mt-10 sm:mt-0 sm:pt-12.25 sm:col-span-1 sm:self-start min-w-0">
             {/* Block 2 — description */}
             <p
               className="font-(family-name:--font-pt-mono) font-normal text-black dark:text-white whitespace-pre-line wrap-break-word min-w-0 w-full sm:max-w-92.25"
@@ -53,7 +53,7 @@ export function About() {
             >
               {"Москва. Россия\n2015—2026©"}
             </p>
-          </div>
+          </Reveal>
         </div>
       </Container>
     </section>

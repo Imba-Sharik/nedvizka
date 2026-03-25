@@ -1,9 +1,17 @@
+"use client";
+
+import { useRef, useEffect } from "react";
 import Image from "next/image";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Container } from "@/shared/ui";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const cards = [
   {
     src: "/images/Mask3.png",
+    hoverSrc: "/images/Mask6.jpg",
     alt: "Метмаш",
     name: "МЕТМАШ",
     area: "20000 м²",
@@ -12,6 +20,7 @@ const cards = [
   },
   {
     src: "/images/Mask2.png",
+    hoverSrc: "/images/Mask5.jpg",
     alt: "Парк-музей Коломенское",
     name: "ПАРК-МУЗЕЙ КОЛОМЕНСКОЕ",
     area: "20000 м²",
@@ -20,6 +29,7 @@ const cards = [
   },
   {
     src: "/images/Mask.png",
+    hoverSrc: "/images/Mask4.jpg",
     alt: "ДК Серп и Молот",
     name: "ДК СЕРП И МОЛОТ",
     area: "20000 м²",
@@ -28,29 +38,103 @@ const cards = [
   },
 ];
 
+function CardImage({ card }: { card: (typeof cards)[number] }) {
+  const hoverRef = useRef<HTMLImageElement>(null);
+
+  const handleEnter = () => {
+    gsap.set(hoverRef.current, { opacity: 1 });
+  };
+
+  const handleLeave = () => {
+    gsap.set(hoverRef.current, { opacity: 0 });
+  };
+
+  return (
+    <div
+      data-cursor-label="Подробнее"
+      className="relative overflow-hidden rounded-[9px] lg:cursor-none"
+      style={{ aspectRatio: "1 / 1" }}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+    >
+      <div data-card-img className="absolute inset-0">
+        <Image
+          src={card.src}
+          alt={card.alt}
+          fill
+          priority
+          unoptimized
+          className="object-cover"
+        />
+        <img
+          ref={hoverRef}
+          src={card.hoverSrc}
+          alt={card.alt}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0, pointerEvents: "none" }}
+        />
+      </div>
+    </div>
+  );
+}
+
 export function Cards() {
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = gridRef.current;
+    if (!el) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const imgs = el.querySelectorAll<HTMLElement>("[data-card-img]");
+    const metas = el.querySelectorAll<HTMLElement>("[data-card-meta]");
+
+    gsap.set(imgs, {
+      clipPath: "inset(0 0 100% 0)",
+      scale: 0.6,
+    });
+
+    gsap.set(metas, {
+      opacity: 0,
+      y: 20,
+    });
+
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: el, start: "top 80%", once: true },
+    });
+
+    tl.to(imgs, {
+      clipPath: "inset(0 0 0% 0)",
+      scale: 1,
+      duration: 2.8,
+      ease: "expo.out",
+    });
+
+    tl.to(metas, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "expo.out",
+      stagger: 0.1,
+    }, "-=1.8");
+
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => {
+        if (t.trigger === el) t.kill();
+      });
+    };
+  }, []);
+
   return (
     <Container className="relative z-20 pb-20 sm:pb-49">
-      <div className="grid grid-cols-1 sm:section-cols gap-5">
+      <div ref={gridRef} className="grid grid-cols-1 sm:section-cols gap-5">
         {cards.map((card) => (
           <div key={card.src}>
             {/* Image */}
-            <div
-              className="relative overflow-hidden rounded-[9px] bg-[rgba(216,216,216,1)]"
-              style={{ aspectRatio: "1 / 1" }}
-            >
-              <Image
-                src={card.src}
-                alt={card.alt}
-                fill
-                priority
-                unoptimized
-                style={{ objectFit: "cover" }}
-              />
-            </div>
+            <CardImage card={card} />
 
             {/* Meta row */}
-            <div className="flex items-start justify-between mt-4.25">
+            <div data-card-meta className="flex items-start justify-between mt-4.25">
               {/* Title + description */}
               <div>
                 <span className="font-(family-name:--font-pt-mono) font-normal uppercase text-black dark:text-white" style={{ fontSize: "clamp(18px,1.2vw,24px)", lineHeight: "1.3" }}>

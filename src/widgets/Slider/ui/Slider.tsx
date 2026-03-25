@@ -8,7 +8,7 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/shared/ui/carousel";
-import { Container } from "@/shared/ui";
+import { Container, Reveal } from "@/shared/ui";
 
 const slides = [
   "/slider/slider.png",
@@ -34,12 +34,13 @@ export function Slider() {
   return (
     <section style={{ marginTop: 'clamp(40px, 4.2vw, 60px)' }}>
       <Container>
+        <Reveal>
         <Carousel opts={{ loop: true }} setApi={setApi}>
           <div className="relative overflow-hidden rounded-[10px]">
           <CarouselContent className="ml-0">
             {slides.map((src, i) => (
               <CarouselItem key={i} className="pl-0">
-                <div className="relative w-full aspect-1867/851">
+                <div className="relative w-full aspect-1867/1702 lg:aspect-1867/851">
                   <Image
                     src={src}
                     alt={`Slide ${i + 1}`}
@@ -87,6 +88,7 @@ export function Slider() {
           </div>
           </div>
         </Carousel>
+        </Reveal>
       </Container>
     </section>
   );
