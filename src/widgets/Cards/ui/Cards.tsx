@@ -86,37 +86,21 @@ export function Cards() {
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const imgs = el.querySelectorAll<HTMLElement>("[data-card-img]");
-    const metas = el.querySelectorAll<HTMLElement>("[data-card-meta]");
+    const cards = el.querySelectorAll<HTMLElement>("[data-card]");
 
-    gsap.set(imgs, {
-      clipPath: "inset(0 0 100% 0)",
-      scale: 0.6,
-    });
-
-    gsap.set(metas, {
-      opacity: 0,
-      y: 20,
-    });
+    gsap.set(cards, { opacity: 0, y: 40 });
 
     const tl = gsap.timeline({
       scrollTrigger: { trigger: el, start: "top 80%", once: true },
     });
 
-    tl.to(imgs, {
-      clipPath: "inset(0 0 0% 0)",
-      scale: 1,
-      duration: 2.8,
-      ease: "expo.out",
-    });
-
-    tl.to(metas, {
+    tl.to(cards, {
       opacity: 1,
       y: 0,
       duration: 1,
       ease: "expo.out",
-      stagger: 0.1,
-    }, "-=1.8");
+      stagger: 0,
+    });
 
     return () => {
       ScrollTrigger.getAll().forEach((t) => {
@@ -129,7 +113,7 @@ export function Cards() {
     <Container className="relative z-20 pb-20 sm:pb-49">
       <div ref={gridRef} className="grid grid-cols-1 sm:section-cols gap-5">
         {cards.map((card) => (
-          <div key={card.src}>
+          <div key={card.src} data-card>
             {/* Image */}
             <CardImage card={card} />
 
