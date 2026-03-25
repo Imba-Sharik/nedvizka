@@ -72,7 +72,7 @@ export function Hero() {
       <div
         className="absolute pointer-events-none z-10"
         style={{
-          top: "40px",
+          top: "-38px",
           height: "930.8px",
           left: "calc((100% - 100vw) / 2 - 80.5px)",
           width: "calc(100vw + 119px)",
