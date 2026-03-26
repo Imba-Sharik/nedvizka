@@ -61,6 +61,20 @@ function TransitionLinks({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const resumeRef = useRef<(() => void) | null>(null);
+
+  // Resume timeline when Next.js finishes navigation (pathname changed)
+  useEffect(() => {
+    if (resumeRef.current) {
+      const resume = resumeRef.current;
+      resumeRef.current = null;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          resume();
+        });
+      });
+    }
+  }, [pathname]);
 
   const animateTransition = useCallback(
     (href: string) => {
@@ -83,7 +97,7 @@ function TransitionLinks({
       tl.to(progress, { width: 300, duration: 0.35, ease: "sine.inOut" });
       tl.to(progress, { width: 400, duration: 0.25, ease: "sine.in" });
 
-      // 2. Columns cover screen (staircase) — starts after bar finishes
+      // 2. Columns cover screen (staircase up)
       tl.fromTo(
         columns,
         { scaleY: 0 },
@@ -96,25 +110,15 @@ function TransitionLinks({
         }
       );
 
-      // 3. Navigate when covered, pause timeline until page loads
+      // 3. Navigate when covered, pause until pathname changes (new page rendered)
       tl.call(() => {
         tl.pause();
         window.scrollTo(0, 0);
+        resumeRef.current = () => tl.resume();
         router.push(href);
-
-        // Wait for new page to render
-        const onLoad = () => {
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              tl.resume();
-            });
-          });
-        };
-        // Listen for route change completion
-        setTimeout(onLoad, 300);
       });
 
-      // 4. Columns reveal (staircase down to exit)
+      // 4. Columns reveal (staircase down)
       tl.to(columns, {
         scaleY: 0,
         duration: DURATION,

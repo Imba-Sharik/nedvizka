@@ -14,6 +14,7 @@ const cards = [
     hoverSrc: "/images/Mask6.jpg",
     alt: "Метмаш",
     name: "МЕТМАШ",
+    href: "/venues/metmash",
     area: "20000 м²",
     description: "Тщательно спроектированные пространства для брендов",
     descriptionWidth: 247,
@@ -23,6 +24,7 @@ const cards = [
     hoverSrc: "/images/Mask5.jpg",
     alt: "Парк-музей Коломенское",
     name: "ПАРК-МУЗЕЙ КОЛОМЕНСКОЕ",
+    href: "/venues/park-muzey-kolomenskoe",
     area: "20000 м²",
     description: "Тщательно спроектированные пространства для брендов",
     descriptionWidth: 247,
@@ -32,13 +34,14 @@ const cards = [
     hoverSrc: "/images/Mask4.jpg",
     alt: "ДК Серп и Молот",
     name: "ДК СЕРП И МОЛОТ",
+    href: "/venues/dk-serp-i-molot",
     area: "20000 м²",
     description: "Тщательно спроектированные пространства для брендов, которые ценят атмосферу",
     descriptionWidth: 367,
   },
 ];
 
-function CardImage({ card }: { card: (typeof cards)[number] }) {
+function CardImage({ card }: { card: (typeof cards)[number]; }) {
   const hoverRef = useRef<HTMLImageElement>(null);
 
   const handleEnter = () => {
@@ -50,9 +53,10 @@ function CardImage({ card }: { card: (typeof cards)[number] }) {
   };
 
   return (
-    <div
+    <a
+      href={card.href}
       data-cursor-label="Подробнее"
-      className="relative overflow-hidden rounded-[9px] lg:cursor-none"
+      className="block relative overflow-hidden rounded-[9px] lg:cursor-none"
       style={{ aspectRatio: "1 / 1" }}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
@@ -73,7 +77,7 @@ function CardImage({ card }: { card: (typeof cards)[number] }) {
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0, pointerEvents: "none" }}
         />
       </div>
-    </div>
+    </a>
   );
 }
 

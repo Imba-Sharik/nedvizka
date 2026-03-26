@@ -124,8 +124,8 @@ export function Premises() {
           </div>
         </Reveal>
 
-        {/* Table */}
-        <Reveal delay={0.15} className="mt-11 overflow-x-auto">
+        {/* Desktop table */}
+        <Reveal delay={0.15} className="mt-11 hidden sm:block overflow-x-auto">
           <div style={{ minWidth: 1350 }}>
             {/* Column headers */}
             <div className="grid pb-3" style={{ gridTemplateColumns: gridCols }}>
@@ -165,7 +165,7 @@ export function Premises() {
                     {row.status}
                   </span>
                   <button className={`${cellBase} text-right whitespace-nowrap`}>
-                    Оставь заявку
+                    Оставить заявку
                   </button>
                 </div>
               </div>
@@ -180,6 +180,31 @@ export function Premises() {
             {/* Bottom divider */}
             <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
           </div>
+        </Reveal>
+
+        {/* Mobile cards */}
+        <Reveal delay={0.15} className="mt-8 flex flex-col sm:hidden">
+          {filtered.map((row, i) => (
+            <div key={i}>
+              <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
+              <div className="py-5">
+                <span className="font-(family-name:--font-pt-mono) font-normal text-[#0c0c0c] dark:text-white text-[16px] leading-snug">
+                  {row.place}&nbsp;&nbsp;{row.lot}
+                </span>
+                <div className="mt-1.5 font-(family-name:--font-pt-mono) font-normal text-[14px] text-black dark:text-white opacity-40 leading-snug">
+                  {row.area} м²&nbsp;&nbsp;&nbsp;{row.type}&nbsp;&nbsp;&nbsp;{fmt(row.price)}
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {filtered.length === 0 && (
+            <div className="py-12 text-center font-sans text-[16px] text-black/50 dark:text-white/50">
+              Помещения не найдены
+            </div>
+          )}
+
+          <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
         </Reveal>
 
         <a
