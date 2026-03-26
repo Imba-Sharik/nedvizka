@@ -3,13 +3,15 @@
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Container } from "@/shared/ui";
+import { Container, Reveal } from "@/shared/ui";
 import { VenueCard, venues } from "@/entities/venue";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Cards() {
+export function VenueOtherLocations({ currentSlug }: { currentSlug: string }) {
   const gridRef = useRef<HTMLDivElement>(null);
+
+  const otherVenues = venues.filter((v) => v.slug !== currentSlug);
 
   useEffect(() => {
     const el = gridRef.current;
@@ -41,9 +43,17 @@ export function Cards() {
   }, []);
 
   return (
-    <Container className="relative z-20 pb-20 sm:pb-49">
+    <Container className="pt-20 sm:pt-49 pb-20 sm:pb-49">
+      <Reveal>
+        <h2
+          className="font-(family-name:--font-pt-mono) font-normal uppercase text-black dark:text-white mb-5 sm:mb-13"
+          style={{ fontSize: "clamp(24px,2.5vw,36px)", lineHeight: "1.2" }}
+        >
+          Другие локации
+        </h2>
+      </Reveal>
       <div ref={gridRef} className="grid grid-cols-1 sm:section-cols gap-5">
-        {venues.map((card) => (
+        {otherVenues.map((card) => (
           <VenueCard key={card.slug} card={card} />
         ))}
       </div>
