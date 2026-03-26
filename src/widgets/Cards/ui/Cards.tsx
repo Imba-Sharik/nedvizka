@@ -88,7 +88,7 @@ export function Cards() {
 
     const cards = el.querySelectorAll<HTMLElement>("[data-card]");
 
-    gsap.set(cards, { opacity: 0, y: 40 });
+    gsap.set(cards, { opacity: 0, y: 150 });
 
     const tl = gsap.timeline({
       scrollTrigger: { trigger: el, start: "top 80%", once: true },
@@ -97,7 +97,7 @@ export function Cards() {
     tl.to(cards, {
       opacity: 1,
       y: 0,
-      duration: 1,
+      duration: 2,
       ease: "expo.out",
       stagger: 0,
     });

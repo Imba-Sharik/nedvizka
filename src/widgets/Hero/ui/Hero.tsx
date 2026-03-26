@@ -1,13 +1,26 @@
 'use client'
 
 import { useRef, useEffect } from 'react'
-import { Reveal } from '@/shared/ui'
+import { gsap } from 'gsap'
 
 export function Hero() {
   const wrapperRef = useRef<HTMLDivElement>(null)
+  const textRef = useRef<HTMLDivElement>(null)
   const mouse = useRef({ x: 0, y: 0 })
   const pos = useRef({ x: 0, y: 0 })
   const sectionRect = useRef<DOMRect | null>(null)
+
+  useEffect(() => {
+    if (textRef.current && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.fromTo(
+        textRef.current,
+        { y: 150, opacity: 0 },
+        { y: 0, opacity: 1, duration: 2, ease: 'expo.out' }
+      )
+    } else if (textRef.current) {
+      textRef.current.style.opacity = '1'
+    }
+  }, [])
 
   useEffect(() => {
     const section = wrapperRef.current?.closest('section') as HTMLElement | null
@@ -134,7 +147,7 @@ export function Hero() {
       {/* Hero content */}
       <div className="relative z-20 mt-20 px-4 md:mt-0 md:px-6.5 md:absolute md:top-[45.6%] md:left-0 md:right-0 md:section-cols md:gap-5">
         <div className="hidden md:block md:col-span-2" /> {/* left spacer */}
-        <Reveal className="md:col-span-1" start="top 95%">
+        <div ref={textRef} className="md:col-span-1" style={{ opacity: 0 }}>
           <div className="font-(family-name:--font-pt-mono) font-medium uppercase whitespace-pre-line md:whitespace-pre text-black dark:text-white text-[20px] md:text-[clamp(12px,1.7vw,27px)] leading-[1.35]">
             Формируем места,{"\n"}где эстетика, инфраструктура{"\n"}и предпринимательство{"\n"}соединяются в единую городскую{"\n"}среду.
           </div>
@@ -144,7 +157,7 @@ export function Hero() {
           >
             Подобрать{"\n"}площадь →
           </a>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
