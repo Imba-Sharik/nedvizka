@@ -11,7 +11,7 @@ interface VenueHeroProps {
 export function VenueHero({ title, imageSrc, address, ctaText = "Подобрать площадь" }: VenueHeroProps) {
   return (
     <section className="relative w-full -mt-19.25 overflow-hidden" style={{ height: "clamp(500px, 45.42vw, 872px)", borderBottomLeftRadius: "clamp(14px, 1.46vw, 28px)", borderBottomRightRadius: "clamp(14px, 1.46vw, 28px)" }}>
-      <Image src={imageSrc} alt={title[0]} fill priority unoptimized className="object-cover" style={{ objectPosition: "center bottom" }} />
+      <Image src={imageSrc} alt={title[0]} fill priority sizes="100vw" className="object-cover" style={{ objectPosition: "center bottom" }} />
       <div className="absolute inset-0 bg-black/40" />
 
       {/* Mobile: bottom */}
@@ -46,7 +46,7 @@ export function VenueHero({ title, imageSrc, address, ctaText = "Подобра�
       {/* Desktop: 3rd column, top: 513px */}
       <div
         className="hidden lg:grid absolute left-0 right-0 px-6.5 section-cols gap-5"
-        style={{ top: "58.8%" }}
+        style={{ top: "57.65%" }}
       >
         <div className="col-span-2" />
         <Reveal distance={30} className="col-span-1">
@@ -57,7 +57,7 @@ export function VenueHero({ title, imageSrc, address, ctaText = "Подобра�
           )}
           <h1
             className="font-(family-name:--font-pt-mono) font-medium uppercase text-white"
-            style={{ fontSize: "clamp(20px, 2.76vw, 53px)", lineHeight: "1.35", marginBottom: "clamp(16px, 1.46vw, 28px)" }}
+            style={{ fontSize: "clamp(20px, 2.76vw, 53px)", lineHeight: "1.1", marginBottom: "clamp(16px, 1.46vw, 28px)" }}
           >
             {title.map((line, i) => (
               <span key={i}>{line}{i < title.length - 1 && <br />}</span>

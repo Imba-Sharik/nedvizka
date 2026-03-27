@@ -34,7 +34,7 @@ export function Header() {
       <div className="sticky top-0 z-51 h-0 pointer-events-none">
         {/* Desktop: Оставить заявку */}
         <button
-          className="pointer-events-auto hidden lg:block absolute top-[clamp(16px,1.6vw,23px)] right-6.5 px-[clamp(8px,0.83vw,12px)] h-[clamp(26px,2.1vw,30px)] rounded-[7px] bg-white opacity-[0.82] text-[clamp(8px,0.97vw,14px)] font-medium text-black"
+          className="pointer-events-auto hidden lg:block absolute top-5.75 right-6.5 px-[clamp(8px,0.83vw,12px)] h-[clamp(26px,2.1vw,30px)] rounded-[7px] bg-white opacity-[0.82] text-[clamp(8px,0.97vw,14px)] font-medium text-black"
           style={{ animation: "slideDown 0.5s ease both" }}
         >
           Оставить заявку

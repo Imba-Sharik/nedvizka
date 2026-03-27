@@ -47,7 +47,7 @@ export function VenueOtherLocations({ currentSlug }: { currentSlug: string }) {
       <Reveal>
         <h2
           className="font-(family-name:--font-pt-mono) font-normal uppercase text-black dark:text-white mb-5 sm:mb-13"
-          style={{ fontSize: "clamp(24px,2.5vw,36px)", lineHeight: "1.2" }}
+          style={{ fontSize: "clamp(24px,3.68vw,53px)", lineHeight: "1.2" }}
         >
           Другие локации
         </h2>
