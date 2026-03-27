@@ -63,17 +63,23 @@ function TransitionLinks({
   const pathname = usePathname();
   const resumeRef = useRef<(() => void) | null>(null);
 
-  // Resume timeline when Next.js finishes navigation (pathname changed)
+  // Resume timeline when page signals ready (or fallback after timeout)
   useEffect(() => {
-    if (resumeRef.current) {
-      const resume = resumeRef.current;
-      resumeRef.current = null;
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          resume();
-        });
-      });
-    }
+    if (!resumeRef.current) return;
+    const resume = resumeRef.current;
+    resumeRef.current = null;
+
+    let done = false;
+    const go = () => {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      window.removeEventListener("page:ready", go);
+      requestAnimationFrame(() => requestAnimationFrame(resume));
+    };
+
+    const timer = setTimeout(go, 500);
+    window.addEventListener("page:ready", go, { once: true });
   }, [pathname]);
 
   const animateTransition = useCallback(

@@ -28,7 +28,7 @@ export const venues: Venue[] = [
     hoverSrc: "/images/Mask5.jpg",
     alt: "Парк-музей Коломенское",
     name: "ПАРК-МУЗЕЙ КОЛОМЕНСКОЕ",
-    href: "/venues/park-muzey-kolomenskoe",
+    href: "/venues/metmash",
     area: "20000 м²",
     description: "Тщательно спроектированные пространства для брендов",
     descriptionWidth: 247,
@@ -39,7 +39,7 @@ export const venues: Venue[] = [
     hoverSrc: "/images/Mask4.jpg",
     alt: "ДК Серп и Молот",
     name: "ДК СЕРП И МОЛОТ",
-    href: "/venues/dk-serp-i-molot",
+    href: "/venues/metmash",
     area: "20000 м²",
     description:
       "Тщательно спроектированные пространства для брендов, которые ценят атмосферу",

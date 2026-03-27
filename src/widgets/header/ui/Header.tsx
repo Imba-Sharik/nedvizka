@@ -16,8 +16,8 @@ import {
 
 const venues = [
   { name: "МЕТМАШ", href: "/venues/metmash" },
-  { name: "ПАРК-МУЗЕЙ КОЛОМЕНСКОЕ", href: "/venues/park-muzey-kolomenskoe" },
-  { name: "ДК СЕРП И МОЛОТ", href: "/venues/dk-serp-i-molot" },
+  { name: "ПАРК-МУЗЕЙ КОЛОМЕНСКОЕ", href: "/venues/metmash" },
+  { name: "ДК СЕРП И МОЛОТ", href: "/venues/metmash" },
 ];
 
 export function Header() {
@@ -68,7 +68,7 @@ export function Header() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="min-w-64">
               {venues.map((v) => (
-                <DropdownMenuItem key={v.href}>
+                <DropdownMenuItem key={v.name}>
                   <Link href={v.href} className="font-medium w-full">{v.name}</Link>
                 </DropdownMenuItem>
               ))}
@@ -114,7 +114,7 @@ export function Header() {
               </Link>
               {venues.map((v) => (
                 <Link
-                  key={v.href}
+                  key={v.name}
                   href={v.href}
                   onClick={() => setOpen(false)}
                   className="text-[16px] font-medium text-page-text opacity-[0.82] py-2"

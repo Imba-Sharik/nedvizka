@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { Reveal } from "@/shared/ui";
 
@@ -10,13 +12,21 @@ interface VenueHeroProps {
 
 export function VenueHero({ title, imageSrc, address, ctaText = "Подобрать площадь" }: VenueHeroProps) {
   return (
-    <section className="relative w-full -mt-19.25 overflow-hidden" style={{ height: "clamp(500px, 45.42vw, 872px)", borderBottomLeftRadius: "clamp(14px, 1.46vw, 28px)", borderBottomRightRadius: "clamp(14px, 1.46vw, 28px)" }}>
-      <Image src={imageSrc} alt={title[0]} fill priority sizes="100vw" className="object-cover" style={{ objectPosition: "center bottom" }} />
-      <div className="absolute inset-0 bg-black/40" />
+    <section className="relative w-full -mt-19.25 overflow-hidden bg-background" style={{ height: "clamp(500px, 45.42vw, 872px)", borderBottomLeftRadius: "clamp(14px, 1.46vw, 28px)", borderBottomRightRadius: "clamp(14px, 1.46vw, 28px)" }}>
+      <Image
+        src={imageSrc}
+        alt={title[0]}
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+        style={{ objectPosition: "center bottom" }}
+        onLoad={() => window.dispatchEvent(new Event("page:ready"))}
+      />
 
       {/* Mobile: bottom */}
       <div className="absolute bottom-0 left-0 right-0 pb-12 px-4 lg:hidden">
-        <Reveal distance={30}>
+        <Reveal distance={150} duration={2}>
           {address && (
             <p className="font-sans font-medium text-white" style={{ opacity: 0.58, fontSize: 13, marginBottom: 16 }}>
               {address}
@@ -49,7 +59,7 @@ export function VenueHero({ title, imageSrc, address, ctaText = "Подобра�
         style={{ top: "57.65%" }}
       >
         <div className="col-span-2" />
-        <Reveal distance={30} className="col-span-1">
+        <Reveal distance={150} duration={2} className="col-span-1">
           {address && (
             <p className="font-sans font-medium text-white" style={{ opacity: 0.58, fontSize: "clamp(10px, 0.73vw, 14px)", marginBottom: "clamp(16px, 1.46vw, 28px)" }}>
               {address}
