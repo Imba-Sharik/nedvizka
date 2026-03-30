@@ -28,7 +28,7 @@ export default function RootLayout({
         >
           <BookingProvider>
             <PageTransition>
-              <div className="relative overflow-x-clip w-full max-w-480 mx-auto min-h-screen">
+              <div className="relative w-full max-w-480 mx-auto min-h-screen">
                 <CustomCursor />
                 <Header />
                 {children}
