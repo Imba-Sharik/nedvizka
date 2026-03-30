@@ -3,6 +3,7 @@ import { sfProDisplay, ptMono } from "@/shared/fonts";
 import { ThemeProvider } from "@/shared/ui/theme-provider";
 import { Header } from "@/widgets/header";
 import { CustomCursor, PageTransition, BookingProvider } from "@/shared/ui";
+import { Toaster } from "sonner";
 import { BookingSheet } from "@/widgets/BookingSheet";
 import "./globals.css";
 
@@ -34,6 +35,7 @@ export default function RootLayout({
               </div>
             </PageTransition>
             <BookingSheet />
+            <Toaster position="bottom-center" />
           </BookingProvider>
         </ThemeProvider>
       </body>

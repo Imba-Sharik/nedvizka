@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import { useBooking } from "@/shared/ui/booking-context";
 import { Sheet, SheetContent, SheetTitle } from "@/shared/ui";
 
@@ -123,12 +124,31 @@ export function BookingSheet() {
                 )}
               </button>
               <span className="font-(family-name:--font-pt-mono) text-[11px] leading-relaxed text-black/60 dark:text-white/60">
-                Соглашаюсь с условиями<br />передачи данных
+                Соглашаюсь с{" "}
+                <a
+                  href="/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="underline underline-offset-2 hover:text-black/80 dark:hover:text-white/80 transition-colors"
+                >
+                  условиями передачи данных
+                </a>
               </span>
             </label>
 
             <button
               disabled={!canSubmit}
+              onClick={() => {
+                toast.success("Заявка отправлена", {
+                  description: "Мы свяжемся с вами в ближайшее время",
+                });
+                setPhone("");
+                setEmail("");
+                setCategory("");
+                setAgreed(false);
+                closeBooking();
+              }}
               className="w-full h-11 bg-black dark:bg-white text-white dark:text-black font-(family-name:--font-pt-mono) text-[13px] uppercase tracking-widest rounded-[7px] transition-opacity disabled:opacity-25"
             >
               Оставить заявку
