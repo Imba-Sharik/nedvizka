@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import { useBooking } from "@/shared/ui/booking-context";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -23,6 +24,7 @@ const venues = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const { theme, setTheme } = useTheme();
+  const { openBooking, isOpen: bookingOpen } = useBooking();
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -33,14 +35,16 @@ export function Header() {
       {/* Elements outside header — no blend effect */}
       <div className="sticky top-0 z-51 h-0 pointer-events-none">
         {/* Desktop: Оставить заявку */}
+        {!bookingOpen && (
         <button
+          onClick={() => openBooking()}
           className="pointer-events-auto hidden lg:block absolute top-5.75 right-6.5 px-[clamp(8px,0.83vw,12px)] h-[clamp(26px,2.1vw,30px)] rounded-[7px] bg-white opacity-[0.82] text-[clamp(8px,0.97vw,14px)] font-medium text-black"
-          style={{ animation: "slideDown 0.5s ease both" }}
         >
           Оставить заявку
         </button>
+        )}
         {/* Mobile: Menu */}
-        {!open && (
+        {!open && !bookingOpen && (
           <button
             onClick={() => setOpen(true)}
             className="pointer-events-auto lg:hidden absolute top-4 right-4 px-3 h-7.5 rounded-[7px] bg-white text-[14px] font-medium uppercase tracking-wide text-black opacity-[0.82]"
@@ -129,7 +133,7 @@ export function Header() {
             </p>
 
             <button
-              onClick={() => setOpen(false)}
+              onClick={() => { setOpen(false); openBooking(); }}
               className="w-full h-10 rounded-[7px] bg-black/5 dark:bg-white/10 text-[14px] font-medium text-page-text"
             >
               Оставить заявку

@@ -8,7 +8,7 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/shared/ui/carousel";
-import { Container, Reveal } from "@/shared/ui";
+import { Container, Reveal, Lightbox } from "@/shared/ui";
 
 const slides = [
   "/slider/slider.png",
@@ -20,15 +20,12 @@ const slides = [
 export function Slider() {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
+  const [lightboxOpen, setLightboxOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (!api) return;
-
     setCurrent(api.selectedScrollSnap());
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap());
-    });
+    api.on("select", () => setCurrent(api.selectedScrollSnap()));
   }, [api]);
 
   return (
@@ -51,6 +48,17 @@ export function Slider() {
               </CarouselItem>
             ))}
           </CarouselContent>
+
+          {/* Maximize */}
+          <button
+            onClick={() => setLightboxOpen(true)}
+            className="absolute top-4 right-4 z-10 flex items-center justify-center w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm text-white transition hover:bg-white/30"
+            aria-label="Открыть фото"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M2 6V2H6M10 2H14V6M14 10V14H10M6 14H2V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
 
           {/* Arrows */}
           <button
@@ -90,6 +98,13 @@ export function Slider() {
         </Carousel>
         </Reveal>
       </Container>
+
+      <Lightbox
+        images={slides}
+        initialIndex={current}
+        open={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
     </section>
   );
 }

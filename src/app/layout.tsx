@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { sfProDisplay, ptMono } from "@/shared/fonts";
 import { ThemeProvider } from "@/shared/ui/theme-provider";
 import { Header } from "@/widgets/header";
-import { CustomCursor, PageTransition } from "@/shared/ui";
+import { CustomCursor, PageTransition, BookingProvider } from "@/shared/ui";
+import { BookingSheet } from "@/widgets/BookingSheet";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -24,13 +25,16 @@ export default function RootLayout({
           enableSystem={false}
           themes={["light", "dark"]}
         >
-          <PageTransition>
-            <div className="relative overflow-x-clip w-full max-w-480 mx-auto min-h-screen">
-              <CustomCursor />
-              <Header />
-              {children}
-            </div>
-          </PageTransition>
+          <BookingProvider>
+            <PageTransition>
+              <div className="relative overflow-x-clip w-full max-w-480 mx-auto min-h-screen">
+                <CustomCursor />
+                <Header />
+                {children}
+              </div>
+            </PageTransition>
+            <BookingSheet />
+          </BookingProvider>
         </ThemeProvider>
       </body>
     </html>

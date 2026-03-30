@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Container, Reveal } from "@/shared/ui";
+import { Container, Reveal, useBooking } from "@/shared/ui";
 
 interface Premise {
   place: string;
@@ -72,6 +72,7 @@ interface VenuePremisesProps {
 
 export function VenuePremises({ venueName }: VenuePremisesProps) {
   const venuePremises = premises.filter((p) => p.place === venueName);
+  const { openBooking } = useBooking();
 
   const [priceFrom, setPriceFrom] = useState("");
   const [priceTo, setPriceTo] = useState("");
@@ -169,7 +170,7 @@ export function VenuePremises({ venueName }: VenuePremisesProps) {
                 >
                   {row.status}
                 </span>
-                <button className={`${cellBase} text-right whitespace-nowrap`}>
+                <button onClick={() => openBooking({ venueName: row.place, lotId: row.lot })} className={`${cellBase} text-right whitespace-nowrap`}>
                   Оставить заявку
                 </button>
               </div>

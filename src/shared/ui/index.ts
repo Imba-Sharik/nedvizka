@@ -12,6 +12,8 @@ export {
 export { CustomCursor } from "./custom-cursor";
 export { Reveal } from "./reveal";
 export { PageTransition } from "./page-transition";
+export { BookingProvider, useBooking } from "./booking-context";
+export { Lightbox } from "./lightbox";
 export {
   Sheet,
   SheetTrigger,
