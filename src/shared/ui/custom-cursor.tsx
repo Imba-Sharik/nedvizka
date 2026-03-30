@@ -62,14 +62,27 @@ export function CustomCursor() {
       }
     };
 
+    const onClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.closest("[data-cursor-label]")) {
+        label.style.opacity = "0";
+        dot.style.width = "12px";
+        dot.style.height = "12px";
+        dot.style.backgroundColor = "white";
+        dot.style.mixBlendMode = "difference";
+      }
+    };
+
     window.addEventListener("mousemove", move);
     window.addEventListener("mouseover", onEnter);
     window.addEventListener("mouseout", onLeave);
+    window.addEventListener("click", onClick, true);
 
     return () => {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseover", onEnter);
       window.removeEventListener("mouseout", onLeave);
+      window.removeEventListener("click", onClick, true);
     };
   }, []);
 
