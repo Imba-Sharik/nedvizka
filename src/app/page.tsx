@@ -13,7 +13,7 @@ export default function Home() {
       <Cards />
       <About />
       <Slider />
-      <Premises />
+      <Premises limit={10} />
       <Gallery />
       <Quote />
     </main>
