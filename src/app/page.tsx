@@ -1,4 +1,4 @@
-import { Hero } from "@/widgets/Hero";
+import { Hero, HeroGradient } from "@/widgets/Hero";
 import { Cards } from "@/widgets/Cards";
 import { About } from "@/widgets/About";
 import { Slider } from "@/widgets/Slider";
@@ -8,7 +8,8 @@ import { Quote } from "@/widgets/Quote";
 
 export default function Home() {
   return (
-    <main>
+    <main className="relative">
+      <HeroGradient />
       <Hero />
       <Cards />
       <About />

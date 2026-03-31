@@ -3,12 +3,100 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 
-export function Hero() {
+export function HeroGradient() {
   const wrapperRef = useRef<HTMLDivElement>(null)
-  const textRef = useRef<HTMLDivElement>(null)
   const mouse = useRef({ x: 0, y: 0 })
   const pos = useRef({ x: 0, y: 0 })
-  const sectionRect = useRef<DOMRect | null>(null)
+  const visible = useRef(true)
+
+  useEffect(() => {
+    const el = wrapperRef.current
+    if (!el) return
+
+    // Высота зоны видимости: Hero + Cards (~1200px от top страницы)
+    const maxScrollY = 1200
+
+    const ease = (v: number, half: number) => {
+      const t = Math.min(Math.abs(v) / half, 1)
+      const curved = t * t * (3 - 2 * t)
+      return Math.sign(v) * curved * half
+    }
+
+    const anchorY = 300
+
+    const onMouseMove = (e: MouseEvent) => {
+      const halfVW = window.innerWidth / 2
+      const rawX = e.clientX - halfVW
+      const rawY = (e.clientY + window.scrollY - anchorY) * 0.5
+      mouse.current = {
+        x: ease(rawX, halfVW),
+        y: rawY,
+      }
+    }
+
+    const onScroll = () => {
+      const show = window.scrollY < maxScrollY
+      if (show !== visible.current) {
+        visible.current = show
+        if (el) el.style.opacity = show ? '1' : '0'
+      }
+    }
+
+    document.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    const isTouchDevice = window.matchMedia('(hover: none)').matches
+    if (isTouchDevice) {
+      el.style.opacity = '1'
+      el.classList.add('gradient-mobile-drift')
+      return () => {
+        document.removeEventListener('mousemove', onMouseMove)
+        window.removeEventListener('scroll', onScroll)
+      }
+    }
+
+    const clamp = (v: number, max: number) => Math.max(-max, Math.min(max, v))
+
+    let rafId: number
+    const tick = () => {
+      pos.current.x += (mouse.current.x - pos.current.x) * 0.07
+      pos.current.y += (mouse.current.y - pos.current.y) * 0.07
+
+      if (el && visible.current) {
+        const maxX = window.innerWidth / 2
+        const dx = clamp(pos.current.x, maxX)
+        // Ограничиваем Y: градиент не ниже низа 2-й секции в viewport
+        const scrollOffset = window.scrollY
+        const maxVisualY = maxScrollY - scrollOffset - 80
+        const dy = Math.max(-150, Math.min(pos.current.y - scrollOffset * 0.5, maxVisualY))
+        el.style.transform = `translateX(calc(-50% + ${dx}px)) translateY(${dy}px)`
+        el.style.opacity = '1'
+      }
+
+      rafId = requestAnimationFrame(tick)
+    }
+    rafId = requestAnimationFrame(tick)
+
+    return () => {
+      document.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(rafId)
+    }
+  }, [])
+
+  return (
+    <div
+      ref={wrapperRef}
+      className="fixed top-4 lg:top-20 left-1/2 pointer-events-none z-0"
+      style={{ willChange: 'transform', opacity: 0, transition: 'opacity 0.3s ease' }}
+    >
+      <div className="gradient-blur" />
+    </div>
+  )
+}
+
+export function Hero() {
+  const textRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (textRef.current && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -22,64 +110,8 @@ export function Hero() {
     }
   }, [])
 
-  useEffect(() => {
-    const section = wrapperRef.current?.closest('section') as HTMLElement | null
-    if (!section) return
-
-    const ease = (v: number, half: number) => {
-      const t = Math.min(Math.abs(v) / half, 1)
-      const curved = t * t * (3 - 2 * t)
-      return Math.sign(v) * curved * half
-    }
-
-    const onMouseMove = (e: MouseEvent) => {
-      const rect = section.getBoundingClientRect()
-      sectionRect.current = rect
-      const rawX = e.clientX - rect.left - rect.width / 2
-      mouse.current = {
-        x: ease(rawX, rect.width / 2),
-        y: (e.clientY - rect.top - rect.height / 2) * 0.5,
-      }
-    }
-
-    section.addEventListener('mousemove', onMouseMove)
-
-    const isTouchDevice = window.matchMedia('(hover: none)').matches
-    if (isTouchDevice) {
-      if (wrapperRef.current) {
-        wrapperRef.current.style.opacity = '1'
-        wrapperRef.current.classList.add('gradient-mobile-drift')
-      }
-      return () => section.removeEventListener('mousemove', onMouseMove)
-    }
-
-    const clamp = (v: number, max: number) => Math.max(-max, Math.min(max, v))
-
-    let rafId: number
-    const tick = () => {
-      pos.current.x += (mouse.current.x - pos.current.x) * 0.07
-      pos.current.y += (mouse.current.y - pos.current.y) * 0.07
-
-      if (wrapperRef.current) {
-        const maxX = sectionRect.current ? sectionRect.current.width / 2 - 280 : 440
-        const dx = clamp(pos.current.x, maxX)
-        const dy = clamp(pos.current.y, 120)
-        wrapperRef.current.style.transform = `translateX(calc(-50% + ${dx}px)) translateY(${dy}px)`
-        wrapperRef.current.style.opacity = '1'
-      }
-
-      rafId = requestAnimationFrame(tick)
-    }
-    rafId = requestAnimationFrame(tick)
-
-    return () => {
-      section.removeEventListener('mousemove', onMouseMove)
-      cancelAnimationFrame(rafId)
-    }
-  }, [])
-
   return (
-    <section className="pb-16 md:pb-0 relative md:h-[clamp(480px,44vw,630px)]">
+    <section className="pb-16 md:pb-0 relative md:h-[clamp(480px,44vw,630px)] overflow-hidden">
 
       {/* Lines group — above gradient */}
       <div
@@ -133,15 +165,6 @@ export function Hero() {
             <line x1="0" y1="617" x2="100%" y2="0" stroke="rgba(255,255,255,1)" strokeWidth="1" />
           </svg>
         </div>
-      </div>
-
-      {/* Gradient blur — mouse following wrapper + CSS rotation inside */}
-      <div
-        ref={wrapperRef}
-        className="absolute top-4 lg:top-20 left-1/2 lg:left-1/2 pointer-events-none z-0"
-        style={{ willChange: 'transform', opacity: 0, transition: 'opacity 0.4s ease' }}
-      >
-        <div className="gradient-blur" />
       </div>
 
       {/* Hero content */}

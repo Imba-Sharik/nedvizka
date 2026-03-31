@@ -3,6 +3,7 @@ import { sfProDisplay, ptMono } from "@/shared/fonts";
 import { ThemeProvider } from "@/shared/ui/theme-provider";
 import { Header } from "@/widgets/header";
 import { CustomCursor, PageTransition, BookingProvider } from "@/shared/ui";
+
 import { Toaster } from "sonner";
 import { BookingSheet } from "@/widgets/BookingSheet";
 import "./globals.css";
@@ -19,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" suppressHydrationWarning>
-      <body className={`${sfProDisplay.variable} ${ptMono.variable} overflow-x-clip antialiased lg:cursor-none`}>
+      <body className={`${sfProDisplay.variable} ${ptMono.variable} antialiased lg:cursor-none`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -28,7 +29,7 @@ export default function RootLayout({
         >
           <BookingProvider>
             <PageTransition>
-              <div className="relative w-full max-w-480 mx-auto min-h-screen">
+              <div className="relative w-full max-w-480 mx-auto min-h-screen overflow-x-clip">
                 <CustomCursor />
                 <Header />
                 {children}
