@@ -17,8 +17,9 @@ import {
 
 const venues = [
   { name: "МЕТМАШ", href: "/venues/metmash" },
-  { name: "ПАРК-МУЗЕЙ КОЛОМЕНСКОЕ", href: "/venues/metmash" },
-  { name: "ДК СЕРП И МОЛОТ", href: "/venues/metmash" },
+  { name: "ПАРК-МУЗЕЙ КОЛОМЕНСКОЕ", href: "/venues/park-muzey-kolomenskoe" },
+  { name: "ДК СЕРП И МОЛОТ", href: "/venues/dk-serp-i-molot" },
+  { name: "ВИШНЁВЫЙ САД", href: "/venues/vishneviy-sad" },
 ];
 
 export function Header() {

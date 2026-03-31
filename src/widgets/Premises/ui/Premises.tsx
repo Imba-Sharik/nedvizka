@@ -71,7 +71,7 @@ export const allPremises: Premise[] = [
   { location: "Вишневый Сад",            name: "ВС-1",  area: null,   price: null,   status: "Свободно" },
 ];
 
-const gridCols = "2.5fr 1fr 1fr 1.5fr 1.4fr 1.5fr";
+const gridCols = "2.5fr 0.8fr 0.7fr 1.2fr 0.7fr 1.2fr";
 
 const cellBase =
   "font-(family-name:--font-pt-mono) font-normal leading-4.75 text-[#0c0c0c] dark:text-white";
@@ -154,8 +154,8 @@ export function Premises({ limit, standalone }: PremisesProps) {
         </Reveal>
 
         {/* Desktop table */}
-        <Reveal delay={0.15} className="mt-11 hidden sm:block overflow-x-auto">
-          <div style={{ minWidth: 900 }}>
+        <Reveal delay={0.15} className="mt-11 hidden sm:block">
+          <div>
             {/* Header row */}
             <div className="grid pb-3" style={{ gridTemplateColumns: gridCols }}>
               {COLS.map((col) => (
@@ -174,7 +174,7 @@ export function Premises({ limit, standalone }: PremisesProps) {
               <div key={i}>
                 <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
                 <div
-                  className="grid items-center py-5.5"
+                  className="grid items-center py-5.5 -mx-3 px-3 rounded-lg transition-colors hover:bg-black/3 dark:hover:bg-white/4"
                   style={{ gridTemplateColumns: gridCols, fontSize: 16 }}
                 >
                   <span className={cellBase}>{row.location}</span>

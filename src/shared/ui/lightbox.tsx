@@ -15,7 +15,8 @@ export function Lightbox({ images, initialIndex = 0, open, onClose }: LightboxPr
 
   useEffect(() => {
     if (open) setIndex(initialIndex);
-  }, [open, initialIndex]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
   const prev = useCallback(
     () => setIndex((i) => (i - 1 + images.length) % images.length),
@@ -33,10 +34,10 @@ export function Lightbox({ images, initialIndex = 0, open, onClose }: LightboxPr
       else if (e.key === "ArrowRight") next();
       else if (e.key === "Escape") onClose();
     };
-    document.body.style.overflow = "hidden";
+    document.body.style.overflowY = "hidden";
     window.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflowY = "";
       window.removeEventListener("keydown", onKey);
     };
   }, [open, prev, next, onClose]);
@@ -60,14 +61,13 @@ export function Lightbox({ images, initialIndex = 0, open, onClose }: LightboxPr
       </button>
 
       {/* Image */}
-      <div className="relative max-h-[80vh] max-w-[90vw] flex items-center justify-center">
+      <div className="relative rounded-lg overflow-hidden w-[85vw] max-w-215 h-[60vh] max-h-140">
         <Image
           src={images[index]}
           alt={`Фото ${index + 1}`}
-          width={1400}
-          height={900}
-          className="max-h-[80vh] w-auto rounded-lg object-contain"
-          sizes="90vw"
+          fill
+          className="object-cover"
+          sizes="min(860px, 85vw)"
           priority
         />
       </div>

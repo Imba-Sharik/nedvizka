@@ -152,10 +152,10 @@ export function Hero() {
             Формируем места,{"\n"}где эстетика, инфраструктура{"\n"}и предпринимательство{"\n"}соединяются в единую городскую{"\n"}среду.
           </div>
           <a
-            href="#"
-            className="block mt-9.5 opacity-40 dark:opacity-[0.37] font-sans text-[14px] leading-3.75 font-normal no-underline whitespace-pre text-black dark:text-white"
+            href="/premises"
+            className="block mt-9.5 opacity-40 dark:opacity-[0.37] font-sans text-[14px] leading-3.75 font-normal no-underline text-black dark:text-white"
           >
-            Подобрать{"\n"}площадь →
+            Подобрать площадь →
           </a>
         </div>
       </div>
