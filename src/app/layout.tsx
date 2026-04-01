@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { sfProDisplay, ptMono } from "@/shared/fonts";
 import { ThemeProvider } from "@/shared/ui/theme-provider";
 import { Header } from "@/widgets/header";
+import { Footer } from "@/widgets/Footer";
 import { CustomCursor, PageTransition, BookingProvider } from "@/shared/ui";
 
 import { Toaster } from "sonner";
@@ -33,6 +34,7 @@ export default function RootLayout({
                 <CustomCursor />
                 <Header />
                 {children}
+                <Footer />
               </div>
             </PageTransition>
             <BookingSheet />
