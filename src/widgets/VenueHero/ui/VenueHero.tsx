@@ -12,17 +12,20 @@ interface VenueHeroProps {
 
 export function VenueHero({ title, imageSrc, address, ctaText = "Подобрать площадь" }: VenueHeroProps) {
   return (
-    <section className="relative w-full -mt-19.25 overflow-hidden bg-background" style={{ height: "clamp(500px, 45.42vw, 872px)", borderBottomLeftRadius: "clamp(14px, 1.46vw, 28px)", borderBottomRightRadius: "clamp(14px, 1.46vw, 28px)" }}>
+    <section className="relative w-full -mt-19.25 overflow-hidden bg-black" style={{ height: "clamp(500px, 45.42vw, 872px)", borderBottomLeftRadius: "clamp(14px, 1.46vw, 28px)", borderBottomRightRadius: "clamp(14px, 1.46vw, 28px)" }}>
       <Image
         src={imageSrc}
         alt={title[0]}
         fill
         priority
         sizes="100vw"
-        className="object-cover"
+        className="object-cover opacity-50"
         style={{ objectPosition: "center bottom" }}
         onLoad={() => window.dispatchEvent(new Event("page:ready"))}
       />
+
+      {/* Top gradient for header readability */}
+      <div className="absolute inset-x-0 top-0 h-32 bg-linear-to-b from-black/60 to-transparent pointer-events-none" />
 
       {/* Mobile: bottom */}
       <div className="absolute bottom-0 left-0 right-0 pb-12 px-4 lg:hidden">

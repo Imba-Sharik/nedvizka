@@ -25,7 +25,7 @@ export function VenuePage({ venue }: VenuePageProps) {
     <main>
       <VenueHero
         title={venue.heroTitle}
-        imageSrc={venue.src}
+        imageSrc={venue.heroSrc || venue.src}
         address={venue.address}
       />
       <VenueAbout paragraphs={paragraphs} />
