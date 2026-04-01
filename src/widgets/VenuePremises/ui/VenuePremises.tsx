@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Container, Reveal, useBooking } from "@/shared/ui";
 import { allPremises } from "@/widgets/Premises";
 
-type PremiseStatus = "Свободно" | "Бронь" | "Лист ожидания";
+type PremiseStatus = "Свободно" | "Забронировано" | "Лист ожидания";
 
 const gridCols = "1fr 1fr 1.5fr 0.8fr 1.5fr";
 
@@ -13,7 +13,7 @@ const cellBase =
 
 const statusColor: Record<PremiseStatus, string> = {
   "Свободно":      "text-[#0c0c0c] dark:text-[#E5FF82]",
-  "Бронь":         "text-[#0c0c0c] dark:text-[#FF824A]",
+  "Забронировано":         "text-[#B73B3B] dark:text-[#FF824A]",
   "Лист ожидания": "text-[#0c0c0c] dark:text-[#FFD966]",
 };
 
@@ -84,7 +84,7 @@ export function VenuePremises({ venueName }: VenuePremisesProps) {
   };
 
   return (
-    <Container className="pt-20 sm:pt-49">
+    <Container id="premises" className="pt-20 sm:pt-49">
       {/* Title + Filter */}
       <Reveal className="flex flex-col gap-8 min-[1240px]:flex-row min-[1240px]:items-center min-[1240px]:justify-between">
         <h2

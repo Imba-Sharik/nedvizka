@@ -5,10 +5,6 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useBooking } from "@/shared/ui/booking-context";
 import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
   Sheet,
   SheetContent,
   SheetHeader,
@@ -58,38 +54,23 @@ export function Header() {
       <header className="sticky top-0 z-50 mix-blend-exclusion invert flex items-center justify-between py-4 px-4 lg:py-5.75 lg:pl-6.5 lg:pr-6.5 lg:section-cols lg:gap-5 lg:items-center lg:justify-normal" style={{ animation: "slideDown 0.5s ease both" }}>
         <Link
           href="/"
-          className="text-[22px] lg:text-[26px] font-medium leading-7.75 text-black lg:col-span-2 lg:self-center"
+          className="flex items-center gap-2 text-[22px] lg:text-[26px] font-medium leading-7.75 text-black lg:col-span-2 lg:self-center"
         >
+          <img src="/logo.svg" alt="" className="h-5.5 lg:h-6.5 w-auto -mt-1" />
           Недвижка
         </Link>
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center justify-between lg:col-span-1">
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              className="text-[clamp(8px,0.97vw,14px)] font-medium leading-4.25 opacity-[0.82] text-black outline-none cursor-pointer"
-            >
-              Все площадки
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="min-w-64">
-              {venues.map((v) => (
-                <DropdownMenuItem key={v.name}>
-                  <Link href={v.href} className="font-medium w-full">{v.name}</Link>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Link
+            href="/premises"
+            className="text-[clamp(8px,0.97vw,14px)] font-medium leading-4.25 opacity-[0.82] text-black"
+          >
+            Все объекты
+          </Link>
 
           <div className="flex items-center" style={{ gap: 'clamp(0px, 1.7vw, 24px)' }}>
-            <button
-              onClick={toggleTheme}
-              className="w-7.5 h-7.5 flex items-center justify-center rounded-[7px] opacity-[0.82] text-black transition-colors"
-              aria-label="Переключить тему"
-            >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="black" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
-              </svg>
-            </button>
+            {/* Theme toggle hidden */}
             <p
               className="text-[clamp(8px,0.97vw,14px)] font-medium leading-4.25 opacity-[0.82] text-black"
             >
@@ -140,18 +121,7 @@ export function Header() {
               Оставить заявку
             </button>
 
-            <button
-              onClick={() => { toggleTheme(); setOpen(false); }}
-              className="flex items-center gap-2 text-[14px] font-medium opacity-[0.82] text-page-text"
-            >
-              <svg className="hidden dark:block w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
-              </svg>
-              <svg className="block dark:hidden w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
-              </svg>
-              Сменить тему
-            </button>
+            {/* Theme toggle hidden */}
           </SheetContent>
         </Sheet>
       </header>

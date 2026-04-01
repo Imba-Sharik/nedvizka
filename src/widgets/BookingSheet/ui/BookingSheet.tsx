@@ -40,7 +40,8 @@ export function BookingSheet() {
     .filter(Boolean)
     .join(", ");
 
-  const canSubmit = phone.trim() && email.trim() && agreed;
+  const [sending, setSending] = useState(false);
+  const canSubmit = phone.trim() && email.trim() && agreed && !sending;
 
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && closeBooking()}>
@@ -139,15 +140,36 @@ export function BookingSheet() {
 
             <button
               disabled={!canSubmit}
-              onClick={() => {
-                toast.success("Заявка отправлена", {
-                  description: "Мы свяжемся с вами в ближайшее время",
-                });
-                setPhone("");
-                setEmail("");
-                setCategory("");
-                setAgreed(false);
-                closeBooking();
+              onClick={async () => {
+                setSending(true);
+                try {
+                  const res = await fetch("/api/send", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      phone,
+                      email,
+                      category,
+                      venue: options.venueName,
+                      lot: options.lotId,
+                    }),
+                  });
+                  if (!res.ok) throw new Error();
+                  toast.success("Заявка отправлена", {
+                    description: "Мы свяжемся с вами в ближайшее время",
+                  });
+                  setPhone("");
+                  setEmail("");
+                  setCategory("");
+                  setAgreed(false);
+                  closeBooking();
+                } catch {
+                  toast.error("Ошибка отправки", {
+                    description: "Попробуйте ещё раз",
+                  });
+                } finally {
+                  setSending(false);
+                }
               }}
               className="w-full h-11 bg-black dark:bg-white text-white dark:text-black font-(family-name:--font-pt-mono) text-[13px] uppercase tracking-widest rounded-[7px] transition-opacity disabled:opacity-25"
             >

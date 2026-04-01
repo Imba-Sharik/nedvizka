@@ -4,11 +4,12 @@ interface ContainerProps {
   children: ReactNode;
   className?: string;
   style?: CSSProperties;
+  id?: string;
 }
 
-export function Container({ children, className = "", style }: ContainerProps) {
+export function Container({ children, className = "", style, id }: ContainerProps) {
   return (
-    <div className={`px-4 lg:px-6.5 ${className}`} style={style}>
+    <div id={id} className={`px-4 lg:px-6.5 ${className}`} style={style}>
       {children}
     </div>
   );

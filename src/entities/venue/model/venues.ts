@@ -32,7 +32,7 @@ export const venues: Venue[] = [
     location: "Метмаш × Новый Голливуд",
     href: "/venues/metmash",
     area: "20 000 м²",
-    address: "г. Москва, Рязанский проспект д.8А",
+    address: "Москва, Рязанский проспект д.8А",
     description: "Центр культуры и предпринимательства новой волны.",
     descriptionWidth: 247,
     fullDescription:
@@ -68,7 +68,7 @@ export const venues: Venue[] = [
     location: "Парк-Музей Коломенское",
     href: "/venues/park-muzey-kolomenskoe",
     area: "3 000 м²",
-    address: "г. Москва, проспект Андропова, 39",
+    address: "Москва, проспект Андропова, 39",
     description:
       "Площадка, объединяющая гастрономию, культурные события и городскую жизнь",
     descriptionWidth: 247,
@@ -100,7 +100,7 @@ export const venues: Venue[] = [
     location: "ДК Серп и Молот",
     href: "/venues/dk-serp-i-molot",
     area: "8 100 м²",
-    address: "г. Москва, Волочаевская улица, 48",
+    address: "Москва, Волочаевская улица, 48",
     description:
       "Знаковое здание эпохи советского модернизма и современных событийных форматов.",
     descriptionWidth: 367,

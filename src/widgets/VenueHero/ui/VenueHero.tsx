@@ -40,16 +40,18 @@ export function VenueHero({ title, imageSrc, address, ctaText = "Подобра�
               <span key={i}>{line}{i < title.length - 1 && <br />}</span>
             ))}
           </h1>
-          <button
-            className="relative overflow-hidden rounded-[7px] flex items-center justify-center font-sans font-medium text-white"
+          <a
+            href="#premises"
+            className="relative overflow-hidden rounded-[7px] inline-flex items-center justify-center font-sans font-medium text-white no-underline"
             style={{ height: 39, padding: "0 18px", fontSize: 13, whiteSpace: "nowrap" }}
+            onClick={(e) => { e.preventDefault(); document.getElementById("premises")?.scrollIntoView({ behavior: "smooth" }); }}
           >
             <div
               className="absolute inset-0"
               style={{ backgroundColor: "rgba(255,255,255,0.63)", backdropFilter: "blur(22px)", opacity: 0.3 }}
             />
             <span className="relative">{ctaText}</span>
-          </button>
+          </a>
         </Reveal>
       </div>
 
@@ -73,16 +75,18 @@ export function VenueHero({ title, imageSrc, address, ctaText = "Подобра�
               <span key={i}>{line}{i < title.length - 1 && <br />}</span>
             ))}
           </h1>
-          <button
-            className="relative overflow-hidden rounded-[7px] flex items-center justify-center font-sans font-medium text-white"
+          <a
+            href="#premises"
+            className="relative overflow-hidden rounded-[7px] inline-flex items-center justify-center font-sans font-medium text-white no-underline"
             style={{ height: "clamp(24px, 2.03vw, 39px)", padding: "0 clamp(12px, 1.15vw, 22px)", fontSize: "clamp(10px, 0.73vw, 14px)", whiteSpace: "nowrap" }}
+            onClick={(e) => { e.preventDefault(); document.getElementById("premises")?.scrollIntoView({ behavior: "smooth" }); }}
           >
             <div
               className="absolute inset-0"
               style={{ backgroundColor: "rgba(255,255,255,0.63)", backdropFilter: "blur(22px)", opacity: 0.3 }}
             />
             <span className="relative">{ctaText}</span>
-          </button>
+          </a>
         </Reveal>
       </div>
     </section>

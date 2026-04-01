@@ -19,7 +19,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
       {/* Progress bar — grows from 0 to ~400px */}
       <div
         ref={progressRef}
-        className="fixed top-0 left-0 h-1 z-100 pointer-events-none bg-black origin-left"
+        className="fixed top-0 left-0 h-1 z-100 pointer-events-none bg-white origin-left"
         style={{ width: 0 }}
       />
 
@@ -31,7 +31,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
         {Array.from({ length: COLUMNS }).map((_, i) => (
           <div
             key={i}
-            className="flex-1 bg-black origin-top scale-y-0"
+            className="flex-1 bg-white origin-top scale-y-0"
             data-col={i}
           />
         ))}

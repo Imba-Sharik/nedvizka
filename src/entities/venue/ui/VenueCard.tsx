@@ -8,13 +8,13 @@ import type { Venue } from "../model/venues";
 function CardImage({ card }: { card: Venue }) {
   const hoverRef = useRef<HTMLImageElement>(null);
 
-  const handleEnter = () => {
-    gsap.set(hoverRef.current, { opacity: 1 });
-  };
+  // const handleEnter = () => {
+  //   gsap.set(hoverRef.current, { opacity: 1 });
+  // };
 
-  const handleLeave = () => {
-    gsap.set(hoverRef.current, { opacity: 0 });
-  };
+  // const handleLeave = () => {
+  //   gsap.set(hoverRef.current, { opacity: 0 });
+  // };
 
   return (
     <a
@@ -22,8 +22,8 @@ function CardImage({ card }: { card: Venue }) {
       data-cursor-label="Подробнее"
       className="block relative overflow-hidden rounded-[9px] lg:cursor-none"
       style={{ aspectRatio: "1 / 1" }}
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
+      // onMouseEnter={handleEnter}
+      // onMouseLeave={handleLeave}
     >
       <div data-card-img className="absolute inset-0">
         <Image
@@ -73,11 +73,11 @@ export function VenueCard({ card }: { card: Venue }) {
             {card.name}
           </span>
           <p
-            className="mt-3 font-sans font-medium text-black dark:text-white opacity-[0.37]"
+            className="mt-3 font-sans font-medium text-black dark:text-white opacity-[0.37] line-clamp-2"
             style={{
               fontSize: "clamp(13px,0.75vw,15px)",
               lineHeight: "1.33",
-              maxWidth: `clamp(${Math.round(card.descriptionWidth * 0.6)}px,${(card.descriptionWidth / 2000 * 100).toFixed(2)}vw,${card.descriptionWidth}px)`,
+              maxWidth: "70%",
             }}
           >
             {card.description}

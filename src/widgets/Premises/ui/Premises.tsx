@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Container, Reveal, useBooking } from "@/shared/ui";
 
-type PremiseStatus = "Свободно" | "Бронь" | "Лист ожидания";
+type PremiseStatus = "Свободно" | "Забронировано" | "Лист ожидания";
 
 interface Premise {
   location: string;
@@ -15,8 +15,8 @@ interface Premise {
 
 export const allPremises: Premise[] = [
   // Метмаш × Новый Голливуд — 4В series (price = Сумма в мес = Итого год / 12)
-  { location: "Метмаш × Новый Голливуд", name: "4В-1",  area: 7.5,    price: 95813,  status: "Бронь" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-2",  area: 16.5,   price: 265733, status: "Бронь" },
+  { location: "Метмаш × Новый Голливуд", name: "4В-1",  area: 7.5,    price: 95813,  status: "Забронировано" },
+  { location: "Метмаш × Новый Голливуд", name: "4В-2",  area: 16.5,   price: 265733, status: "Забронировано" },
   { location: "Метмаш × Новый Голливуд", name: "4В-3",  area: 6,      price: 73320,  status: "Свободно" },
   { location: "Метмаш × Новый Голливуд", name: "4В-4",  area: 6,      price: 73320,  status: "Свободно" },
   { location: "Метмаш × Новый Голливуд", name: "4В-5",  area: 10.7,   price: 149361, status: "Свободно" },
@@ -25,8 +25,8 @@ export const allPremises: Premise[] = [
   { location: "Метмаш × Новый Голливуд", name: "4В-8",  area: 9,      price: 119970, status: "Свободно" },
   { location: "Метмаш × Новый Голливуд", name: "4В-9",  area: 9,      price: 119970, status: "Свободно" },
   { location: "Метмаш × Новый Голливуд", name: "4В-10", area: 13.3,   price: 198449, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-11", area: 13.9,   price: 210488, status: "Бронь" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-12", area: 7.6,    price: 97371,  status: "Бронь" },
+  { location: "Метмаш × Новый Голливуд", name: "4В-11", area: 13.9,   price: 210488, status: "Забронировано" },
+  { location: "Метмаш × Новый Голливуд", name: "4В-12", area: 7.6,    price: 97371,  status: "Забронировано" },
   { location: "Метмаш × Новый Голливуд", name: "4В-13", area: 10.7,   price: 149361, status: "Свободно" },
   { location: "Метмаш × Новый Голливуд", name: "4В-14", area: 8.7,    price: 115005, status: "Свободно" },
   { location: "Метмаш × Новый Голливуд", name: "4В-15", area: 10.5,   price: 145793, status: "Свободно" },
@@ -55,21 +55,28 @@ export const allPremises: Premise[] = [
   { location: "Метмаш × Новый Голливуд", name: "6В-1",  area: 1124,   price: null,   status: "Свободно" },
   { location: "Метмаш × Новый Голливуд", name: "7В-1",  area: 807.7,  price: null,   status: "Свободно" },
   // Парк-Музей Коломенское (price по запросу — не указываем на сайте)
-  { location: "Парк-Музей Коломенское",  name: "ПК-1",  area: 858.11, price: null,   status: "Бронь" },
-  { location: "Парк-Музей Коломенское",  name: "ПК-2",  area: 268.9,  price: null,   status: "Бронь" },
-  { location: "Парк-Музей Коломенское",  name: "ПК-3",  area: 849.6,  price: null,   status: "Бронь" },
+  { location: "Парк-Музей Коломенское",  name: "ПК-1",  area: 858.11, price: null,   status: "Забронировано" },
+  { location: "Парк-Музей Коломенское",  name: "ПК-2",  area: 268.9,  price: null,   status: "Забронировано" },
+  { location: "Парк-Музей Коломенское",  name: "ПК-3",  area: 849.6,  price: null,   status: "Забронировано" },
   { location: "Парк-Музей Коломенское",  name: "ПК-4",  area: 483.5,  price: null,   status: "Свободно" },
-  { location: "Парк-Музей Коломенское",  name: "ПК-5",  area: 135.43, price: null,   status: "Бронь" },
-  { location: "Парк-Музей Коломенское",  name: "ПК-6",  area: 318,    price: null,   status: "Бронь" },
+  { location: "Парк-Музей Коломенское",  name: "ПК-5",  area: 135.43, price: null,   status: "Забронировано" },
+  { location: "Парк-Музей Коломенское",  name: "ПК-6",  area: 318,    price: null,   status: "Забронировано" },
   // Парк Горького
   { location: "Парк Горького",           name: "ПГ-1",  area: 780.2,  price: null,   status: "Лист ожидания" },
   { location: "Парк Горького",           name: "ПГ-2",  area: 213.1,  price: null,   status: "Лист ожидания" },
-  { location: "Парк Горького",           name: "ПГ-3",  area: null,   price: null,   status: "Бронь" },
+  { location: "Парк Горького",           name: "ПГ-3",  area: null,   price: null,   status: "Забронировано" },
   // ДК Серп и Молот
   { location: "ДК Серп и Молот",         name: "СМ-1",  area: null,   price: null,   status: "Свободно" },
   // Вишневый Сад
   { location: "Вишневый Сад",            name: "ВС-1",  area: null,   price: null,   status: "Свободно" },
 ];
+
+const locationHref: Record<string, string> = {
+  "Метмаш × Новый Голливуд": "/venues/metmash",
+  "Парк-Музей Коломенское":  "/venues/park-muzey-kolomenskoe",
+  "ДК Серп и Молот":         "/venues/dk-serp-i-molot",
+  "Вишневый Сад":            "/venues/vishneviy-sad",
+};
 
 const gridCols = "2.5fr 0.8fr 0.7fr 1.2fr 0.7fr 1.2fr";
 
@@ -78,7 +85,7 @@ const cellBase =
 
 const statusColor: Record<PremiseStatus, string> = {
   "Свободно":      "text-[#0c0c0c] dark:text-[#E5FF82]",
-  "Бронь":         "text-[#0c0c0c] dark:text-[#FF824A]",
+  "Забронировано":         "text-[#B73B3B] dark:text-[#FF824A]",
   "Лист ожидания": "text-[#0c0c0c] dark:text-[#FFD966]",
 };
 
@@ -120,7 +127,7 @@ export function Premises({ limit, standalone }: PremisesProps) {
   const rows = limit ? filtered.slice(0, limit) : filtered;
 
   return (
-    <section style={{ marginTop: standalone ? 0 : "clamp(80px, 14.4vw, 208px)" }}>
+    <section id="premises" style={{ marginTop: standalone ? 0 : "clamp(80px, 14.4vw, 208px)" }}>
       <Container
         style={{
           paddingTop:    standalone ? "clamp(32px, 3vw, 48px)" : "clamp(80px, 8.9vw, 128px)",
@@ -177,7 +184,7 @@ export function Premises({ limit, standalone }: PremisesProps) {
                   className="grid items-center py-5.5 -mx-3 px-3 rounded-lg transition-colors hover:bg-black/3 dark:hover:bg-white/4"
                   style={{ gridTemplateColumns: gridCols, fontSize: 16 }}
                 >
-                  <span className={cellBase}>{row.location}</span>
+                  <a href={locationHref[row.location] || "#"} className={`${cellBase} no-underline hover:opacity-70 transition-opacity`}>{row.location}</a>
                   <span className={cellBase}>{row.name}</span>
                   <span className={cellBase}>{fmtArea(row.area)}</span>
                   <span className={cellBase}>{fmtPrice(row.price)}</span>
@@ -212,7 +219,7 @@ export function Premises({ limit, standalone }: PremisesProps) {
               <div className="py-5">
                 <div className="flex items-baseline justify-between gap-4">
                   <span className="font-(family-name:--font-pt-mono) font-normal text-[#0c0c0c] dark:text-white text-[16px] leading-snug">
-                    {row.location}&nbsp;&nbsp;{row.name}
+                    <a href={locationHref[row.location] || "#"} className="no-underline text-inherit">{row.location}</a>&nbsp;&nbsp;{row.name}
                   </span>
                   <span className={`font-(family-name:--font-pt-mono) font-normal text-[14px] leading-snug shrink-0 ${statusColor[row.status]}`}>
                     {row.status}
@@ -237,7 +244,7 @@ export function Premises({ limit, standalone }: PremisesProps) {
         {limit && (
           <a
             href="/premises"
-            className="block mt-9.5 opacity-40 dark:opacity-[0.37] font-sans text-[16px] leading-3.75 font-normal no-underline text-black dark:text-white"
+            className="block mt-9.5 font-sans text-[16px] leading-3.75 font-medium no-underline text-black dark:text-white"
           >
             Показать все
           </a>
