@@ -9,7 +9,7 @@ import { BookingSheet } from "@/widgets/BookingSheet";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Nedvizka",
+  title: "Недвижка",
   description: "Платформа недвижимости",
 };
 
