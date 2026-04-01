@@ -24,7 +24,7 @@ export interface Venue {
 export const venues: Venue[] = [
   {
     slug: "metmash",
-    src: "/premises/metmash-thumbnail.png",
+    src: "/premises/metmash-thumbnail1.webp",
     hoverSrc: "/images/Mask6.jpg",
     alt: "Метмаш",
     name: "МЕТМАШ",
@@ -60,7 +60,7 @@ export const venues: Venue[] = [
   },
   {
     slug: "park-muzey-kolomenskoe",
-    src: "/premises/kolomenskoye-thumbnail.jpg",
+    src: "/premises/kolomenskoye-thumbnail1.webp",
     hoverSrc: "/images/Mask5.jpg",
     alt: "Парк-музей Коломенское",
     name: "ПАРК-МУЗЕЙ КОЛОМЕНСКОЕ",
@@ -92,7 +92,7 @@ export const venues: Venue[] = [
   },
   {
     slug: "dk-serp-i-molot",
-    src: "/premises/dk-serp-i-molot-thumbnail.jpg",
+    src: "/premises/dk-serp-i-molot-thumbnail1.webp",
     hoverSrc: "/images/Mask4.jpg",
     alt: "ДК Серп и Молот",
     name: "ДК СЕРП И МОЛОТ",
@@ -124,8 +124,8 @@ export const venues: Venue[] = [
   },
   {
     slug: "vishneviy-sad",
-    src: "/premises/cherry-orchard-thumbnail.jpg",
-    hoverSrc: "/premises/cherry-orchard-thumbnail.jpg",
+    src: "/premises/cherry-orchard-thumbnail2.webp",
+    hoverSrc: "/premises/cherry-orchard-thumbnail2.webp",
     alt: "Вишнёвый сад",
     name: "ВИШНЁВЫЙ САД",
     heroTitle: ["ВИШНЁВЫЙ", "САД"],

@@ -11,10 +11,11 @@ import {
 import { Container, Reveal, Lightbox } from "@/shared/ui";
 
 const slides = [
-  "/slider/slider.png",
-  "/slider/slider1.png",
-  "/slider/slider2.png",
-  "/slider/slider3.jpg",
+  "/slider/1slider.webp",
+  "/slider/1slider2.webp",
+  "/slider/1slider3.webp",
+  "/slider/1slider4.webp",
+  "/slider/1slider5.webp",
 ];
 
 export function Slider() {
