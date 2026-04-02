@@ -103,7 +103,7 @@ export function Hero() {
   }, [])
 
   return (
-    <section className="pb-16 md:pb-0 relative md:h-[clamp(480px,44vw,630px)] overflow-hidden">
+    <section className="pb-16 md:pb-0 relative md:h-[calc(100vh-140px)] md:max-h-[630px] overflow-hidden">
 
       {/* Gradient — за текстом */}
       <div
