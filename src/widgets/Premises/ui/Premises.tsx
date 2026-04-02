@@ -327,7 +327,7 @@ export function Premises({ limit, standalone }: PremisesProps) {
 
             {/* Data rows */}
             {rows.map((row, i) => (
-              <HoverCard key={i} openDelay={200} closeDelay={0}>
+              <HoverCard key={i}>
                 <HoverCardTrigger render={<div />}>
                   <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
                   <div
