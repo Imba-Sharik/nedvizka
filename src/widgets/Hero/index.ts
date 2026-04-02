@@ -1,1 +1,1 @@
-export { Hero, HeroGradient } from "./ui/Hero";
+export { Hero } from "./ui/Hero";

@@ -3,19 +3,57 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 
-export function HeroGradient() {
-  const wrapperRef = useRef<HTMLDivElement>(null)
+export function Hero() {
+  const textRef = useRef<HTMLDivElement>(null)
+  const gradientRef = useRef<HTMLDivElement>(null)
   const mouse = useRef({ x: 0, y: 0 })
   const pos = useRef({ x: 0, y: 0 })
   const visible = useRef(true)
 
   useEffect(() => {
-    const el = wrapperRef.current
+    // Анимация текста
+    if (textRef.current && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.fromTo(
+        textRef.current,
+        { y: 150, opacity: 0 },
+        { y: 0, opacity: 1, duration: 2, ease: 'expo.out' }
+      )
+    } else if (textRef.current) {
+      textRef.current.style.opacity = '1'
+    }
+
+    // Логика градиента
+    const el = gradientRef.current
     if (!el) return
 
-    // Высота зоны видимости: Hero + Cards (~1200px от top страницы)
-    const maxScrollY = 1200
+    const isTouch = window.matchMedia('(hover: none)').matches
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches
 
+    // Десктоп — статичный за текстом, позиция через CSS
+    if (isDesktop) {
+      el.style.opacity = '1'
+      return
+    }
+
+    // Мобилка — скрываем при скролле ниже Hero + Cards
+    const maxScrollY = 1200
+    const onScroll = () => {
+      const show = window.scrollY < maxScrollY
+      if (show !== visible.current) {
+        visible.current = show
+        el.style.opacity = show ? '1' : '0'
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    // Тач-устройства — дрифт-анимация
+    if (isTouch) {
+      el.style.opacity = '1'
+      el.classList.add('gradient-mobile-drift')
+      return () => window.removeEventListener('scroll', onScroll)
+    }
+
+    // Малые экраны с мышкой — слежение за курсором
     const ease = (v: number, half: number) => {
       const t = Math.min(Math.abs(v) / half, 1)
       const curved = t * t * (3 - 2 * t)
@@ -34,26 +72,7 @@ export function HeroGradient() {
       }
     }
 
-    const onScroll = () => {
-      const show = window.scrollY < maxScrollY
-      if (show !== visible.current) {
-        visible.current = show
-        if (el) el.style.opacity = show ? '1' : '0'
-      }
-    }
-
     document.addEventListener('mousemove', onMouseMove)
-    window.addEventListener('scroll', onScroll, { passive: true })
-
-    const isTouchDevice = window.matchMedia('(hover: none)').matches
-    if (isTouchDevice) {
-      el.style.opacity = '1'
-      el.classList.add('gradient-mobile-drift')
-      return () => {
-        document.removeEventListener('mousemove', onMouseMove)
-        window.removeEventListener('scroll', onScroll)
-      }
-    }
 
     const clamp = (v: number, max: number) => Math.max(-max, Math.min(max, v))
 
@@ -65,7 +84,6 @@ export function HeroGradient() {
       if (el && visible.current) {
         const maxX = window.innerWidth / 2
         const dx = clamp(pos.current.x, maxX)
-        // Ограничиваем Y: градиент не ниже низа 2-й секции в viewport
         const scrollOffset = window.scrollY
         const maxVisualY = maxScrollY - scrollOffset - 80
         const dy = Math.max(-150, Math.min(pos.current.y - scrollOffset * 0.5, maxVisualY))
@@ -85,33 +103,16 @@ export function HeroGradient() {
   }, [])
 
   return (
-    <div
-      ref={wrapperRef}
-      className="fixed top-4 lg:top-20 left-1/2 pointer-events-none z-0"
-      style={{ willChange: 'transform', opacity: 0, transition: 'opacity 0.3s ease' }}
-    >
-      <div className="gradient-blur" />
-    </div>
-  )
-}
-
-export function Hero() {
-  const textRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (textRef.current && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      gsap.fromTo(
-        textRef.current,
-        { y: 150, opacity: 0 },
-        { y: 0, opacity: 1, duration: 2, ease: 'expo.out' }
-      )
-    } else if (textRef.current) {
-      textRef.current.style.opacity = '1'
-    }
-  }, [])
-
-  return (
     <section className="pb-16 md:pb-0 relative md:h-[clamp(480px,44vw,630px)] overflow-hidden">
+
+      {/* Gradient — за текстом */}
+      <div
+        ref={gradientRef}
+        className="fixed md:absolute top-4 md:top-[65%] left-1/2 md:left-[80%] md:-translate-x-1/2 md:-translate-y-1/2 pointer-events-none z-0"
+        style={{ willChange: 'transform', opacity: 0, transition: 'opacity 0.3s ease' }}
+      >
+        <div className="gradient-blur" />
+      </div>
 
       {/* Lines group — above gradient */}
       <div

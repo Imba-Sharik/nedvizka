@@ -46,6 +46,7 @@ export function Slider() {
                     src={src}
                     alt={`Slide ${i + 1}`}
                     fill
+                    unoptimized
                     className="object-cover"
                   />
                 </div>

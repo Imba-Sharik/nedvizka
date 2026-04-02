@@ -5,7 +5,7 @@ import { VenuePremises } from "@/widgets/VenuePremises";
 import { VenueGallery } from "@/widgets/VenueGallery";
 import { VenueAdvantages } from "@/widgets/VenueAdvantages";
 import { VenueOtherLocations } from "@/widgets/VenueOtherLocations";
-import { Quote } from "@/widgets/Quote";
+// import { Quote } from "@/widgets/Quote";
 import type { Venue } from "@/entities/venue";
 
 interface VenuePageProps {
@@ -34,7 +34,6 @@ export function VenuePage({ venue }: VenuePageProps) {
       <VenueAdvantages items={advantageItems} />
       {venue.gallery.length > 0 && <VenueGallery slides={venue.gallery} />}
       <VenueOtherLocations currentSlug={venue.slug} />
-      <Quote />
     </main>
   );
 }

@@ -22,12 +22,12 @@ export function VenueAdvantages({ items }: VenueAdvantagesProps) {
             {/* Col 1 — number + title */}
             <div className="sm:col-span-1 flex justify-between">
               <span
-                className="font-sans font-medium text-[14px] leading-[1.2] text-black dark:text-white shrink-0"
+                className="hidden sm:inline font-sans font-medium text-[14px] leading-[1.2] text-black dark:text-white shrink-0"
               >
                 {item.number}
               </span>
               <span
-                className="font-sans font-medium text-[14px] leading-[1.2] text-black dark:text-white text-right"
+                className="font-sans font-medium text-[14px] leading-[1.2] text-black dark:text-white text-left sm:text-right"
                 style={{ maxWidth: 200 }}
               >
                 {item.title}

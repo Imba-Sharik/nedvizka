@@ -1,7 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Container, Reveal, useBooking } from "@/shared/ui";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/shared/ui/dropdown-menu";
+import {
+  HoverCard,
+  HoverCardTrigger,
+  HoverCardContent,
+} from "@/shared/ui/hover-card";
 
 type PremiseStatus = "Свободно" | "Забронировано" | "Лист ожидания";
 
@@ -78,6 +90,14 @@ const locationHref: Record<string, string> = {
   "Вишневый Сад":            "/venues/vishneviy-sad",
 };
 
+const locationThumb: Record<string, string> = {
+  "Метмаш × Новый Голливуд": "/premises/metmash-thumbnail1.webp",
+  "Парк-Музей Коломенское":  "/premises/kolomenskoye-thumbnail1.webp",
+  "ДК Серп и Молот":         "/premises/dk-serp-i-molot-thumbnail1.webp",
+  "Вишневый Сад":            "/premises/cherry-orchard-thumbnail2.webp",
+  "Парк Горького":           "/premises/metmash-thumbnail1.webp",
+};
+
 const gridCols = "2.5fr 0.8fr 0.7fr 1.2fr 0.7fr 1.2fr";
 
 const cellBase =
@@ -96,35 +116,71 @@ const fmtArea = (area: number | null) =>
   area !== null ? `${area} м²` : "—";
 
 const COLS = ["Локация", "Наименование", "Площадь", "Стоимость (мес)", "Статус", ""];
+const SORTABLE: Record<string, "area" | "price"> = {
+  "Площадь": "area",
+  "Стоимость (мес)": "price",
+};
 
 interface PremisesProps {
   limit?: number;
   standalone?: boolean;
 }
 
+const locations = [...new Set(allPremises.map((p) => p.location))];
+
 export function Premises({ limit, standalone }: PremisesProps) {
   const { openBooking } = useBooking();
+  const [location, setLocation] = useState("");
   const [priceFrom, setPriceFrom] = useState("");
   const [priceTo, setPriceTo] = useState("");
   const [areaFrom, setAreaFrom] = useState("");
   const [areaTo, setAreaTo] = useState("");
   const [filtered, setFiltered] = useState<Premise[]>(allPremises);
+  const [sortKey, setSortKey] = useState<"area" | "price" | null>(null);
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
 
-  const handleFilter = () => {
-    const pf = priceFrom ? Number(priceFrom) : 0;
-    const pt = priceTo ? Number(priceTo) : Infinity;
-    const af = areaFrom ? Number(areaFrom) : 0;
-    const at = areaTo ? Number(areaTo) : Infinity;
+  const applyFilters = (loc: string, pf: string, pt: string, af: string, at: string) => {
+    const pfN = pf ? Number(pf) : 0;
+    const ptN = pt ? Number(pt) : Infinity;
+    const afN = af ? Number(af) : 0;
+    const atN = at ? Number(at) : Infinity;
     setFiltered(
       allPremises.filter((r) => {
-        const priceOk = r.price !== null ? r.price >= pf && r.price <= pt : true;
-        const areaOk  = r.area  !== null ? r.area  >= af && r.area  <= at : true;
-        return priceOk && areaOk;
+        const locOk   = loc ? r.location === loc : true;
+        const priceOk = r.price !== null ? r.price >= pfN && r.price <= ptN : true;
+        const areaOk  = r.area  !== null ? r.area  >= afN && r.area  <= atN : true;
+        return locOk && priceOk && areaOk;
       }),
     );
   };
 
-  const rows = limit ? filtered.slice(0, limit) : filtered;
+  const handleLocationChange = (v: string) => {
+    setLocation(v);
+    applyFilters(v, priceFrom, priceTo, areaFrom, areaTo);
+  };
+
+  const handleFilter = () => {
+    applyFilters(location, priceFrom, priceTo, areaFrom, areaTo);
+  };
+
+  const handleSort = (key: "area" | "price") => {
+    if (sortKey === key) {
+      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    } else {
+      setSortKey(key);
+      setSortDir("asc");
+    }
+  };
+
+  const sorted = sortKey
+    ? [...filtered].sort((a, b) => {
+        const av = a[sortKey] ?? -Infinity;
+        const bv = b[sortKey] ?? -Infinity;
+        return sortDir === "asc" ? av - bv : bv - av;
+      })
+    : filtered;
+
+  const rows = limit ? sorted.slice(0, limit) : sorted;
 
   return (
     <section id="premises" style={{ marginTop: standalone ? 0 : "clamp(80px, 14.4vw, 208px)" }}>
@@ -136,7 +192,7 @@ export function Premises({ limit, standalone }: PremisesProps) {
       >
         {/* Title + Filter */}
         <Reveal
-          className={`flex flex-col gap-8 ${!limit ? "min-[1240px]:flex-row min-[1240px]:items-center min-[1240px]:justify-between" : ""}`}
+          className="flex flex-col gap-8 min-[1240px]:flex-row min-[1240px]:items-center min-[1240px]:justify-between"
         >
           <h2
             className="font-(family-name:--font-pt-mono) font-normal uppercase text-black dark:text-white shrink-0"
@@ -145,8 +201,79 @@ export function Premises({ limit, standalone }: PremisesProps) {
             Доступные помещения
           </h2>
 
-          {!limit && (
-            <div className="flex items-center gap-6 flex-wrap min-[1240px]:flex-nowrap">
+          {/* Mobile filters */}
+          <div className="flex flex-col gap-3 min-[640px]:hidden w-full">
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  className="flex items-center justify-between gap-3 rounded-[68px] pl-5 pr-4 font-sans text-[14px] font-medium leading-4.25 text-black dark:text-black bg-white dark:bg-white cursor-pointer border-0 outline-none w-full"
+                  style={{ height: 39 }}
+                >
+                  {location || "Площадка"}
+                  <svg width="10" height="14" viewBox="0 0 10 14" fill="none" className="shrink-0">
+                    <path d="M5 1V13M5 13L1 9M5 13L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" sideOffset={6} className="rounded-xl">
+                  <DropdownMenuItem
+                    onClick={() => handleLocationChange("")}
+                    className="cursor-pointer"
+                  >
+                    Все площадки
+                  </DropdownMenuItem>
+                  {locations.map((loc) => (
+                    <DropdownMenuItem
+                      key={loc}
+                      onClick={() => handleLocationChange(loc)}
+                      className="cursor-pointer"
+                    >
+                      {loc}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <div className="flex items-center justify-between">
+                <FilterGroup label="Цена" from={priceFrom} to={priceTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setPriceFrom} onToChange={setPriceTo} />
+                <FilterGroup label="Площадь" from={areaFrom} to={areaTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setAreaFrom} onToChange={setAreaTo} />
+              </div>
+              <button
+                onClick={handleFilter}
+                className="font-sans text-[14px] font-medium leading-4.25 text-black bg-white dark:bg-white dark:text-black rounded-[68px] px-6 cursor-pointer w-full"
+                style={{ height: 39 }}
+              >
+                Показать
+              </button>
+          </div>
+
+          {/* Desktop filters */}
+          <div className="hidden min-[640px]:flex items-center gap-6">
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  className="flex items-center justify-between gap-3 rounded-[68px] pl-5 pr-4 font-sans text-[14px] font-medium leading-4.25 text-black dark:text-black bg-white dark:bg-white cursor-pointer border-0 outline-none"
+                  style={{ height: 39, minWidth: 148 }}
+                >
+                  {location || "Площадка"}
+                  <svg width="10" height="14" viewBox="0 0 10 14" fill="none" className="shrink-0">
+                    <path d="M5 1V13M5 13L1 9M5 13L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" sideOffset={6} className="rounded-xl">
+                  <DropdownMenuItem
+                    onClick={() => handleLocationChange("")}
+                    className="cursor-pointer"
+                  >
+                    Все площадки
+                  </DropdownMenuItem>
+                  {locations.map((loc) => (
+                    <DropdownMenuItem
+                      key={loc}
+                      onClick={() => handleLocationChange(loc)}
+                      className="cursor-pointer"
+                    >
+                      {loc}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
               <FilterGroup label="Цена" from={priceFrom} to={priceTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setPriceFrom} onToChange={setPriceTo} />
               <FilterGroup label="Площадь" from={areaFrom} to={areaTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setAreaFrom} onToChange={setAreaTo} />
               <button
@@ -156,8 +283,7 @@ export function Premises({ limit, standalone }: PremisesProps) {
               >
                 Показать
               </button>
-            </div>
-          )}
+          </div>
         </Reveal>
 
         {/* Desktop table */}
@@ -165,40 +291,75 @@ export function Premises({ limit, standalone }: PremisesProps) {
           <div>
             {/* Header row */}
             <div className="grid pb-3" style={{ gridTemplateColumns: gridCols }}>
-              {COLS.map((col) => (
-                <span
-                  key={col}
-                  className="font-sans font-medium text-black dark:text-white"
-                  style={{ opacity: 0.44, fontSize: 14 }}
-                >
-                  {col}
-                </span>
-              ))}
+              {COLS.map((col) => {
+                const key = SORTABLE[col];
+                if (key) {
+                  const active = sortKey === key;
+                  return (
+                    <button
+                      key={col}
+                      onClick={() => handleSort(key)}
+                      className="flex items-center gap-1.5 font-sans font-medium text-black dark:text-white cursor-pointer"
+                      style={{ opacity: active ? 0.7 : 0.44, fontSize: 14 }}
+                    >
+                      {col}
+                      <svg
+                        width="8" height="10" viewBox="0 0 8 10" fill="none"
+                        className="shrink-0 transition-transform"
+                        style={{ transform: active && sortDir === "desc" ? "rotate(180deg)" : "none" }}
+                      >
+                        <path d="M4 9V1M4 1L1 4M4 1L7 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                  );
+                }
+                return (
+                  <span
+                    key={col}
+                    className="font-sans font-medium text-black dark:text-white"
+                    style={{ opacity: 0.44, fontSize: 14 }}
+                  >
+                    {col}
+                  </span>
+                );
+              })}
             </div>
 
             {/* Data rows */}
             {rows.map((row, i) => (
-              <div key={i}>
-                <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
-                <div
-                  className="grid items-center py-5.5 -mx-3 px-3 rounded-lg transition-colors hover:bg-black/3 dark:hover:bg-white/4"
-                  style={{ gridTemplateColumns: gridCols, fontSize: 16 }}
-                >
-                  <a href={locationHref[row.location] || "#"} className={`${cellBase} no-underline hover:opacity-70 transition-opacity`}>{row.location}</a>
-                  <span className={cellBase}>{row.name}</span>
-                  <span className={cellBase}>{fmtArea(row.area)}</span>
-                  <span className={cellBase}>{fmtPrice(row.price)}</span>
-                  <span className={`font-(family-name:--font-pt-mono) font-normal leading-4.75 ${statusColor[row.status]}`}>
-                    {row.status}
-                  </span>
-                  <button
-                    onClick={() => openBooking({ venueName: row.location, lotId: row.name })}
-                    className={`${cellBase} text-right whitespace-nowrap`}
+              <HoverCard key={i} openDelay={200} closeDelay={0}>
+                <HoverCardTrigger render={<div />}>
+                  <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
+                  <div
+                    className="grid items-center py-5.5 -mx-3 px-3 rounded-lg transition-colors hover:bg-black/3 dark:hover:bg-white/4"
+                    style={{ gridTemplateColumns: gridCols, fontSize: 16 }}
                   >
-                    Оставить заявку
-                  </button>
-                </div>
-              </div>
+                    <a href={locationHref[row.location] || "#"} className={`${cellBase} no-underline hover:opacity-70 transition-opacity`}>{row.location}</a>
+                    <span className={cellBase}>{row.name}</span>
+                    <span className={cellBase}>{fmtArea(row.area)}</span>
+                    <span className={cellBase}>{fmtPrice(row.price)}</span>
+                    <span className={`font-(family-name:--font-pt-mono) font-normal leading-4.75 ${statusColor[row.status]}`}>
+                      {row.status}
+                    </span>
+                    <button
+                      onClick={() => openBooking({ venueName: row.location, lotId: row.name })}
+                      className={`${cellBase} text-right whitespace-nowrap`}
+                    >
+                      Оставить заявку
+                    </button>
+                  </div>
+                </HoverCardTrigger>
+                <HoverCardContent side="top" align="start" sideOffset={8} alignOffset={280} className="w-auto p-1.5">
+                  <Image
+                    src={locationThumb[row.location] || "/premises/metmash-thumbnail1.webp"}
+                    alt={`Схема ${row.name}`}
+                    width={240}
+                    height={160}
+                    unoptimized
+                    className="rounded-md object-cover"
+                  />
+                </HoverCardContent>
+              </HoverCard>
             ))}
 
             {rows.length === 0 && (
@@ -263,38 +424,48 @@ function FilterGroup({
   onFromChange: (v: string) => void;
   onToChange: (v: string) => void;
 }) {
+  const inputClass =
+    "relative w-[69px] h-full bg-transparent text-center font-sans text-[14px] font-medium leading-4.25 text-white placeholder:text-white border-0 outline-none appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]";
+
   return (
-    <div className="flex items-center gap-2.25">
+    <div className="flex flex-col gap-1.5 min-[640px]:flex-row min-[640px]:items-center min-[640px]:gap-2.25">
       <span className="font-sans text-[14px] font-medium leading-4.25 text-black dark:text-white">
         {label}
       </span>
-      <FilterPill value={from} placeholder={fromPlaceholder} onChange={onFromChange} />
-      <FilterPill value={to}   placeholder={toPlaceholder}   onChange={onToChange}   />
-    </div>
-  );
-}
-
-function FilterPill({
-  value, placeholder, onChange,
-}: {
-  value: string; placeholder: string; onChange: (v: string) => void;
-}) {
-  return (
-    <div
-      className="relative flex items-center justify-center rounded-[68px] overflow-hidden"
-      style={{ width: 69, height: 39 }}
-    >
-      <div
-        className="absolute inset-0 bg-[rgba(0,0,0,0.41)] dark:bg-[rgba(255,255,255,0.41)]"
-        style={{ backdropFilter: "blur(22px)", opacity: 0.3 }}
-      />
-      <input
-        type="number"
-        value={value}
-        placeholder={placeholder}
-        onChange={(e) => onChange(e.target.value)}
-        className="relative w-full h-full bg-transparent text-center font-sans text-[14px] font-medium leading-4.25 text-black dark:text-white placeholder:text-black/50 dark:placeholder:text-white/50 border-0 outline-none appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
-      />
+      <div className="flex items-center gap-px">
+        <div
+          className="relative flex items-center justify-center rounded-l-[68px] overflow-hidden"
+          style={{ width: 69, height: 39 }}
+        >
+          <div
+            className="absolute inset-0 bg-[rgba(0,0,0,0.41)] dark:bg-[rgba(255,255,255,0.41)]"
+            style={{ backdropFilter: "blur(22px)", opacity: 0.55 }}
+          />
+          <input
+            type="number"
+            value={from}
+            placeholder={fromPlaceholder}
+            onChange={(e) => onFromChange(e.target.value)}
+            className={inputClass}
+          />
+        </div>
+        <div
+          className="relative flex items-center justify-center rounded-r-[68px] overflow-hidden"
+          style={{ width: 69, height: 39 }}
+        >
+          <div
+            className="absolute inset-0 bg-[rgba(0,0,0,0.41)] dark:bg-[rgba(255,255,255,0.41)]"
+            style={{ backdropFilter: "blur(22px)", opacity: 0.55 }}
+          />
+          <input
+            type="number"
+            value={to}
+            placeholder={toPlaceholder}
+            onChange={(e) => onToChange(e.target.value)}
+            className={inputClass}
+          />
+        </div>
+      </div>
     </div>
   );
 }

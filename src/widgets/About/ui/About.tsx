@@ -15,7 +15,7 @@ export function About() {
             <p
               className="font-(family-name:--font-pt-mono) font-normal uppercase text-black dark:text-white whitespace-pre-line"
               style={{
-                fontSize: "clamp(20px,2.65vw,53px)",
+                fontSize: "clamp(28px,2.65vw,53px)",
                 lineHeight: "1.06",
               }}
             >
@@ -32,7 +32,7 @@ export function About() {
             <p
               className="font-(family-name:--font-pt-mono) font-normal text-black dark:text-white whitespace-pre-line wrap-break-word min-w-0 w-full sm:max-w-92.25"
               style={{
-                fontSize: "clamp(12px,0.95vw,19px)",
+                fontSize: "clamp(16px,0.95vw,19px)",
                 lineHeight: "1.37",
               }}
             >
