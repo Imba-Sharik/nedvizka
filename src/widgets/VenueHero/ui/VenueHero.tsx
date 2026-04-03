@@ -51,7 +51,7 @@ export function VenueHero({ title, imageSrc, address, ctaText = "Подобра�
           >
             <div
               className="absolute inset-0"
-              style={{ backgroundColor: "rgba(255,255,255,0.63)", backdropFilter: "blur(22px)", opacity: 0.3 }}
+              style={{ backgroundColor: "rgba(255,255,255,0.19)", backdropFilter: "blur(22px)", WebkitBackdropFilter: "blur(22px)" }}
             />
             <span className="relative">{ctaText}</span>
           </a>
@@ -86,7 +86,7 @@ export function VenueHero({ title, imageSrc, address, ctaText = "Подобра�
           >
             <div
               className="absolute inset-0"
-              style={{ backgroundColor: "rgba(255,255,255,0.63)", backdropFilter: "blur(22px)", opacity: 0.3 }}
+              style={{ backgroundColor: "rgba(255,255,255,0.19)", backdropFilter: "blur(22px)", WebkitBackdropFilter: "blur(22px)" }}
             />
             <span className="relative">{ctaText}</span>
           </a>

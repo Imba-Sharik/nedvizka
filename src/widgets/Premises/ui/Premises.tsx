@@ -207,7 +207,6 @@ export function Premises({ limit, standalone }: PremisesProps) {
                 <FilterGroup label="Цена" from={priceFrom} to={priceTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setPriceFrom} onToChange={setPriceTo} />
                 <FilterGroup label="Площадь" from={areaFrom} to={areaTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setAreaFrom} onToChange={setAreaTo} />
               </div>
-              {!standalone && (
               <DropdownMenu>
                 <DropdownMenuTrigger
                   className="relative flex items-center justify-between gap-3 rounded-[68px] pl-5 pr-4 font-sans text-[14px] font-medium leading-4.25 text-white cursor-pointer border-0 outline-none overflow-hidden w-full"
@@ -240,7 +239,6 @@ export function Premises({ limit, standalone }: PremisesProps) {
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
-              )}
               <button
                 onClick={handleFilter}
                 className="font-sans text-[14px] font-medium leading-4.25 text-black bg-white dark:bg-white dark:text-black rounded-[68px] px-6 cursor-pointer w-full"
@@ -252,7 +250,6 @@ export function Premises({ limit, standalone }: PremisesProps) {
 
           {/* Desktop filters */}
           <div className="hidden min-[750px]:flex items-center gap-6">
-              {!standalone && (
               <DropdownMenu>
                 <DropdownMenuTrigger
                   className="relative flex items-center justify-between gap-3 rounded-[68px] pl-5 pr-4 font-sans text-[14px] font-medium leading-4.25 text-white cursor-pointer border-0 outline-none overflow-hidden"
@@ -285,7 +282,6 @@ export function Premises({ limit, standalone }: PremisesProps) {
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
-              )}
               <FilterGroup label="Цена" from={priceFrom} to={priceTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setPriceFrom} onToChange={setPriceTo} />
               <FilterGroup label="Площадь" from={areaFrom} to={areaTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setAreaFrom} onToChange={setAreaTo} />
               <button
