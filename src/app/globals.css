@@ -193,6 +193,9 @@ html::-webkit-scrollbar {
   .gradient-blur {
     --size: 560px;
     filter: blur(80px);
+    animation: none;
+    opacity: 0.37;
+    scale: 1;
   }
 
   .dark .gradient-blur {

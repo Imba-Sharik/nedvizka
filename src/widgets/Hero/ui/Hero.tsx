@@ -103,76 +103,22 @@ export function Hero() {
   }, [])
 
   return (
-    <section className="pb-16 md:pb-0 relative md:h-[calc(100vh-140px)] md:max-h-[630px] overflow-hidden">
+    <section className="pb-16 md:pb-0 relative md:h-[calc(100vh-140px)] md:max-h-[630px] overflow-x-clip min-[1450px]:overflow-x-visible">
 
       {/* Gradient — за текстом */}
       <div
         ref={gradientRef}
-        className="fixed md:absolute top-4 md:top-[65%] left-1/2 md:left-[80%] md:-translate-x-1/2 md:-translate-y-1/2 pointer-events-none z-0"
+        className="absolute top-4 md:top-[65%] left-1/2 md:left-[80%] md:-translate-x-1/2 md:-translate-y-1/2 pointer-events-none z-0"
         style={{ willChange: 'transform', opacity: 0, transition: 'opacity 0.3s ease' }}
       >
         <div className="gradient-blur" />
-      </div>
-
-      {/* Lines group — above gradient */}
-      <div
-        className="absolute pointer-events-none z-10"
-        style={{
-          top: "-38px",
-          height: "930.8px",
-          left: "calc((100% - 100vw) / 2 - 80.5px)",
-          width: "calc(100vw + 119px)",
-          opacity: 0.57,
-        }}
-      >
-        {/* Block 1 — bottom-left to top-right, right-aligned */}
-        <div
-          className="absolute right-0"
-          style={{ top: "47.5px", width: `${(1874 / 2039) * 100}%`, height: "569px" }}
-        >
-          <svg width="100%" height="100%" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="line1Gradient" x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#C8C8C8" stopOpacity="1" />
-                <stop offset="100%" stopColor="#FFFFFF" stopOpacity="1" />
-              </linearGradient>
-            </defs>
-            <line x1="0" y1="569" x2="100%" y2="0" stroke="url(#line1Gradient)" strokeWidth="1" />
-          </svg>
-        </div>
-
-        {/* Block 2 — top-left to bottom-right, left-aligned */}
-        <div
-          className="absolute left-0"
-          style={{ top: "24.5px", width: `${(1334 / 2039) * 100}%`, height: "517px" }}
-        >
-          <svg width="100%" height="100%" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="line2Gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#C8C8C8" stopOpacity="1" />
-                <stop offset="100%" stopColor="#FFFFFF" stopOpacity="1" />
-              </linearGradient>
-            </defs>
-            <line x1="0" y1="0" x2="100%" y2="517" stroke="url(#line2Gradient)" strokeWidth="1" />
-          </svg>
-        </div>
-
-        {/* Block 3 — bottom-left to top-right, left offset 114.5px */}
-        <div
-          className="absolute"
-          style={{ top: "0px", left: `${(114.5 / 2039) * 100}%`, width: `${(1220 / 2039) * 100}%`, height: "617px" }}
-        >
-          <svg width="100%" height="100%" preserveAspectRatio="none">
-            <line x1="0" y1="617" x2="100%" y2="0" stroke="rgba(255,255,255,1)" strokeWidth="1" />
-          </svg>
-        </div>
       </div>
 
       {/* Hero content */}
       <div className="relative z-20 mt-20 px-4 md:mt-0 md:px-6.5 md:absolute md:top-[45.6%] md:left-0 md:right-0 md:section-cols md:gap-5">
         <div className="hidden md:block md:col-span-2" /> {/* left spacer */}
         <div ref={textRef} className="md:col-span-1" style={{ opacity: 0 }}>
-          <div className="font-(family-name:--font-pt-mono) font-medium uppercase whitespace-pre-line md:whitespace-pre text-black dark:text-white text-[20px] md:text-[clamp(12px,1.7vw,27px)] leading-[1.35]">
+          <div className="font-(family-name:--font-pt-mono) font-medium uppercase whitespace-pre-line lg:whitespace-pre text-black dark:text-white text-[20px] md:text-[clamp(12px,1.7vw,27px)] leading-[1.35]">
             Формируем места,{"\n"}где эстетика, инфраструктура{"\n"}и предпринимательство{"\n"}соединяются в единую городскую{"\n"}среду.
           </div>
           <a
@@ -185,5 +131,57 @@ export function Hero() {
         </div>
       </div>
     </section>
+  );
+}
+
+export function HeroLines() {
+  return (
+    <div
+      className="absolute pointer-events-none z-10"
+      style={{
+        top: "-38px",
+        height: "930.8px",
+        left: "calc((100% - 100vw) / 2 - 80.5px)",
+        width: "calc(100vw + 119px)",
+        opacity: 0.57,
+      }}
+    >
+      <div
+        className="absolute right-0"
+        style={{ top: "47.5px", width: `${(1874 / 2039) * 100}%`, height: "569px" }}
+      >
+        <svg width="100%" height="100%" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="line1Gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#C8C8C8" stopOpacity="1" />
+              <stop offset="100%" stopColor="#FFFFFF" stopOpacity="1" />
+            </linearGradient>
+          </defs>
+          <line x1="0" y1="569" x2="100%" y2="0" stroke="url(#line1Gradient)" strokeWidth="1" />
+        </svg>
+      </div>
+      <div
+        className="absolute left-0"
+        style={{ top: "24.5px", width: `${(1334 / 2039) * 100}%`, height: "517px" }}
+      >
+        <svg width="100%" height="100%" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="line2Gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#C8C8C8" stopOpacity="1" />
+              <stop offset="100%" stopColor="#FFFFFF" stopOpacity="1" />
+            </linearGradient>
+          </defs>
+          <line x1="0" y1="0" x2="100%" y2="517" stroke="url(#line2Gradient)" strokeWidth="1" />
+        </svg>
+      </div>
+      <div
+        className="absolute"
+        style={{ top: "0px", left: `${(114.5 / 2039) * 100}%`, width: `${(1220 / 2039) * 100}%`, height: "617px" }}
+      >
+        <svg width="100%" height="100%" preserveAspectRatio="none">
+          <line x1="0" y1="617" x2="100%" y2="0" stroke="rgba(255,255,255,1)" strokeWidth="1" />
+        </svg>
+      </div>
+    </div>
   );
 }

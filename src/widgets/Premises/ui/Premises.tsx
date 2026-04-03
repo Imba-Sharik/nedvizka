@@ -202,14 +202,23 @@ export function Premises({ limit, standalone }: PremisesProps) {
           </h2>
 
           {/* Mobile filters */}
-          <div className="flex flex-col gap-3 min-[640px]:hidden w-full">
+          <div className="flex flex-col gap-3 min-[750px]:hidden w-full">
+              <div className="flex items-center justify-between">
+                <FilterGroup label="Цена" from={priceFrom} to={priceTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setPriceFrom} onToChange={setPriceTo} />
+                <FilterGroup label="Площадь" from={areaFrom} to={areaTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setAreaFrom} onToChange={setAreaTo} />
+              </div>
+              {!standalone && (
               <DropdownMenu>
                 <DropdownMenuTrigger
-                  className="flex items-center justify-between gap-3 rounded-[68px] pl-5 pr-4 font-sans text-[14px] font-medium leading-4.25 text-black dark:text-black bg-white dark:bg-white cursor-pointer border-0 outline-none w-full"
+                  className="relative flex items-center justify-between gap-3 rounded-[68px] pl-5 pr-4 font-sans text-[14px] font-medium leading-4.25 text-white cursor-pointer border-0 outline-none overflow-hidden w-full"
                   style={{ height: 39 }}
                 >
-                  {location || "Площадка"}
-                  <svg width="10" height="14" viewBox="0 0 10 14" fill="none" className="shrink-0">
+                  <div
+                    className="absolute inset-0 bg-[rgba(0,0,0,0.41)] dark:bg-[rgba(255,255,255,0.41)]"
+                    style={{ backdropFilter: "blur(22px)", opacity: 0.55 }}
+                  />
+                  <span className="relative">{location || "Площадка"}</span>
+                  <svg width="10" height="14" viewBox="0 0 10 14" fill="none" className="relative shrink-0">
                     <path d="M5 1V13M5 13L1 9M5 13L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </DropdownMenuTrigger>
@@ -231,10 +240,7 @@ export function Premises({ limit, standalone }: PremisesProps) {
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
-              <div className="flex items-center justify-between">
-                <FilterGroup label="Цена" from={priceFrom} to={priceTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setPriceFrom} onToChange={setPriceTo} />
-                <FilterGroup label="Площадь" from={areaFrom} to={areaTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setAreaFrom} onToChange={setAreaTo} />
-              </div>
+              )}
               <button
                 onClick={handleFilter}
                 className="font-sans text-[14px] font-medium leading-4.25 text-black bg-white dark:bg-white dark:text-black rounded-[68px] px-6 cursor-pointer w-full"
@@ -245,14 +251,19 @@ export function Premises({ limit, standalone }: PremisesProps) {
           </div>
 
           {/* Desktop filters */}
-          <div className="hidden min-[640px]:flex items-center gap-6">
+          <div className="hidden min-[750px]:flex items-center gap-6">
+              {!standalone && (
               <DropdownMenu>
                 <DropdownMenuTrigger
-                  className="flex items-center justify-between gap-3 rounded-[68px] pl-5 pr-4 font-sans text-[14px] font-medium leading-4.25 text-black dark:text-black bg-white dark:bg-white cursor-pointer border-0 outline-none"
+                  className="relative flex items-center justify-between gap-3 rounded-[68px] pl-5 pr-4 font-sans text-[14px] font-medium leading-4.25 text-white cursor-pointer border-0 outline-none overflow-hidden"
                   style={{ height: 39, minWidth: 148 }}
                 >
-                  {location || "Площадка"}
-                  <svg width="10" height="14" viewBox="0 0 10 14" fill="none" className="shrink-0">
+                  <div
+                    className="absolute inset-0 bg-[rgba(0,0,0,0.41)] dark:bg-[rgba(255,255,255,0.41)]"
+                    style={{ backdropFilter: "blur(22px)", opacity: 0.55 }}
+                  />
+                  <span className="relative">{location || "Площадка"}</span>
+                  <svg width="10" height="14" viewBox="0 0 10 14" fill="none" className="relative shrink-0">
                     <path d="M5 1V13M5 13L1 9M5 13L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </DropdownMenuTrigger>
@@ -274,6 +285,7 @@ export function Premises({ limit, standalone }: PremisesProps) {
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
+              )}
               <FilterGroup label="Цена" from={priceFrom} to={priceTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setPriceFrom} onToChange={setPriceTo} />
               <FilterGroup label="Площадь" from={areaFrom} to={areaTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setAreaFrom} onToChange={setAreaTo} />
               <button
@@ -287,7 +299,7 @@ export function Premises({ limit, standalone }: PremisesProps) {
         </Reveal>
 
         {/* Desktop table */}
-        <Reveal delay={0.15} className="mt-11 hidden sm:block">
+        <Reveal delay={0.15} className="mt-11 hidden min-[750px]:block">
           <div>
             {/* Header row */}
             <div className="grid pb-3" style={{ gridTemplateColumns: gridCols }}>
@@ -373,14 +385,17 @@ export function Premises({ limit, standalone }: PremisesProps) {
         </Reveal>
 
         {/* Mobile cards */}
-        <Reveal delay={0.15} className="mt-8 flex flex-col sm:hidden">
+        <Reveal delay={0.15} className="mt-8 flex flex-col min-[750px]:hidden">
           {rows.map((row, i) => (
             <div key={i}>
               <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
-              <div className="py-5">
+              <div
+                className="py-5 cursor-pointer active:bg-black/3 dark:active:bg-white/4 transition-colors"
+                onClick={() => openBooking({ venueName: row.location, lotId: row.name })}
+              >
                 <div className="flex items-baseline justify-between gap-4">
                   <span className="font-(family-name:--font-pt-mono) font-normal text-[#0c0c0c] dark:text-white text-[16px] leading-snug">
-                    <a href={locationHref[row.location] || "#"} className="no-underline text-inherit">{row.location}</a>&nbsp;&nbsp;{row.name}
+                    {row.location}&nbsp;&nbsp;{row.name}
                   </span>
                   <span className={`font-(family-name:--font-pt-mono) font-normal text-[14px] leading-snug shrink-0 ${statusColor[row.status]}`}>
                     {row.status}
@@ -428,7 +443,7 @@ function FilterGroup({
     "relative w-[69px] h-full bg-transparent text-center font-sans text-[14px] font-medium leading-4.25 text-white placeholder:text-white border-0 outline-none appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]";
 
   return (
-    <div className="flex flex-col gap-1.5 min-[640px]:flex-row min-[640px]:items-center min-[640px]:gap-2.25">
+    <div className="flex flex-col gap-1.5 min-[750px]:flex-row min-[750px]:items-center min-[750px]:gap-2.25">
       <span className="font-sans text-[14px] font-medium leading-4.25 text-black dark:text-white">
         {label}
       </span>

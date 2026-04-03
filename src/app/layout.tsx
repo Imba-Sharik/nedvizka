@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" suppressHydrationWarning>
-      <body className={`${sfProDisplay.variable} ${ptMono.variable} antialiased lg:cursor-none`}>
+      <body className={`${sfProDisplay.variable} ${ptMono.variable} antialiased lg:cursor-none overflow-x-clip`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -30,7 +30,7 @@ export default function RootLayout({
         >
           <BookingProvider>
             <PageTransition>
-              <div className="relative w-full max-w-480 mx-auto min-h-screen overflow-x-clip">
+              <div className="relative w-full max-w-480 mx-auto min-h-screen">
                 <CustomCursor />
                 <Header />
                 {children}

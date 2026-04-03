@@ -1,1 +1,1 @@
-export { Hero } from "./ui/Hero";
+export { Hero, HeroLines } from "./ui/Hero";

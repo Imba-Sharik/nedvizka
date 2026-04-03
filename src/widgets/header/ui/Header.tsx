@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTheme } from "next-themes";
+// import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useBooking } from "@/shared/ui/booking-context";
 import {
@@ -18,29 +18,29 @@ const venues = [
   { name: "ВИШНЁВЫЙ САД", href: "/venues/vishneviy-sad" },
 ];
 
-const SunIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-    <circle cx="9" cy="9" r="4" stroke="currentColor" strokeWidth="1.5"/>
-    <path d="M9 1v2M9 15v2M1 9h2M15 9h2M3.93 3.93l1.41 1.41M12.66 12.66l1.41 1.41M3.93 14.07l1.41-1.41M12.66 5.34l1.41-1.41" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-  </svg>
-);
+// const SunIcon = () => (
+//   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+//     <circle cx="9" cy="9" r="4" stroke="currentColor" strokeWidth="1.5"/>
+//     <path d="M9 1v2M9 15v2M1 9h2M15 9h2M3.93 3.93l1.41 1.41M12.66 12.66l1.41 1.41M3.93 14.07l1.41-1.41M12.66 5.34l1.41-1.41" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+//   </svg>
+// );
 
-const MoonIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-    <path d="M15.5 9.84a6.5 6.5 0 1 1-7.34-7.34A5 5 0 0 0 15.5 9.84Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
+// const MoonIcon = () => (
+//   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+//     <path d="M15.5 9.84a6.5 6.5 0 1 1-7.34-7.34A5 5 0 0 0 15.5 9.84Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+//   </svg>
+// );
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const { resolvedTheme, setTheme } = useTheme();
+  // const { resolvedTheme, setTheme } = useTheme();
   const { openBooking, isOpen: bookingOpen } = useBooking();
 
-  const isDark = resolvedTheme === "dark";
+  // const isDark = resolvedTheme === "dark";
 
-  const toggleTheme = () => {
-    setTheme(resolvedTheme === "dark" ? "light" : "dark");
-  };
+  // const toggleTheme = () => {
+  //   setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  // };
 
   return (
     <>
@@ -85,13 +85,13 @@ export function Header() {
           </Link>
 
           <div className="flex items-center" style={{ gap: 'clamp(0px, 1.7vw, 24px)' }}>
-            <button
+            {/* <button
               onClick={toggleTheme}
               className="opacity-[0.82] text-black cursor-pointer"
               aria-label="Сменить тему"
             >
               {isDark ? <SunIcon /> : <MoonIcon />}
-            </button>
+            </button> */}
             <p
               className="text-[clamp(8px,0.97vw,14px)] font-medium leading-4.25 opacity-[0.82] text-black"
             >
@@ -142,13 +142,13 @@ export function Header() {
               Оставить заявку
             </button>
 
-            <button
+            {/* <button
               onClick={toggleTheme}
               className="opacity-[0.82] text-page-text cursor-pointer self-start"
               aria-label="Сменить тему"
             >
               {isDark ? <SunIcon /> : <MoonIcon />}
-            </button>
+            </button> */}
           </SheetContent>
         </Sheet>
       </header>

@@ -48,7 +48,7 @@ export function About() {
                 fontSize: "clamp(9px,0.65vw,13px)",
                 lineHeight: "1.46",
                 opacity: 0.44,
-                width: "278px",
+                maxWidth: "278px",
               }}
             >
               {"Москва. Россия\n2015—2026©"}
