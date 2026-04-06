@@ -30,7 +30,7 @@ export function VenuePage({ venue }: VenuePageProps) {
       />
       <VenueAbout paragraphs={paragraphs} />
       <VenueScheme imageSrc="/metmash/scheme.jpeg" area={venue.area} />
-      <VenuePremises venueName={venue.location} thumbSrc={venue.src} />
+      <VenuePremises venueName={venue.location} />
       <VenueAdvantages items={advantageItems} />
       {venue.gallery.length > 0 && <VenueGallery slides={venue.gallery} />}
       <VenueOtherLocations currentSlug={venue.slug} />

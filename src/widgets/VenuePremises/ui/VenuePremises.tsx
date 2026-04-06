@@ -37,10 +37,9 @@ const SORTABLE: Record<string, "area" | "price"> = {
 
 interface VenuePremisesProps {
   venueName: string;
-  thumbSrc: string;
 }
 
-export function VenuePremises({ venueName, thumbSrc }: VenuePremisesProps) {
+export function VenuePremises({ venueName }: VenuePremisesProps) {
   const venuePremises = allPremises.filter((p) => p.location === venueName);
   const { openBooking } = useBooking();
 
@@ -188,8 +187,8 @@ export function VenuePremises({ venueName, thumbSrc }: VenuePremisesProps) {
                 <Image
                   src="/premises/premises-preview-default.webp"
                   alt={row.name}
-                  width={240}
-                  height={160}
+                  width={150}
+                  height={150}
                   unoptimized
                   className="rounded-md object-cover"
                 />

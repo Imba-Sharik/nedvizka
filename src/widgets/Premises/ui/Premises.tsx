@@ -362,8 +362,8 @@ export function Premises({ limit, standalone }: PremisesProps) {
                   <Image
                     src="/premises/premises-preview-default.webp"
                     alt={`Схема ${row.name}`}
-                    width={240}
-                    height={160}
+                    width={150}
+                    height={150}
                     unoptimized
                     className="rounded-md object-cover"
                   />
