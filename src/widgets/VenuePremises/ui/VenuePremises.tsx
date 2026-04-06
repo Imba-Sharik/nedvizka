@@ -186,7 +186,7 @@ export function VenuePremises({ venueName, thumbSrc }: VenuePremisesProps) {
               </HoverCardTrigger>
               <HoverCardContent side="top" align="start" sideOffset={8} alignOffset={280} className="w-auto p-1.5">
                 <Image
-                  src={thumbSrc}
+                  src="/premises/premises-preview-default.webp"
                   alt={row.name}
                   width={240}
                   height={160}

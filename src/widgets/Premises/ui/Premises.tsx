@@ -360,7 +360,7 @@ export function Premises({ limit, standalone }: PremisesProps) {
                 </HoverCardTrigger>
                 <HoverCardContent side="top" align="start" sideOffset={8} alignOffset={280} className="w-auto p-1.5">
                   <Image
-                    src={locationThumb[row.location] || "/premises/metmash-thumbnail1.webp"}
+                    src="/premises/premises-preview-default.webp"
                     alt={`Схема ${row.name}`}
                     width={240}
                     height={160}
