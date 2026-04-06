@@ -2,11 +2,8 @@
 
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Container } from "@/shared/ui";
 import { VenueCard, venues } from "@/entities/venue";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export function Cards() {
   const gridRef = useRef<HTMLDivElement>(null);
@@ -21,23 +18,13 @@ export function Cards() {
 
     gsap.set(cards, { opacity: 0, y: 150 });
 
-    const tl = gsap.timeline({
-      scrollTrigger: { trigger: el, start: "top 80%", once: true },
-    });
-
-    tl.to(cards, {
+    gsap.to(cards, {
       opacity: 1,
       y: 0,
       duration: 2,
       ease: "expo.out",
       stagger: 0,
     });
-
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => {
-        if (t.trigger === el) t.kill();
-      });
-    };
   }, []);
 
   return (

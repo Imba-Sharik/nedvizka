@@ -9,9 +9,9 @@ import { Premises } from "@/widgets/Premises";
 export default function Home() {
   return (
     <main className="relative">
-      <div className="absolute inset-0 -translate-y-[140px] min-[650px]:translate-y-0 overflow-clip min-[1450px]:overflow-visible pointer-events-none z-10">
+      {/* <div className="absolute inset-0 -translate-y-[140px] min-[650px]:translate-y-0 overflow-clip min-[1450px]:overflow-visible pointer-events-none z-10">
         <HeroLines />
-      </div>
+      </div> */}
       <Hero />
       <Cards />
       <About />
