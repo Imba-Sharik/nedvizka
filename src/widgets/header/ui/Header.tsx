@@ -15,6 +15,7 @@ const venues = [
   { name: "МЕТМАШ", href: "/venues/metmash" },
   { name: "ПАРК-МУЗЕЙ КОЛОМЕНСКОЕ", href: "/venues/park-muzey-kolomenskoe" },
   { name: "ДК СЕРП И МОЛОТ", href: "/venues/dk-serp-i-molot" },
+  { name: "ПАРК ГОРЬКОГО", href: "/venues/park-gorkogo" },
   { name: "ВИШНЁВЫЙ САД", href: "/venues/vishneviy-sad" },
 ];
 

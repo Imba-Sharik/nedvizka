@@ -88,6 +88,7 @@ const locationHref: Record<string, string> = {
   "Парк-Музей Коломенское":  "/venues/park-muzey-kolomenskoe",
   "ДК Серп и Молот":         "/venues/dk-serp-i-molot",
   "Вишневый Сад":            "/venues/vishneviy-sad",
+  "Парк Горького":           "/venues/park-gorkogo",
 };
 
 const locationThumb: Record<string, string> = {
@@ -95,7 +96,7 @@ const locationThumb: Record<string, string> = {
   "Парк-Музей Коломенское":  "/premises/kolomenskoye-thumbnail1.webp",
   "ДК Серп и Молот":         "/premises/dk-serp-i-molot-thumbnail1.webp",
   "Вишневый Сад":            "/premises/cherry-orchard-thumbnail2.webp",
-  "Парк Горького":           "/premises/metmash-thumbnail1.webp",
+  "Парк Горького":           "/premises/park-gorkogo-thumbnail.webp",
 };
 
 const gridCols = "2.5fr 0.8fr 0.7fr 1.2fr 0.7fr 1.2fr";

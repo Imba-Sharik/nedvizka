@@ -1,8 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Container, Reveal, useBooking } from "@/shared/ui";
 import { allPremises } from "@/widgets/Premises";
+import {
+  HoverCard,
+  HoverCardTrigger,
+  HoverCardContent,
+} from "@/shared/ui/hover-card";
 
 type PremiseStatus = "Свободно" | "Забронировано" | "Лист ожидания";
 
@@ -31,9 +37,10 @@ const SORTABLE: Record<string, "area" | "price"> = {
 
 interface VenuePremisesProps {
   venueName: string;
+  thumbSrc: string;
 }
 
-export function VenuePremises({ venueName }: VenuePremisesProps) {
+export function VenuePremises({ venueName, thumbSrc }: VenuePremisesProps) {
   const venuePremises = allPremises.filter((p) => p.location === venueName);
   const { openBooking } = useBooking();
 
@@ -156,26 +163,38 @@ export function VenuePremises({ venueName }: VenuePremisesProps) {
           </div>
 
           {sorted.map((row, i) => (
-            <div key={i}>
-              <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
-              <div
-                className="grid items-center py-5.5 -mx-3 px-3 rounded-lg transition-colors hover:bg-black/3 dark:hover:bg-white/4"
-                style={{ gridTemplateColumns: gridCols, fontSize: 16 }}
-              >
-                <span className={cellBase}>{row.name}</span>
-                <span className={cellBase}>{fmtArea(row.area)}</span>
-                <span className={cellBase}>{fmtPrice(row.price)}</span>
-                <span className={`font-(family-name:--font-pt-mono) font-normal leading-4.75 ${statusColor[row.status]}`}>
-                  {row.status}
-                </span>
-                <button
-                  onClick={() => openBooking({ venueName: row.location, lotId: row.name })}
-                  className={`${cellBase} text-right whitespace-nowrap`}
+            <HoverCard key={i}>
+              <HoverCardTrigger render={<div />}>
+                <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
+                <div
+                  className="grid items-center py-5.5 -mx-3 px-3 rounded-lg transition-colors hover:bg-black/3 dark:hover:bg-white/4"
+                  style={{ gridTemplateColumns: gridCols, fontSize: 16 }}
                 >
-                  Оставить заявку
-                </button>
-              </div>
-            </div>
+                  <span className={cellBase}>{row.name}</span>
+                  <span className={cellBase}>{fmtArea(row.area)}</span>
+                  <span className={cellBase}>{fmtPrice(row.price)}</span>
+                  <span className={`font-(family-name:--font-pt-mono) font-normal leading-4.75 ${statusColor[row.status]}`}>
+                    {row.status}
+                  </span>
+                  <button
+                    onClick={() => openBooking({ venueName: row.location, lotId: row.name })}
+                    className={`${cellBase} text-right whitespace-nowrap`}
+                  >
+                    Оставить заявку
+                  </button>
+                </div>
+              </HoverCardTrigger>
+              <HoverCardContent side="top" align="start" sideOffset={8} alignOffset={280} className="w-auto p-1.5">
+                <Image
+                  src={thumbSrc}
+                  alt={row.name}
+                  width={240}
+                  height={160}
+                  unoptimized
+                  className="rounded-md object-cover"
+                />
+              </HoverCardContent>
+            </HoverCard>
           ))}
 
           {sorted.length === 0 && (
