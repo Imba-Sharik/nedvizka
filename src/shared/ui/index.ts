@@ -14,6 +14,7 @@ export { Reveal } from "./reveal";
 export { PageTransition } from "./page-transition";
 export { BookingProvider, useBooking } from "./booking-context";
 export { Lightbox } from "./lightbox";
+export { FilterGroup } from "./filter-group";
 export {
   Sheet,
   SheetTrigger,

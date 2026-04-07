@@ -2,19 +2,10 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { gsap } from "gsap";
 import type { Venue } from "../model/venues";
 
 function CardImage({ card }: { card: Venue }) {
   const hoverRef = useRef<HTMLImageElement>(null);
-
-  // const handleEnter = () => {
-  //   gsap.set(hoverRef.current, { opacity: 1 });
-  // };
-
-  // const handleLeave = () => {
-  //   gsap.set(hoverRef.current, { opacity: 0 });
-  // };
 
   return (
     <a
@@ -22,8 +13,6 @@ function CardImage({ card }: { card: Venue }) {
       data-cursor-label="Подробнее"
       className="block relative overflow-hidden rounded-[9px] lg:cursor-none"
       style={{ aspectRatio: "1 / 1" }}
-      // onMouseEnter={handleEnter}
-      // onMouseLeave={handleLeave}
     >
       <div data-card-img className="absolute inset-0">
         <Image

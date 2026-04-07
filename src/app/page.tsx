@@ -4,7 +4,6 @@ import { About } from "@/widgets/About";
 import { Slider } from "@/widgets/Slider";
 import { Premises } from "@/widgets/Premises";
 // import { Gallery } from "@/widgets/Gallery";
-// import { Quote } from "@/widgets/Quote";
 
 export default function Home() {
   return (

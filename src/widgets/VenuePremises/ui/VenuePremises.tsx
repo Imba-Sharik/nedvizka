@@ -1,39 +1,24 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
-import { Container, Reveal, useBooking } from "@/shared/ui";
-import { allPremises } from "@/widgets/Premises";
+import { Container, Reveal, useBooking, FilterGroup } from "@/shared/ui";
+import { usePremisesFilters } from "@/shared/lib";
+import {
+  allPremises,
+  cellBase,
+  statusColor,
+  fmtPrice,
+  fmtArea,
+  SORTABLE,
+} from "@/entities/venue";
 import {
   HoverCard,
   HoverCardTrigger,
   HoverCardContent,
 } from "@/shared/ui/hover-card";
 
-type PremiseStatus = "Свободно" | "Забронировано" | "Лист ожидания";
-
 const gridCols = "1fr 1fr 1.5fr 0.8fr 1.5fr";
-
-const cellBase =
-  "font-(family-name:--font-pt-mono) font-normal leading-4.75 text-[#0c0c0c] dark:text-white";
-
-const statusColor: Record<PremiseStatus, string> = {
-  "Свободно":      "text-[#0c0c0c] dark:text-[#E5FF82]",
-  "Забронировано":         "text-[#B73B3B] dark:text-[#FF824A]",
-  "Лист ожидания": "text-[#0c0c0c] dark:text-[#FFD966]",
-};
-
-const fmtPrice = (price: number | null) =>
-  price !== null ? `${price.toLocaleString("ru-RU")} ₽` : "—";
-
-const fmtArea = (area: number | null) =>
-  area !== null ? `${area} м²` : "—";
-
 const COLS = ["Наименование", "Площадь", "Стоимость (мес)", "Статус", ""];
-const SORTABLE: Record<string, "area" | "price"> = {
-  "Площадь": "area",
-  "Стоимость (мес)": "price",
-};
 
 interface VenuePremisesProps {
   venueName: string;
@@ -43,45 +28,16 @@ export function VenuePremises({ venueName }: VenuePremisesProps) {
   const venuePremises = allPremises.filter((p) => p.location === venueName);
   const { openBooking } = useBooking();
 
-  const [priceFrom, setPriceFrom] = useState("");
-  const [priceTo, setPriceTo] = useState("");
-  const [areaFrom, setAreaFrom] = useState("");
-  const [areaTo, setAreaTo] = useState("");
-  const [filtered, setFiltered] = useState(venuePremises);
-  const [sortKey, setSortKey] = useState<"area" | "price" | null>(null);
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
-
-  const handleFilter = () => {
-    const pf = priceFrom ? Number(priceFrom) : 0;
-    const pt = priceTo ? Number(priceTo) : Infinity;
-    const af = areaFrom ? Number(areaFrom) : 0;
-    const at = areaTo ? Number(areaTo) : Infinity;
-
-    setFiltered(
-      venuePremises.filter((r) => {
-        const priceOk = r.price !== null ? r.price >= pf && r.price <= pt : true;
-        const areaOk  = r.area  !== null ? r.area  >= af && r.area  <= at : true;
-        return priceOk && areaOk;
-      }),
-    );
-  };
-
-  const handleSort = (key: "area" | "price") => {
-    if (sortKey === key) {
-      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
-    } else {
-      setSortKey(key);
-      setSortDir("asc");
-    }
-  };
-
-  const sorted = sortKey
-    ? [...filtered].sort((a, b) => {
-        const av = a[sortKey] ?? -Infinity;
-        const bv = b[sortKey] ?? -Infinity;
-        return sortDir === "asc" ? av - bv : bv - av;
-      })
-    : filtered;
+  const {
+    priceFrom, setPriceFrom,
+    priceTo, setPriceTo,
+    areaFrom, setAreaFrom,
+    areaTo, setAreaTo,
+    sorted,
+    sortKey, sortDir,
+    handleFilter,
+    handleSort,
+  } = usePremisesFilters({ initialData: venuePremises });
 
   return (
     <Container id="premises" className="pt-20 sm:pt-49">
@@ -101,7 +57,7 @@ export function VenuePremises({ venueName }: VenuePremisesProps) {
             <FilterGroup label="Площадь" from={areaFrom} to={areaTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setAreaFrom} onToChange={setAreaTo} />
           </div>
           <button
-            onClick={handleFilter}
+            onClick={() => handleFilter()}
             className="font-sans text-[14px] font-medium leading-4.25 text-black bg-white dark:bg-white dark:text-black rounded-[68px] px-6 cursor-pointer w-full"
             style={{ height: 39 }}
           >
@@ -114,7 +70,7 @@ export function VenuePremises({ venueName }: VenuePremisesProps) {
           <FilterGroup label="Цена" from={priceFrom} to={priceTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setPriceFrom} onToChange={setPriceTo} />
           <FilterGroup label="Площадь" from={areaFrom} to={areaTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setAreaFrom} onToChange={setAreaTo} />
           <button
-            onClick={handleFilter}
+            onClick={() => handleFilter()}
             className="font-sans text-[14px] font-medium leading-4.25 text-black bg-white dark:bg-white dark:text-black rounded-[68px] px-6 cursor-pointer"
             style={{ height: 39 }}
           >
@@ -239,60 +195,5 @@ export function VenuePremises({ venueName }: VenuePremisesProps) {
         <div className="w-full h-px bg-[rgba(0,0,0,0.14)] dark:bg-[rgba(56,56,56,1)]" />
       </Reveal>
     </Container>
-  );
-}
-
-function FilterGroup({
-  label, from, to, fromPlaceholder, toPlaceholder, onFromChange, onToChange,
-}: {
-  label: string;
-  from: string; to: string;
-  fromPlaceholder: string; toPlaceholder: string;
-  onFromChange: (v: string) => void;
-  onToChange: (v: string) => void;
-}) {
-  const inputClass =
-    "relative w-[69px] h-full bg-transparent text-center font-sans text-[14px] font-medium leading-4.25 text-white placeholder:text-white border-0 outline-none appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]";
-
-  return (
-    <div className="flex flex-col gap-1.5 min-[750px]:flex-row min-[750px]:items-center min-[750px]:gap-2.25">
-      <span className="font-sans text-[14px] font-medium leading-4.25 text-black dark:text-white">
-        {label}
-      </span>
-      <div className="flex items-center gap-px">
-        <div
-          className="relative flex items-center justify-center rounded-l-[68px] overflow-hidden"
-          style={{ width: 69, height: 39 }}
-        >
-          <div
-            className="absolute inset-0 bg-[rgba(0,0,0,0.41)] dark:bg-[rgba(255,255,255,0.41)]"
-            style={{ backdropFilter: "blur(22px)", opacity: 0.55 }}
-          />
-          <input
-            type="number"
-            value={from}
-            placeholder={fromPlaceholder}
-            onChange={(e) => onFromChange(e.target.value)}
-            className={inputClass}
-          />
-        </div>
-        <div
-          className="relative flex items-center justify-center rounded-r-[68px] overflow-hidden"
-          style={{ width: 69, height: 39 }}
-        >
-          <div
-            className="absolute inset-0 bg-[rgba(0,0,0,0.41)] dark:bg-[rgba(255,255,255,0.41)]"
-            style={{ backdropFilter: "blur(22px)", opacity: 0.55 }}
-          />
-          <input
-            type="number"
-            value={to}
-            placeholder={toPlaceholder}
-            onChange={(e) => onToChange(e.target.value)}
-            className={inputClass}
-          />
-        </div>
-      </div>
-    </div>
   );
 }

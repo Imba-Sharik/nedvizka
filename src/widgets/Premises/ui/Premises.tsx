@@ -2,7 +2,18 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Container, Reveal, useBooking } from "@/shared/ui";
+import { Container, Reveal, useBooking, FilterGroup } from "@/shared/ui";
+import { usePremisesFilters } from "@/shared/lib";
+import {
+  allPremises,
+  premiseLocations,
+  cellBase,
+  statusColor,
+  fmtPrice,
+  fmtArea,
+  SORTABLE,
+  venues,
+} from "@/entities/venue";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -15,171 +26,37 @@ import {
   HoverCardContent,
 } from "@/shared/ui/hover-card";
 
-type PremiseStatus = "Свободно" | "Забронировано" | "Лист ожидания";
-
-interface Premise {
-  location: string;
-  name: string;
-  area: number | null;
-  price: number | null;
-  status: PremiseStatus;
-}
-
-export const allPremises: Premise[] = [
-  // Метмаш × Новый Голливуд — 4В series (price = Сумма в мес = Итого год / 12)
-  { location: "Метмаш × Новый Голливуд", name: "4В-1",  area: 7.5,    price: 95813,  status: "Забронировано" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-2",  area: 16.5,   price: 265733, status: "Забронировано" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-3",  area: 6,      price: 73320,  status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-4",  area: 6,      price: 73320,  status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-5",  area: 10.7,   price: 149361, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-6",  area: 9,      price: 119970, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-7",  area: 9,      price: 119970, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-8",  area: 9,      price: 119970, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-9",  area: 9,      price: 119970, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-10", area: 13.3,   price: 198449, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-11", area: 13.9,   price: 210488, status: "Забронировано" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-12", area: 7.6,    price: 97371,  status: "Забронировано" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-13", area: 10.7,   price: 149361, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-14", area: 8.7,    price: 115005, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-15", area: 10.5,   price: 145793, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-16", area: 9,      price: 119970, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-17", area: 17.7,   price: 292917, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-18", area: 15,     price: 233250, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-19", area: 15,     price: 233250, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-20", area: 9,      price: 119970, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-21", area: 9,      price: 119970, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-22", area: 15,     price: 233250, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-23", area: 9,      price: 119970, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-24", area: 9,      price: 119970, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-25", area: 9,      price: 119970, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-26", area: 10.5,   price: 145793, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-27", area: 10.5,   price: 145793, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-28", area: 19.3,   price: 330821, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-29", area: 9,      price: 119970, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-30", area: 16.6,   price: 267957, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-31", area: 16.6,   price: 267957, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-32", area: 9,      price: 119970, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-33", area: 9,      price: 119970, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-34", area: 9,      price: 119970, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-35", area: 10.4,   price: 144019, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "4В-36", area: 35,     price: 803250, status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "5В-1",  area: 807.7,  price: null,   status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "6В-1",  area: 1124,   price: null,   status: "Свободно" },
-  { location: "Метмаш × Новый Голливуд", name: "7В-1",  area: 807.7,  price: null,   status: "Свободно" },
-  // Парк-Музей Коломенское (price по запросу — не указываем на сайте)
-  { location: "Парк-Музей Коломенское",  name: "ПК-1",  area: 858.11, price: null,   status: "Забронировано" },
-  { location: "Парк-Музей Коломенское",  name: "ПК-2",  area: 268.9,  price: null,   status: "Забронировано" },
-  { location: "Парк-Музей Коломенское",  name: "ПК-3",  area: 849.6,  price: null,   status: "Забронировано" },
-  { location: "Парк-Музей Коломенское",  name: "ПК-4",  area: 483.5,  price: null,   status: "Свободно" },
-  { location: "Парк-Музей Коломенское",  name: "ПК-5",  area: 135.43, price: null,   status: "Забронировано" },
-  { location: "Парк-Музей Коломенское",  name: "ПК-6",  area: 318,    price: null,   status: "Забронировано" },
-  // Парк Горького
-  { location: "Парк Горького",           name: "ПГ-1",  area: 780.2,  price: null,   status: "Лист ожидания" },
-  { location: "Парк Горького",           name: "ПГ-2",  area: 213.1,  price: null,   status: "Лист ожидания" },
-  { location: "Парк Горького",           name: "ПГ-3",  area: null,   price: null,   status: "Забронировано" },
-  // ДК Серп и Молот
-  { location: "ДК Серп и Молот",         name: "СМ-1",  area: null,   price: null,   status: "Свободно" },
-  // Вишневый Сад
-  { location: "Вишневый Сад",            name: "ВС-1",  area: null,   price: null,   status: "Свободно" },
-];
-
-const locationHref: Record<string, string> = {
-  "Метмаш × Новый Голливуд": "/venues/metmash",
-  "Парк-Музей Коломенское":  "/venues/park-muzey-kolomenskoe",
-  "ДК Серп и Молот":         "/venues/dk-serp-i-molot",
-  "Вишневый Сад":            "/venues/vishneviy-sad",
-  "Парк Горького":           "/venues/park-gorkogo",
-};
-
-const locationThumb: Record<string, string> = {
-  "Метмаш × Новый Голливуд": "/premises/metmash-thumbnail1.webp",
-  "Парк-Музей Коломенское":  "/premises/kolomenskoye-thumbnail1.webp",
-  "ДК Серп и Молот":         "/premises/dk-serp-i-molot-thumbnail1.webp",
-  "Вишневый Сад":            "/premises/cherry-orchard-thumbnail2.webp",
-  "Парк Горького":           "/premises/park-gorkogo-thumbnail.webp",
-};
+const locationHref = Object.fromEntries(
+  venues.map((v) => [v.location, v.href]),
+);
 
 const gridCols = "2.5fr 0.8fr 0.7fr 1.2fr 0.7fr 1.2fr";
-
-const cellBase =
-  "font-(family-name:--font-pt-mono) font-normal leading-4.75 text-[#0c0c0c] dark:text-white";
-
-const statusColor: Record<PremiseStatus, string> = {
-  "Свободно":      "text-[#0c0c0c] dark:text-[#E5FF82]",
-  "Забронировано":         "text-[#B73B3B] dark:text-[#FF824A]",
-  "Лист ожидания": "text-[#0c0c0c] dark:text-[#FFD966]",
-};
-
-const fmtPrice = (price: number | null) =>
-  price !== null ? `${price.toLocaleString("ru-RU")} ₽` : "—";
-
-const fmtArea = (area: number | null) =>
-  area !== null ? `${area} м²` : "—";
-
 const COLS = ["Локация", "Наименование", "Площадь", "Стоимость (мес)", "Статус", ""];
-const SORTABLE: Record<string, "area" | "price"> = {
-  "Площадь": "area",
-  "Стоимость (мес)": "price",
-};
 
 interface PremisesProps {
   limit?: number;
   standalone?: boolean;
 }
 
-const locations = [...new Set(allPremises.map((p) => p.location))];
-
 export function Premises({ limit, standalone }: PremisesProps) {
   const { openBooking } = useBooking();
   const [location, setLocation] = useState("");
-  const [priceFrom, setPriceFrom] = useState("");
-  const [priceTo, setPriceTo] = useState("");
-  const [areaFrom, setAreaFrom] = useState("");
-  const [areaTo, setAreaTo] = useState("");
-  const [filtered, setFiltered] = useState<Premise[]>(allPremises);
-  const [sortKey, setSortKey] = useState<"area" | "price" | null>(null);
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
 
-  const applyFilters = (loc: string, pf: string, pt: string, af: string, at: string) => {
-    const pfN = pf ? Number(pf) : 0;
-    const ptN = pt ? Number(pt) : Infinity;
-    const afN = af ? Number(af) : 0;
-    const atN = at ? Number(at) : Infinity;
-    setFiltered(
-      allPremises.filter((r) => {
-        const locOk   = loc ? r.location === loc : true;
-        const priceOk = r.price !== null ? r.price >= pfN && r.price <= ptN : true;
-        const areaOk  = r.area  !== null ? r.area  >= afN && r.area  <= atN : true;
-        return locOk && priceOk && areaOk;
-      }),
-    );
-  };
+  const {
+    priceFrom, setPriceFrom,
+    priceTo, setPriceTo,
+    areaFrom, setAreaFrom,
+    areaTo, setAreaTo,
+    sorted,
+    sortKey, sortDir,
+    handleFilter,
+    handleSort,
+  } = usePremisesFilters({ initialData: allPremises });
 
   const handleLocationChange = (v: string) => {
     setLocation(v);
-    applyFilters(v, priceFrom, priceTo, areaFrom, areaTo);
+    handleFilter(v);
   };
-
-  const handleFilter = () => {
-    applyFilters(location, priceFrom, priceTo, areaFrom, areaTo);
-  };
-
-  const handleSort = (key: "area" | "price") => {
-    if (sortKey === key) {
-      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
-    } else {
-      setSortKey(key);
-      setSortDir("asc");
-    }
-  };
-
-  const sorted = sortKey
-    ? [...filtered].sort((a, b) => {
-        const av = a[sortKey] ?? -Infinity;
-        const bv = b[sortKey] ?? -Infinity;
-        return sortDir === "asc" ? av - bv : bv - av;
-      })
-    : filtered;
 
   const rows = limit ? sorted.slice(0, limit) : sorted;
 
@@ -208,40 +85,12 @@ export function Premises({ limit, standalone }: PremisesProps) {
                 <FilterGroup label="Цена" from={priceFrom} to={priceTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setPriceFrom} onToChange={setPriceTo} />
                 <FilterGroup label="Площадь" from={areaFrom} to={areaTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setAreaFrom} onToChange={setAreaTo} />
               </div>
-              <DropdownMenu>
-                <DropdownMenuTrigger
-                  className="relative flex items-center justify-between gap-3 rounded-[68px] pl-5 pr-4 font-sans text-[14px] font-medium leading-4.25 text-white cursor-pointer border-0 outline-none overflow-hidden w-full"
-                  style={{ height: 39 }}
-                >
-                  <div
-                    className="absolute inset-0 bg-[rgba(0,0,0,0.41)] dark:bg-[rgba(255,255,255,0.41)]"
-                    style={{ backdropFilter: "blur(22px)", opacity: 0.55 }}
-                  />
-                  <span className="relative">{location || "Площадка"}</span>
-                  <svg width="10" height="14" viewBox="0 0 10 14" fill="none" className="relative shrink-0">
-                    <path d="M5 1V13M5 13L1 9M5 13L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" sideOffset={6} className="rounded-xl">
-                  <DropdownMenuItem
-                    onClick={() => handleLocationChange("")}
-                    className="cursor-pointer"
-                  >
-                    Все площадки
-                  </DropdownMenuItem>
-                  {locations.map((loc) => (
-                    <DropdownMenuItem
-                      key={loc}
-                      onClick={() => handleLocationChange(loc)}
-                      className="cursor-pointer"
-                    >
-                      {loc}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <LocationDropdown
+                value={location}
+                onChange={handleLocationChange}
+              />
               <button
-                onClick={handleFilter}
+                onClick={() => handleFilter(location)}
                 className="font-sans text-[14px] font-medium leading-4.25 text-black bg-white dark:bg-white dark:text-black rounded-[68px] px-6 cursor-pointer w-full"
                 style={{ height: 39 }}
               >
@@ -251,42 +100,15 @@ export function Premises({ limit, standalone }: PremisesProps) {
 
           {/* Desktop filters */}
           <div className="hidden min-[750px]:flex items-center gap-6">
-              <DropdownMenu>
-                <DropdownMenuTrigger
-                  className="relative flex items-center justify-between gap-3 rounded-[68px] pl-5 pr-4 font-sans text-[14px] font-medium leading-4.25 text-white cursor-pointer border-0 outline-none overflow-hidden"
-                  style={{ height: 39, minWidth: 148 }}
-                >
-                  <div
-                    className="absolute inset-0 bg-[rgba(0,0,0,0.41)] dark:bg-[rgba(255,255,255,0.41)]"
-                    style={{ backdropFilter: "blur(22px)", opacity: 0.55 }}
-                  />
-                  <span className="relative">{location || "Площадка"}</span>
-                  <svg width="10" height="14" viewBox="0 0 10 14" fill="none" className="relative shrink-0">
-                    <path d="M5 1V13M5 13L1 9M5 13L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" sideOffset={6} className="rounded-xl">
-                  <DropdownMenuItem
-                    onClick={() => handleLocationChange("")}
-                    className="cursor-pointer"
-                  >
-                    Все площадки
-                  </DropdownMenuItem>
-                  {locations.map((loc) => (
-                    <DropdownMenuItem
-                      key={loc}
-                      onClick={() => handleLocationChange(loc)}
-                      className="cursor-pointer"
-                    >
-                      {loc}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <LocationDropdown
+                value={location}
+                onChange={handleLocationChange}
+                className="hidden min-[750px]:flex"
+              />
               <FilterGroup label="Цена" from={priceFrom} to={priceTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setPriceFrom} onToChange={setPriceTo} />
               <FilterGroup label="Площадь" from={areaFrom} to={areaTo} fromPlaceholder="от" toPlaceholder="до" onFromChange={setAreaFrom} onToChange={setAreaTo} />
               <button
-                onClick={handleFilter}
+                onClick={() => handleFilter(location)}
                 className="font-sans text-[14px] font-medium leading-4.25 text-black bg-white dark:bg-white dark:text-black rounded-[68px] px-6 cursor-pointer"
                 style={{ height: 39 }}
               >
@@ -427,57 +249,47 @@ export function Premises({ limit, standalone }: PremisesProps) {
   );
 }
 
-function FilterGroup({
-  label, from, to, fromPlaceholder, toPlaceholder, onFromChange, onToChange,
+function LocationDropdown({
+  value,
+  onChange,
+  className,
 }: {
-  label: string;
-  from: string; to: string;
-  fromPlaceholder: string; toPlaceholder: string;
-  onFromChange: (v: string) => void;
-  onToChange: (v: string) => void;
+  value: string;
+  onChange: (v: string) => void;
+  className?: string;
 }) {
-  const inputClass =
-    "relative w-[69px] h-full bg-transparent text-center font-sans text-[14px] font-medium leading-4.25 text-white placeholder:text-white border-0 outline-none appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]";
-
   return (
-    <div className="flex flex-col gap-1.5 min-[750px]:flex-row min-[750px]:items-center min-[750px]:gap-2.25">
-      <span className="font-sans text-[14px] font-medium leading-4.25 text-black dark:text-white">
-        {label}
-      </span>
-      <div className="flex items-center gap-px">
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        className={`relative flex items-center justify-between gap-3 rounded-[68px] pl-5 pr-4 font-sans text-[14px] font-medium leading-4.25 text-white cursor-pointer border-0 outline-none overflow-hidden ${className ?? "w-full"}`}
+        style={{ height: 39, minWidth: 148 }}
+      >
         <div
-          className="relative flex items-center justify-center rounded-l-[68px] overflow-hidden"
-          style={{ width: 69, height: 39 }}
+          className="absolute inset-0 bg-[rgba(0,0,0,0.41)] dark:bg-[rgba(255,255,255,0.41)]"
+          style={{ backdropFilter: "blur(22px)", opacity: 0.55 }}
+        />
+        <span className="relative">{value || "Площадка"}</span>
+        <svg width="10" height="14" viewBox="0 0 10 14" fill="none" className="relative shrink-0">
+          <path d="M5 1V13M5 13L1 9M5 13L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" sideOffset={6} className="rounded-xl">
+        <DropdownMenuItem
+          onClick={() => onChange("")}
+          className="cursor-pointer"
         >
-          <div
-            className="absolute inset-0 bg-[rgba(0,0,0,0.41)] dark:bg-[rgba(255,255,255,0.41)]"
-            style={{ backdropFilter: "blur(22px)", opacity: 0.55 }}
-          />
-          <input
-            type="number"
-            value={from}
-            placeholder={fromPlaceholder}
-            onChange={(e) => onFromChange(e.target.value)}
-            className={inputClass}
-          />
-        </div>
-        <div
-          className="relative flex items-center justify-center rounded-r-[68px] overflow-hidden"
-          style={{ width: 69, height: 39 }}
-        >
-          <div
-            className="absolute inset-0 bg-[rgba(0,0,0,0.41)] dark:bg-[rgba(255,255,255,0.41)]"
-            style={{ backdropFilter: "blur(22px)", opacity: 0.55 }}
-          />
-          <input
-            type="number"
-            value={to}
-            placeholder={toPlaceholder}
-            onChange={(e) => onToChange(e.target.value)}
-            className={inputClass}
-          />
-        </div>
-      </div>
-    </div>
+          Все площадки
+        </DropdownMenuItem>
+        {premiseLocations.map((loc) => (
+          <DropdownMenuItem
+            key={loc}
+            onClick={() => onChange(loc)}
+            className="cursor-pointer"
+          >
+            {loc}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

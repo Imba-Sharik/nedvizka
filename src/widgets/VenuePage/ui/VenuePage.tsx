@@ -5,7 +5,6 @@ import { VenuePremises } from "@/widgets/VenuePremises";
 import { VenueGallery } from "@/widgets/VenueGallery";
 import { VenueAdvantages } from "@/widgets/VenueAdvantages";
 import { VenueOtherLocations } from "@/widgets/VenueOtherLocations";
-// import { Quote } from "@/widgets/Quote";
 import type { Venue } from "@/entities/venue";
 
 interface VenuePageProps {

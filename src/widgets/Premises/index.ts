@@ -1,1 +1,1 @@
-export { Premises, allPremises } from "./ui/Premises";
+export { Premises } from "./ui/Premises";

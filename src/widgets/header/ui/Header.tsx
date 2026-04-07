@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-// import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useBooking } from "@/shared/ui/booking-context";
 import {
@@ -10,14 +9,9 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/shared/ui";
+import { venues as venueData } from "@/entities/venue";
 
-const venues = [
-  { name: "МЕТМАШ", href: "/venues/metmash" },
-  { name: "ПАРК-МУЗЕЙ КОЛОМЕНСКОЕ", href: "/venues/park-muzey-kolomenskoe" },
-  { name: "ДК СЕРП И МОЛОТ", href: "/venues/dk-serp-i-molot" },
-  { name: "ПАРК ГОРЬКОГО", href: "/venues/park-gorkogo" },
-  { name: "ВИШНЁВЫЙ САД", href: "/venues/vishneviy-sad" },
-];
+const venueLinks = venueData.map((v) => ({ name: v.name, href: v.href }));
 
 // const SunIcon = () => (
 //   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -120,7 +114,7 @@ export function Header() {
               >
                 Главная
               </Link>
-              {venues.map((v) => (
+              {venueLinks.map((v) => (
                 <Link
                   key={v.name}
                   href={v.href}
