@@ -145,7 +145,7 @@ export function VenuePremises({ venueName }: VenuePremisesProps) {
                   alt={row.name}
                   width={150}
                   height={150}
-                  unoptimized
+
                   className="rounded-md object-cover"
                 />
               </HoverCardContent>

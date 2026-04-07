@@ -20,7 +20,7 @@ function CardImage({ card }: { card: Venue }) {
           alt={card.alt}
           fill
           priority
-          unoptimized
+
           className="object-cover"
         />
         <img

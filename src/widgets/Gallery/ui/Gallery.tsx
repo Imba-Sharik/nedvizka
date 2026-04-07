@@ -21,7 +21,7 @@ export function Gallery() {
               delay={row * 0.25}
               className={`relative aspect-square rounded-[9px] overflow-hidden ${cls}`}
             >
-              <Image src={src} alt={alt} fill className="object-cover" unoptimized sizes="(max-width: 768px) 50vw, 25vw" />
+              <Image src={src} alt={alt} fill className="object-cover"sizes="(max-width: 768px) 50vw, 25vw" />
             </Reveal>
           ))}
         </div>
